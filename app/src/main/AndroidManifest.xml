@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.AlexandriaVirtual20">
+        <activity
+            android:name=".AdmTelaHistoricoEmpres"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaSolicPend"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaAdicionarAdm"
+            android:exported="false" />
+        <activity
+            android:name=".AdmInfoPessoais"
+            android:exported="false" />
+        <activity
+            android:name=".AdmPerfil"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaCabReservHorEsp"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaCabReservComNome"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaHoraCab"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaCabReserv"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaEditEvent"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaAdicionEvent"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaEventos"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaCadastUsu"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaInfoUsu"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaUsuCadast"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaCadasProd"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaEditarProduto"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaProdutos"
+            android:exported="false" />
+        <activity
+            android:name=".AdmTelaInicio"
+            android:exported="false" />
+        <activity
+            android:name=".TelaLivrosFavUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaRedefinirSenha"
+            android:exported="false" />
+        <activity
+            android:name=".TelaInformacoesUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaPerfilUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaConfirmReservaUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaCabDisponUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaHoraCabineUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaReservaCabUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaChatbotUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaSolicitaPendUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaHistoricoUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaReviewUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaMeusLivrosUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaRetirarLivroUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaAvaliacoesUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaEmprestLivrosUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaMenuEmprestUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaCapacitacoesUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaLevantBibliogUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaInfoAtividadeUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaAtividadesUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaInfoEventoUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaEventosFuturUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaInfoLivroUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaNotificacoesUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaInicioUsu"
+            android:exported="false" />
+        <activity
+            android:name=".TelaCadastro"
+            android:exported="false" />
+        <activity
+            android:name=".TelaEmail"
+            android:exported="false" />
+        <activity
+            android:name=".TelaLogin"
+            android:exported="false" />
+        <activity
+            android:name=".TelaSplash"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
