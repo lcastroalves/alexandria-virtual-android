@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AlexandriaVirtual2.0</string>
+
+    // Tela de Cadastro
+    <string name="contDescLogo">Logo do aplicativo Alexandria Virtual</string>
+    <string name="titulo">Alexandria Virtual</string>
+    <string name="contDescTitulo">Texto escrito Alexandria Virtual</string>
+
 </resources>
