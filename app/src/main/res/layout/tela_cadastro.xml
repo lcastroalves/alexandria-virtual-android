@@ -5,6 +5,214 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaCadastro">
+    tools:context=".TelaCadastro"
+    android:background="#FFFFFF">
+
+    <ImageView
+        android:id="@+id/logoAlexandria"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        android:contentDescription="@string/contDescLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logoalexandriavirtual" />
+
+    <TextView
+        android:id="@+id/tituloAlexandria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/contDescTitulo"
+        android:fontFamily="@font/trocchi"
+        android:text="@string/titulo"
+        android:textColor="#247AE8"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoAlexandria" />
+
+    <LinearLayout
+        android:id="@+id/container_form"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/linear_layout_borda"
+        app:layout_constraintTop_toBottomOf="@id/tituloAlexandria"
+        app:layout_constraintBottom_toTopOf="@id/botaoTenhoCadastro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome completo"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusBottomEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="4dp"
+            app:boxStrokeColor="@color/borda_input"
+            app:hintTextColor="#247AE8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nomeCompleto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingVertical="13dp"
+                android:paddingHorizontal="12dp"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                android:outlineAmbientShadowColor="#FFF7F7" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome de usuário"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusBottomEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            app:boxStrokeColor="@color/borda_input"
+            app:hintTextColor="#247AE8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/nomeUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingVertical="13dp"
+                android:paddingHorizontal="12dp"
+                android:textSize="16sp"
+                android:inputType="textPersonName"
+                android:outlineAmbientShadowColor="#FFF7F7" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusBottomEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="15dp"
+            app:boxStrokeColor="@color/borda_input"
+            app:hintTextColor="#247AE8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingVertical="13dp"
+                android:paddingHorizontal="12dp"
+                android:textSize="16sp"
+                android:inputType="textEmailAddress"
+                android:outlineAmbientShadowColor="#FFF7F7"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Senha"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusBottomEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            app:boxStrokeColor="@color/borda_input"
+            app:hintTextColor="#247AE8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/senha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingVertical="13dp"
+                android:paddingHorizontal="12dp"
+                android:textSize="16sp"
+                android:inputType="textPassword"
+                android:outlineAmbientShadowColor="#FFF7F7"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirmar senha"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusTopStart="5dp"
+            app:boxCornerRadiusTopEnd="5dp"
+            app:boxCornerRadiusBottomStart="5dp"
+            app:boxCornerRadiusBottomEnd="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            app:boxStrokeColor="@color/borda_input"
+            app:hintTextColor="#247AE8">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/segundaSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="40dp"
+                android:paddingVertical="13dp"
+                android:paddingHorizontal="12dp"
+                android:textSize="16sp"
+                android:inputType="textPassword"
+                android:outlineAmbientShadowColor="#FFF7F7"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/botaoCadastrar"
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
+            android:backgroundTint="#2B76D7"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Cadastrar"
+            android:textSize="25dp"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/botaoTenhoCadastro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#FFFF"
+        android:fontFamily="@font/montserrat_subrayada_bold"
+        android:text="Tenho cadastro>>"
+        android:textAllCaps="false"
+        android:textColor="#2B76D7"
+        android:textSize="18dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/container_form"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
