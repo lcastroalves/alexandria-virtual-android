@@ -1,4 +1,22 @@
 <resources>
+    <string-array name="autores_array">
+        <item>Autor</item>
+
+    </string-array>
+
+    <string-array name="generos_array">
+        <item>Gênero</item>
+    </string-array>
+
+    <string-array name="populares_array">
+        <item>Mais Populares</item>
+    </string-array>
+
+    <string-array name="lancamentos_array">
+        <item>2025</item>
+        <item>2024</item>
+        <item>2023</item>
+    </string-array>
     <string name="app_name">AlexandriaVirtual2.0</string>
 
     // Tela de Cadastro

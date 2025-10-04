@@ -7,4 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".TelaHistoricoUsu">
 
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="historicoLeitura"
+        tools:layout_editor_absoluteX="141dp"
+        tools:layout_editor_absoluteY="128dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
