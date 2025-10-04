@@ -114,10 +114,10 @@
             android:exported="false" />
         <activity
             android:name=".TelaEmprestLivrosUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaMenuEmprestUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaCapacitacoesUsu"
             android:exported="false" />
