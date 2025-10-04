@@ -1,10 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TelaInfoLivroUsu">
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:contentDescription="@string/descricaoBotaoVoltar"
+        android:id="@+id/botaoVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/SobreOLivro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/trocchi"
+        android:textColor="#247AE8"
+        android:text="Sobre o Livro"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toEndOf="@id/botaoVoltar"
+        app:layout_constraintTop_toTopOf="@id/botaoVoltar" />
+
+    <ImageView
+        android:contentDescription="@string/descricaoCapaLivro"
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="30dp"
+        android:src="@drawable/livro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoVoltar" />
+
+    <TextView
+        android:id="@+id/tituloLivro"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/descricaoTituloLivro"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_medium"
+        android:maxLines="3"
+        android:text="Java como Programar"
+        android:textColor="#247AE8"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/autorLivroSuperior"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:contentDescription="@string/descricaoAutorLivro"
+        android:ellipsize="none"
+        android:fontFamily="@font/montserrat_medium"
+        android:maxLines="2"
+        android:text="Paul J. Deitel"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/sinopseLivro"
+        android:layout_width="340dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="20dp"
+        android:contentDescription="@string/sinopseLivro"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_medium"
+        android:maxLines="4"
+        android:text="@string/sinopseLivro"
+        android:textColor="#247AE8"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:src="@drawable/award"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sinopseLivro" />
+
+    <TextView
+        android:id="@+id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Autor:"
+        android:layout_marginStart="30dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/autorLivroInferior"
+        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:maxLines="2"
+        android:ellipsize="none"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Paul J. Deitel"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/clipboard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Informação de Publicação:"
+        android:layout_marginStart="30dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <TextView
+        android:contentDescription="@string/descricaoInfoLivro"
+        android:id="@+id/infoPublica"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:fontFamily="@font/montserrat_medium"
+        android:maxLines="1"
+        android:text="Livro - Português - 10ª edição"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+
+    <ImageView
+        android:contentDescription="@null"
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/book"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+    <TextView
+        android:id="@+id/label3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Gênero/Assunto:"
+        android:layout_marginStart="26dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
+
+    <TextView
+        android:contentDescription="@string/generoLivro"
+        android:id="@+id/generoLivro"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:fontFamily="@font/montserrat_medium"
+        android:text="Computação"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

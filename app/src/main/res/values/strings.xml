@@ -6,4 +6,14 @@
     <string name="titulo">Alexandria Virtual</string>
     <string name="contDescTitulo">Texto escrito Alexandria Virtual</string>
 
+    // Tela info livro usuario
+    <string name="descricaoBotaoVoltar"> Botão de voltar para a tela anterior </string>
+    <string name="descricaoCapaLivro"> Capa do livro Java como Programar </string>
+    <string name="descricaoTituloLivro"> Título do livro Java como Programar </string>
+    <string name="descricaoAutorLivro"> Autor do Paul J. Deitel </string>
+    <string name="sinopseLivro">
+        Um dos livros mais reconhecidos no ensino de programação, escrito por Paul Deitel e Harvey Deitel, este guia combina teoria sólida com prática intensiva.
+    </string>
+    <string name="descricaoInfoLivro"> Livro, Português, 10ª edição </string>
+    <string name="generoLivro"> Gênero Computação </string>
 </resources>
