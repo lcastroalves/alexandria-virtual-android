@@ -119,7 +119,7 @@
             android:name=".TelaMenuEmprestUsu"
             android:exported="true" />
         <activity
-            android:name=".TelaSplash"
+            android:name=".TelaCapacitacoesUsu"
             android:exported="false" />
         <activity
             android:name=".TelaLevantBibliogUsu"
@@ -155,7 +155,7 @@
             android:name=".TelaLogin"
             android:exported="false" />
         <activity
-            android:name=".TelaCapacitacoesUsu"
+            android:name=".TelaSplash"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
