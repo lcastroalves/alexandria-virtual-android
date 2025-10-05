@@ -34,4 +34,10 @@
     </string>
     <string name="descricaoInfoLivro"> Livro, Português, 10ª edição </string>
     <string name="generoLivro"> Gênero Computação </string>
+
+    // Tela Levantamento Bibliográfico
+    <string name="descLevBib">
+        Descrição: Serviço que consiste na busca de conteúdos sobre a temática e especificações definidas pelo solicitante (palavra-chave, idioma, tipo de material, etc). O serviço fornece artigos, referências, resumos e links que direcionam para acesso a textos completos de documentos (artigos de periódicos, teses, entre outros).
+    </string>
+
 </resources>

@@ -46,9 +46,9 @@
 
     <TextView
         android:id="@+id/tituloLivro"
+        android:contentDescription="@string/descricaoTituloLivro"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/descricaoTituloLivro"
         android:ellipsize="end"
         android:fontFamily="@font/montserrat_medium"
         android:maxLines="3"
@@ -176,7 +176,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="40dp"
-        android:src="@drawable/iconeLivro"
+        android:src="@drawable/iconelivro"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
