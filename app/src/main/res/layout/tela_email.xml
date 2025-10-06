@@ -7,4 +7,93 @@
     android:layout_height="match_parent"
     tools:context=".TelaEmail">
 
+    <ImageView
+        android:id="@+id/logoAlexandriaV2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logoalexandriavirtual" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/trocchi"
+        android:text="Alexandria Virtual"
+        android:textColor="#247AE8"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoAlexandriaV2" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="285dp"
+        android:layout_height="248dp"
+        tools:layout_editor_absoluteX="67dp"
+        tools:layout_editor_absoluteY="287dp">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="282dp"
+            android:layout_height="102dp"
+            android:fontFamily="@font/montserrat_subrayada"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:text="Digite seu e-mail para receber o link de redefinição de senha."
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="2dp"
+            tools:layout_editor_absoluteY="28dp" />
+
+        <EditText
+            android:id="@+id/editTextTextEmailAddress"
+            android:layout_width="276dp"
+            android:layout_height="71dp"
+            android:ems="10"
+            android:fontFamily="@font/montserrat_subrayada"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="98dp" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:autoText="false"
+            android:backgroundTint="#247AE8"
+            android:fontFamily="@font/montserrat_subrayada"
+            android:scaleX="1"
+            android:text="Enviar"
+            android:textAlignment="viewStart"
+            android:textSize="12sp"
+            app:cornerRadius="10sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailAddress"
+            app:layout_constraintVertical_bias="1.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="413dp"
+        android:layout_height="607dp"
+        android:adjustViewBounds="false"
+        android:cropToPadding="false"
+        android:scaleType="centerInside"
+        android:scaleX="-0.1"
+        android:scaleY="0.1"
+        app:srcCompat="@drawable/right_arrow"
+        tools:layout_editor_absoluteX="-150dp"
+        tools:layout_editor_absoluteY="-243dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

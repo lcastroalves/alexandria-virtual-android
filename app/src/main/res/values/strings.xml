@@ -1,3 +1,48 @@
 <resources>
+    <string-array name="autores_array">
+        <item>Autor</item>
+
+    </string-array>
+
+    <string-array name="generos_array">
+        <item>Gênero</item>
+    </string-array>
+
+    <string-array name="populares_array">
+        <item>Mais Populares</item>
+    </string-array>
+
+    <string-array name="lancamentos_array">
+        <item>2025</item>
+        <item>2024</item>
+        <item>2023</item>
+    </string-array>
     <string name="app_name">AlexandriaVirtual2.0</string>
+
+    // Tela de Cadastro
+    <string name="contDescLogo">Logo do aplicativo Alexandria Virtual</string>
+    <string name="titulo">Alexandria Virtual</string>
+    <string name="contDescTitulo">Texto escrito Alexandria Virtual</string>
+
+    // Tela info livro usuario
+    <string name="descricaoBotaoVoltar"> Botão de voltar para a tela anterior </string>
+    <string name="descricaoCapaLivro"> Capa do livro Java como Programar </string>
+    <string name="descricaoTituloLivro"> Título do livro Java como Programar </string>
+    <string name="descricaoAutorLivro"> Autor do Paul J. Deitel </string>
+    <string name="sinopseLivro">
+        Um dos livros mais reconhecidos no ensino de programação, escrito por Paul Deitel e Harvey Deitel, este guia combina teoria sólida com prática intensiva.
+    </string>
+    <string name="descricaoInfoLivro"> Livro, Português, 10ª edição </string>
+    <string name="generoLivro"> Gênero Computação </string>
+
+    // Tela Levantamento Bibliográfico
+    <string name="descLevBib">
+        Descrição: Serviço que consiste na busca de conteúdos sobre a temática e especificações definidas pelo solicitante (palavra-chave, idioma, tipo de material, etc). O serviço fornece artigos, referências, resumos e links que direcionam para acesso a textos completos de documentos (artigos de periódicos, teses, entre outros).
+    </string>
+
+    // Tela Capacitações
+    <string name="descCapacitacao">
+        Descrição: o serviço aborda temáticas necessárias à trajetória acadêmica do aluno quanto a pesquisa científica e normalização de trabalhos acadêmicos.
+        Capacitações ofertadas:Pesquisa na Biblioteca Digital (bases de dados); Normas bibliográficas (ABNT, APA e Vancouver); Integridade Acadêmica; Gerenciador de referências Mendeley; Currículo Lattes; Como publicar em revistas científicas?; Base Primal - Atlas de Anatomia 3D, Dynamed e Euromonitor.
+    </string>
 </resources>
