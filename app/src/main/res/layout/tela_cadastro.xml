@@ -43,7 +43,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp"
-        android:background="@color/linear_layout_borda"
+        android:background="@drawable/linear_layout_borda"
         app:layout_constraintTop_toBottomOf="@id/tituloAlexandria"
         app:layout_constraintBottom_toTopOf="@id/botaoTenhoCadastro"
         app:layout_constraintStart_toStartOf="parent"
