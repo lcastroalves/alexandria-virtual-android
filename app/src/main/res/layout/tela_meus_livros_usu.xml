@@ -7,12 +7,201 @@
     android:layout_height="match_parent"
     tools:context=".TelaMeusLivrosUsu">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="meuslivros"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="475dp"
+        android:layout_height="734dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="205dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnback"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="40dp"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/arrowback" />
+
+            <ImageView
+                android:id="@+id/logoUnifor"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="140dp"
+                android:background="@drawable/logoalexandriavirtual"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logoalexandriavirtual"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                tools:layout_editor_absoluteX="155dp" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tituloAlexandria"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/trocchi"
+            android:text="Meus Livros"
+            android:textColor="#247AE8"
+            android:textSize="26sp" />
+        <TextView
+            android:id="@+id/txtClassificar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Classificar por:"
+            android:textSize="18sp"
+            android:textColor="#000000"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/montserrat_medium" />
+
+        <!-- Botões de filtro -->
+        <LinearLayout
+            android:id="@+id/layoutFiltros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:background="@drawable/linear_layout_borda"
+            app:layout_constraintTop_toBottomOf="@id/txtClassificar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/filtroAlugados"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alugados Recentemente"
+                android:textColor="#247AE8"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="4dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/filtroLidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lidos Recentemente"
+                android:textColor="#247AE8"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="4dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:id="@+id/filtroAZ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alfabética A-Z"
+                android:textColor="#247AE8"
+                android:fontFamily="@font/montserrat_medium"
+                android:textSize="16sp"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:padding="4dp" />
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/layoutLivros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/livro1"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
+                android:layout_marginHorizontal="25dp"
+                app:srcCompat="@drawable/livro1" />
+
+            <ImageView
+                android:id="@+id/livro2"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
+                android:layout_marginHorizontal="25dp"
+                app:srcCompat="@drawable/livro2" />
+
+            <ImageView
+                android:id="@+id/livro3"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
+                android:layout_marginHorizontal="25dp"
+                app:srcCompat="@drawable/livro3" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutProgresso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutLivros">
+
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/open_bookk"
+                app:tint="#000000"
+                android:contentDescription="Progresso" />
+
+            <TextView
+                android:id="@+id/txtProgresso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="3/12"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAvaliarLivros"
+            android:layout_width="178dp"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#2B76D7"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="AVALIAR LIVROS"
+            android:textSize="20sp"
+            app:cornerRadius="10dp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

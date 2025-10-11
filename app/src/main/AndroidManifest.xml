@@ -106,7 +106,7 @@
             android:exported="false" />
         <activity
             android:name=".TelaMeusLivrosUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaRetirarLivroUsu"
             android:exported="true" />
