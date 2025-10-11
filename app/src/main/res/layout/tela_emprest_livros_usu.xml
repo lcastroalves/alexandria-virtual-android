@@ -1,310 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TelaEmprestLivrosUsu">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
+        <!-- Barra superior com botão voltar e campo de busca -->
         <ImageButton
-            android:id="@+id/logoImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="43dp"
+            android:id="@+id/btnback"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="start"
+            android:layout_marginTop="40dp"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/arrowback"
-            app:layout_constraintEnd_toStartOf="@+id/textTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/imageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="101dp"
-            android:layout_marginBottom="5dp"
-            app:layout_constraintBottom_toTopOf="@+id/textTitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/logoImage"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/buscar" />
-
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="5dp"
-            android:layout_marginEnd="87dp"
-            android:text="Empréstimo de Livros"
-            android:textColor="@android:color/holo_blue_dark"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/logoImage"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton" />
+            android:src="@drawable/arrowback" />
 
         <LinearLayout
-            android:id="@+id/linearLayout5"
-            android:layout_width="222dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="402dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <SearchView
+                android:id="@+id/searchViewLivros"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:queryHint="Buscar"
+                android:iconifiedByDefault="false" />
+
+        </LinearLayout>
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/textTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Empréstimo de Livros"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/holo_blue_dark"
+            android:gravity="center"
+            android:layout_marginVertical="16dp" />
+
+        <!-- Filtros -->
+        <LinearLayout
+            android:id="@+id/linearLayoutFiltros"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/logoImage"
-            app:layout_constraintTop_toBottomOf="@+id/textTitle">
+            android:padding="8dp"
+            android:background="#F4F4F4"
+            android:elevation="2dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginHorizontal="8dp"
+            android:clipToOutline="true">
 
             <TextView
-                android:id="@+id/text2"
-                android:layout_width="201dp"
+                android:id="@+id/textFiltros"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:text="Filtros e Categorias"
                 android:textColor="@android:color/black"
+                android:textStyle="bold"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_marginBottom="8dp" />
 
             <Spinner
                 android:id="@+id/spinnerAutor"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:padding="4dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
 
             <Spinner
                 android:id="@+id/spinnerGenero"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:padding="4dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
 
             <Spinner
                 android:id="@+id/spinnerMaisPopulares"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:padding="4dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
 
             <Spinner
                 android:id="@+id/spinnerLancamento"
-                android:layout_width="wrap_content"
-                android:layout_height="38dp"
-                android:padding="4dp" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="4dp" />
         </LinearLayout>
 
-
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- Livro 1 -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="1.0">
-
-            <ImageView
-                android:id="@+id/imgLivro2"
-                android:layout_width="91dp"
-                android:layout_height="133dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="32dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgLivro1"
-                app:srcCompat="@drawable/livro2" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp">
 
             <ImageView
                 android:id="@+id/imgLivro1"
-                android:layout_width="wrap_content"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
+                android:src="@drawable/livro1"
+                android:contentDescription="Livro 1" />
+
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="355dp"
-                app:layout_constraintEnd_toStartOf="@+id/txtTitulo1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/livro1" />
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
 
-            <TextView
-                android:id="@+id/txtTitulo1"
-                android:layout_width="262dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="355dp"
-                android:layout_marginEnd="54dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="Ciência da Computação e Tecnologias Digitais"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro1"
-                app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/txtTitulo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ciência da Computação e Tecnologias Digitais"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
 
-            <TextView
-                android:id="@+id/txtAutor1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="186dp"
-                android:text="Ernane Rosa Martins"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro1"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitulo1" />
+                <TextView
+                    android:id="@+id/txtAutor1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ernane Rosa Martins"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/textView35"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                android:layout_marginEnd="201dp"
-                android:text="⭐ 130 avaliações"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro1"
-                app:layout_constraintTop_toBottomOf="@+id/txtAutor1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐ 130 avaliações"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
 
-            <TextView
-                android:id="@+id/btnAvaliacoes1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="223dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="Ver avaliações"
-                android:textColorHighlight="#01061F"
-                android:textColorHint="#0026FF"
-                android:textColorLink="#0011FF"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-            <TextView
-                android:id="@+id/txtTitulo2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_marginEnd="159dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="Java como Programar"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro2"
-                app:layout_constraintTop_toBottomOf="@+id/btnAvaliacoes1" />
-
-            <TextView
-                android:id="@+id/txtAutor2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Paul J. Deitel"
-                android:textColor="@android:color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.004"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro2"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitulo2" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="⭐ 105 avaliações"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.316"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtAutor2" />
-
-            <TextView
-                android:id="@+id/btnAvaliacoes2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="1dp"
-                android:layout_marginTop="52dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:text="Ver avaliações"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/imgLivro2"
-                app:layout_constraintTop_toBottomOf="@+id/txtAutor2" />
-
-            <Button
-                android:id="@+id/btnConfirmar"
-                android:layout_width="277dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="57dp"
-                android:layout_marginTop="27dp"
-                android:layout_marginEnd="81dp"
-                android:text="CONFIRMAR"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgLivro2" />
-
+                <TextView
+                    android:id="@+id/btnAvaliacoes1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver avaliações"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkLivro1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/txtTitulo1"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitulo1" />
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+        <!-- Livro 2 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="8dp">
+
+            <ImageView
+                android:id="@+id/imgLivro2"
+                android:layout_width="90dp"
+                android:layout_height="130dp"
+                android:src="@drawable/livro2"
+                android:contentDescription="Livro 2" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="8dp">
+
+                <TextView
+                    android:id="@+id/txtTitulo2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Java como Programar"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/txtAutor2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Paul J. Deitel"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐ 105 avaliações"
+                    android:textSize="14sp"
+                    android:layout_marginTop="4dp" />
+
+                <TextView
+                    android:id="@+id/btnAvaliacoes2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ver avaliações"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:layout_marginTop="4dp" />
+            </LinearLayout>
 
             <CheckBox
                 android:id="@+id/checkLivro2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="532dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.955"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
 
+        <!-- Botão confirmar -->
+        <Button
+            android:id="@+id/btnConfirmar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CONFIRMAR"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="16dp" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
-
+    </LinearLayout>
+</ScrollView>

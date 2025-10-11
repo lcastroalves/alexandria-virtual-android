@@ -10,6 +10,6 @@ class TelaEventosFuturUsu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.tela_eventos_futur_usu)
+        setContentView(R.layout.tela_eventos_futuros_usu)
     }
 }
