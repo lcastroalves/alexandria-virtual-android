@@ -17,7 +17,7 @@
         android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/seta_azul" />
 
     <TextView
         android:id="@+id/InfoPes"
@@ -78,7 +78,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:hint="Nome completo"
@@ -95,9 +95,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nomeUsuario"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:inputType="textPersonName"
             android:minHeight="40dp"
             android:outlineAmbientShadowColor="#FFF7F7"
@@ -108,7 +107,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="Nome de usuário"
@@ -125,9 +124,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/nomeCompleto"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:inputType="textPersonName"
             android:minHeight="40dp"
             android:outlineAmbientShadowColor="#FFF7F7"
@@ -138,7 +136,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="E-mail"
@@ -155,9 +153,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:inputType="textEmailAddress"
             android:minHeight="40dp"
             android:outlineAmbientShadowColor="#FFF7F7"
@@ -168,7 +165,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout4"
-        android:layout_width="match_parent"
+        android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:hint="Senha"
@@ -185,9 +182,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/senha"
-            android:layout_width="280dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="70dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:inputType="textPassword"
             android:minHeight="40dp"
             android:outlineAmbientShadowColor="#FFF7F7"
@@ -197,15 +193,34 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/botaoRedefinirSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Redefinir senha"
+        android:padding="5dp"
+        android:textSize="15dp"
         android:backgroundTint="#2B76D7"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="30dp"
-        app:cornerRadius="10dp"
+        android:layout_marginEnd="60dp"
+        app:cornerRadius="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+    </Button>
+
+    <Button
+        android:id="@+id/botaoSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2B76D7"
+        android:text="Salvar Alterações"
+        app:cornerRadius="5dp"
+        android:textSize="20dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoRedefinirSenha">
 
     </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>
