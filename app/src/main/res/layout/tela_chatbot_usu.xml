@@ -27,7 +27,7 @@
             android:background="@android:color/transparent"
             app:layout_constraintStart_toStartOf="@id/linear_layout"
             app:layout_constraintTop_toTopOf="@id/linear_layout"
-            app:srcCompat="@drawable/icon" />
+            app:srcCompat="@drawable/seta_azul" />
 
         <ImageView
             android:id="@+id/imageView"
