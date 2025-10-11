@@ -7,4 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".TelaRedefinirSenha">
 
+    <ImageButton
+        android:contentDescription="@string/descricaoBotaoVoltar"
+        android:id="@+id/botaoVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/seta_azul" />
+
+    <ImageView
+        android:id="@+id/logoAlexandria"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/contDescLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoVoltar"
+        app:srcCompat="@drawable/logoalexandriavirtual" />
+
+    <TextView
+        android:id="@+id/tituloAlexandria"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:contentDescription="@string/contDescTitulo"
+        android:fontFamily="@font/trocchi"
+        android:text="@string/titulo"
+        android:textColor="#247AE8"
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoAlexandria" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
