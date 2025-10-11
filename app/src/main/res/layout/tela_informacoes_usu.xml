@@ -197,6 +197,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
+        android:id="@+id/botaoRedefinirSenha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Redefinir senha"
@@ -206,6 +207,22 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
+
+    </Button>
+
+    <Button
+        android:id="@+id/botaoSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#2B76D7"
+        android:text="Salvar Alterações"
+        app:cornerRadius="5dp"
+        android:textSize="20dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoRedefinirSenha">
 
     </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>

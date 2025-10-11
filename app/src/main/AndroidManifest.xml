@@ -89,7 +89,7 @@
             android:name=".TelaReservaCabUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaSplash"
+            android:name=".TelaChatbotUsu"
             android:exported="false" />
         <activity
             android:name=".TelaSolicitaPendUsu"
