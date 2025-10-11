@@ -74,7 +74,7 @@
             android:name=".TelaRedefinirSenha"
             android:exported="false" />
         <activity
-            android:name=".TelaInformacoesUsu"
+            android:name=".TelaChatbotUsu"
             android:exported="false" />
         <activity
             android:name=".TelaConfirmReservaUsu"
@@ -89,7 +89,7 @@
             android:name=".TelaReservaCabUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaChatbotUsu"
+            android:name=".TelaInformacoesUsu"
             android:exported="false" />
         <activity
             android:name=".TelaSolicitaPendUsu"
