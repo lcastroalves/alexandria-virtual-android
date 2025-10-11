@@ -19,6 +19,7 @@ class AMain : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.a_main)
         replaceFragment(TelaInicioUsu())
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
