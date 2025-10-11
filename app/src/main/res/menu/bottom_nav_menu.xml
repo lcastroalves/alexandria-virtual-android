@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:title="Inicio"
+        android:icon="@drawable/icone_home"
+        android:id="@+id/inicio"/>
+    <item
+        android:title="Emprestimo"
+        android:icon="@drawable/icone_emprestimo"
+        android:id="@+id/emprestimo"/>
+    <item
+        android:title="Chatbot"
+        android:icon="@drawable/icone_chatbot"
+        android:id="@+id/chatbot"/>
+    <item
+        android:title="Reserva"
+        android:icon="@drawable/icone_reserva"
+        android:id="@+id/reserva"/>
+    <item
+        android:title="Perfil"
+        android:icon="@drawable/icone_perfil"
+        android:id="@+id/perfil"/>
+</menu>
