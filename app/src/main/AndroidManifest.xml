@@ -149,7 +149,7 @@
             android:name=".TelaLogin"
             android:exported="true" />
         <activity
-            android:name=".AMain"
+            android:name=".TelaSplash"
             android:exported="true"
             >
             <intent-filter>
