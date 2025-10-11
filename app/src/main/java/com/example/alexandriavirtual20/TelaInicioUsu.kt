@@ -10,10 +10,5 @@ class TelaInicioUsu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_inicio_usu)
-
-//        // ESSE CODIGO SERVE PARA A INFORMACOES DO LIVRO! -> Cuidado, estava ocasionando confusao na troca de telas
-//        val intent = Intent(this, TelaInfoLivroUsu::class.java)
-//        intent.putExtra("anterior", "TelaInicioUsu")
-//        startActivity(intent)
     }
 }

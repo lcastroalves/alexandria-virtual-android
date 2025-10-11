@@ -92,7 +92,7 @@
             android:name=".TelaReservaCabUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaChatbotUsu"
+            android:name=".TelaSplash"
             android:exported="false" />
         <activity
             android:name=".TelaSolicitaPendUsu"
@@ -146,7 +146,7 @@
             android:name=".TelaInicioUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaCadastro"
+            android:name=".TelaChatbotUsu"
             android:exported="false" />
         <activity
             android:name=".TelaEmail"
@@ -155,7 +155,7 @@
             android:name=".TelaLogin"
             android:exported="false" />
         <activity
-            android:name=".TelaSplash"
+            android:name=".TelaCadastro"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

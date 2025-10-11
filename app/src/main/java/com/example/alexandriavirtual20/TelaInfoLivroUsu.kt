@@ -17,15 +17,9 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
 
         anterior = intent.getStringExtra("anterior")
         botaoVoltar.setOnClickListener {
-            when (anterior) {
-                "TelaInicioUsu" -> startActivity(Intent(this, TelaInicioUsu::class.java))
-//                "TelaEmprestLivrosUsu" -> startActivity(Intent(this, TelaEmprestLivrosUsu::class.java))
-//                "TelaMeusLivrosUsu" -> startActivity(Intent(this, TelaMeusLivrosUsu::class.java))
-//                "TelaHistoricoUsu" -> startActivity(Intent(this, TelaHistoricoUsu::class.java))
-//                "TelaSolicitaPendUsu" -> startActivity(Intent(this, TelaSolicitaPendUsu::class.java))
-//                "TelaLivrosFavUsu" -> startActivity(Intent(this, TelaSolicitaPendUsu::class.java))
-            }
-            finish()
+
+            // BOTAO VOLTAR
+            onBackPressed()
         }
     }
 }
