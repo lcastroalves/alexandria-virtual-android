@@ -7,4 +7,94 @@
     android:layout_height="match_parent"
     tools:context=".TelaChatbotUsu">
 
+    <LinearLayout
+        android:id="@+id/linear_layout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="50dp"
+        android:orientation="horizontal"
+        android:background="@drawable/conteiner_chatbot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/botaoVoltar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:translationY="12dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="@id/linear_layout"
+            app:layout_constraintTop_toTopOf="@id/linear_layout"
+            app:srcCompat="@drawable/icon" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:translationY="6dp"
+            android:background="@drawable/icone_redondo"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/hipatia"
+            app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar"
+            app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
+            app:layout_constraintTop_toTopOf="@+id/botaoVoltar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/trocchi"
+            android:text="Hipatia"
+            android:textSize="25sp"
+            android:translationY="14dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView">
+
+        </TextView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/edtMensagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_layout" />
+
+    <EditText
+        android:id="@+id/edtMensagem"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/conteiner_mensagem"
+        android:hint="Mensagem"
+        android:inputType="text"
+        android:padding="10dp"
+        android:textColorHint="#797979"
+        android:textSize="20sp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginStart="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/botaoEnviar"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="fitXY"
+        android:background="@android:color/transparent"
+        android:src="@drawable/aviaopapel"
+        app:layout_constraintBottom_toBottomOf="@+id/edtMensagem"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/edtMensagem"
+        app:layout_constraintTop_toTopOf="@+id/edtMensagem" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
