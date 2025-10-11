@@ -5,11 +5,15 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logoalexandriavirtual"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlexandriaVirtual20">
+
+        <activity
+            android:name=".AMain"
+            android:exported="false" />
         <activity
             android:name=".AdmTelaHistoricoEmpres"
             android:exported="false" />
@@ -74,10 +78,7 @@
             android:name=".TelaRedefinirSenha"
             android:exported="false" />
         <activity
-            android:name=".TelaInformacoesUsu"
-            android:exported="false" />
-        <activity
-            android:name=".TelaPerfilUsu"
+            android:name=".TelaChatbotUsu"
             android:exported="false" />
         <activity
             android:name=".TelaConfirmReservaUsu"
@@ -92,7 +93,7 @@
             android:name=".TelaReservaCabUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaChatbotUsu"
+            android:name=".TelaInformacoesUsu"
             android:exported="false" />
         <activity
             android:name=".TelaSolicitaPendUsu"
@@ -143,9 +144,6 @@
             android:name=".TelaNotificacoesUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaInicioUsu"
-            android:exported="false" />
-        <activity
             android:name=".TelaCadastro"
             android:exported="false" />
         <activity
@@ -156,7 +154,8 @@
             android:exported="true" />
         <activity
             android:name=".TelaSplash"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

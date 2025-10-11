@@ -15,7 +15,7 @@ class TelaCadastro : AppCompatActivity() {
         val botaoTenhoCadastro = findViewById<Button>(R.id.botaoTenhoCadastro)
 
         botaoCadastrar.setOnClickListener {
-            val intent = Intent(this, TelaInicioUsu::class.java)
+            val intent = Intent(this, AMain::class.java)
             startActivity(intent)
             finish()
         }

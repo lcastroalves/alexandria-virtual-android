@@ -1,9 +1,20 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AlexandriaVirtual20" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-    </style>
+
+    <!-- Base application theme -->
+    <style name="Base.Theme.AlexandriaVirtual20" parent="Theme.Material3.DayNight.NoActionBar" />
 
     <style name="Theme.AlexandriaVirtual20" parent="Base.Theme.AlexandriaVirtual20" />
+
+    <!-- Estilo para a barra de navegacao -->
+    <style name="BottomNavActiveIndicatorStyle" parent="">
+        <item name="shapeAppearance">@style/PillShape</item>
+        <item name="android:color">#247AE8</item>
+        <item name="android:width">64dp</item>
+        <item name="android:height">40dp</item>
+    </style>
+
+    <style name="PillShape" parent="ShapeAppearance.Material3.Corner.Small">
+        <item name="cornerSize">50%</item> <!-- Pílula totalmente arredondada -->
+    </style>
+
 </resources>
