@@ -1,10 +1,17 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,10 +23,19 @@ private const val ARG_PARAM2 = "param2"
  * Use the [TelaPerfilUsu.newInstance] factory method to
  * create an instance of this fragment.
  */
+
+
 class TelaPerfilUsu : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var abrirGaleria: ActivityResultLauncher<String>
+    private lateinit var fotoPerfil : ImageView
+    private lateinit var btnMudarImg : ImageButton
+    private lateinit var btnInfoPessoais: LinearLayout
+    private lateinit var btnHistoricoLeit: LinearLayout
+    private lateinit var btnFav: LinearLayout
+    private lateinit var btnSair: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +49,48 @@ class TelaPerfilUsu : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.tela_perfil_usu, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnMudarImg = view.findViewById(R.id.btnMudarImg)
+        fotoPerfil = view.findViewById(R.id.fotoPerfil)
+        btnInfoPessoais = view.findViewById(R.id.botaoInfoPes)
+        btnHistoricoLeit = view.findViewById(R.id.botaoHistorLeitur)
+        btnFav = view.findViewById(R.id.botaoFav)
+        btnSair = view.findViewById(R.id.botaoSair)
+
+        abrirGaleria = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ){uri ->
+            if(uri != null){
+                // imagem capturada
+                fotoPerfil.setImageURI(uri)
+            }
+        }
+
+        btnMudarImg.setOnClickListener {
+            abrirGaleria.launch("image/*")
+        }
+
+        btnInfoPessoais.setOnClickListener {
+            val intent = Intent(requireContext(), TelaInformacoesUsu::class.java)
+            startActivity(intent)
+        }
+        btnHistoricoLeit.setOnClickListener {
+            val intent = Intent(requireContext(), TelaHistoricoUsu::class.java)
+            startActivity(intent)
+        }
+        btnFav.setOnClickListener {
+            val intent = Intent(requireContext(), TelaLivrosFavUsu::class.java)
+            startActivity(intent)
+        }
+        btnSair.setOnClickListener {
+            val intent = Intent(requireContext(), TelaLogin::class.java)
+            startActivity(intent)
+        }
     }
 
     companion object {
