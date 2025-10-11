@@ -154,7 +154,7 @@
                 android:id="@+id/textView6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Amei esse livro, fantástico! :) eu vou indicar para todos meus amigos programadores." /> />/>
+                android:text="Amei esse livro, fantástico! :) eu vou indicar para todos meus amigos programadores." />
         </LinearLayout>
 
     </LinearLayout>

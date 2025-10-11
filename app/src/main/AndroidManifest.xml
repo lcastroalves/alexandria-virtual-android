@@ -77,9 +77,6 @@
             android:name=".TelaInformacoesUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaPerfilUsu"
-            android:exported="false" />
-        <activity
             android:name=".TelaConfirmReservaUsu"
             android:exported="false" />
         <activity
@@ -143,9 +140,6 @@
             android:name=".TelaNotificacoesUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaInicioUsu"
-            android:exported="false" />
-        <activity
             android:name=".TelaCadastro"
             android:exported="false" />
         <activity
@@ -156,7 +150,8 @@
             android:exported="true" />
         <activity
             android:name=".TelaSplash"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

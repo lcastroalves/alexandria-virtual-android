@@ -45,4 +45,6 @@
         Descrição: o serviço aborda temáticas necessárias à trajetória acadêmica do aluno quanto a pesquisa científica e normalização de trabalhos acadêmicos.
         Capacitações ofertadas:Pesquisa na Biblioteca Digital (bases de dados); Normas bibliográficas (ABNT, APA e Vancouver); Integridade Acadêmica; Gerenciador de referências Mendeley; Currículo Lattes; Como publicar em revistas científicas?; Base Primal - Atlas de Anatomia 3D, Dynamed e Euromonitor.
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
