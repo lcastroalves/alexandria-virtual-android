@@ -10,6 +10,6 @@ class AdmPerfil : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.adm_perfil)
+        setContentView(R.layout.adm_tela_perfil)
     }
 }

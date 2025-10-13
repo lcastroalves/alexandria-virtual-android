@@ -35,7 +35,7 @@ class TelaLogin : AppCompatActivity() {
                 Toast.makeText(this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show()
 
 
-                val intent = Intent(this, TelaInicioUsu::class.java)
+                val intent = Intent(this, AMain::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Credenciais incorretas, tente novamente!", Toast.LENGTH_SHORT).show()
