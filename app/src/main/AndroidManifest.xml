@@ -12,6 +12,9 @@
         android:theme="@style/Theme.AlexandriaVirtual20">
 
         <activity
+            android:name=".AdmAMain"
+            android:exported="false" />
+        <activity
             android:name=".AMain"
             android:exported="false" />
         <activity
