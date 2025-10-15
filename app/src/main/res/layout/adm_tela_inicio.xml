@@ -1,10 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdmTelaInicio">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".AdmTelaInicio">
+
+        <LinearLayout
+            android:id="@+id/linear_layout"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/conteiner_chatbot"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="30dp"
+                android:translationY="6dp"
+                android:clipToOutline="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logoalexandriavirtual"
+                app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar"
+                app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
+                app:layout_constraintTop_toTopOf="@+id/botaoVoltar" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
+                android:fontFamily="@font/roboto_black"
+                android:maxLines="2"
+                android:text="ALEXANDRIA VIRTUAL"
+                android:textAlignment="center"
+                android:textColor="#247AE8"
+                android:textSize="14sp"
+                android:translationY="14dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="@+id/imageView">
+
+            </TextView>
+
+        </LinearLayout>
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout">
+
+        </SearchView>
+
+        <Button
+            android:id="@+id/btnProd"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#2B76D7"
+            android:maxLines="3"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"
+            android:text="Lista de Produtos da Biblioteca"
+            android:textSize="25sp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnUsuCad"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2B76D7"
+            android:maxLines="3"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"
+            android:text="Usuários Cadastrados"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnProd">
+
+        </Button>
+
+        <Button
+            android:id="@+id/btnEventos"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#2B76D7"
+            android:maxLines="3"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="15dp"
+            android:text="Lista de Eventos"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnUsuCad">
+
+        </Button>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
