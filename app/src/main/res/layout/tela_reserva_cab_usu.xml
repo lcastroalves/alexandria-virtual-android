@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
@@ -21,10 +22,9 @@
             android:layout_width="141dp"
             android:layout_height="111dp"
             android:layout_marginStart="134dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="75dp"
             android:layout_marginEnd="134dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/logoalexandriavirtual" />
@@ -49,7 +49,7 @@
             android:layout_width="220dp"
             android:layout_height="43dp"
             android:layout_marginStart="200dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="200dp"
             android:backgroundTint="#2279E6"
             android:text="CONFIRMAR"
@@ -62,7 +62,7 @@
             android:id="@+id/linearLayout2"
             android:layout_width="413dp"
             android:layout_height="275dp"
-            android:layout_marginTop="92dp"
+            android:layout_marginTop="75dp"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="16dp"
@@ -80,49 +80,41 @@
                 app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="373dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="375dp"
+                    android:layout_height="75dp"
                     android:padding="16dp">
 
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/calendario"
                         android:layout_width="44dp"
                         android:layout_height="47dp"
                         android:layout_marginStart="16dp"
-                        android:layout_marginTop="12dp"
-                        app:layout_constraintEnd_toStartOf="@+id/textView3"
-                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+                        app:srcCompat="@drawable/calendario" />
 
                     <TextView
-                        android:layout_width="117dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="44dp"
-                        android:layout_marginTop="408dp"
-                        android:layout_marginEnd="195dp"
-                        android:text="Data:"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-                    <TextView
-                        android:id="@+id/textView3"
+                        android:id="@+id/Data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="238dp"
-                        android:layout_weight="1"
-                        android:text="TextView"
+                        android:layout_marginStart="20dp"
+                        android:text="Data:"
+                        app:layout_constraintStart_toEndOf="@+id/calendario"
+                        app:layout_constraintTop_toTopOf="@+id/calendario" />
+
+                    <TextView
+                        android:id="@+id/TextoData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="09/10/2025"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/imageView2"
-                        app:layout_constraintTop_toBottomOf="parent"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintStart_toEndOf="@+id/calendario"
+                        app:layout_constraintTop_toBottomOf="@+id/Data" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
@@ -136,47 +128,52 @@
                 app:cardElevation="4dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="373dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="375dp"
+                    android:layout_height="75dp"
                     android:padding="16dp">
 
                     <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:layout_marginBottom="1dp"
-                        android:layout_weight="1"
+                        android:id="@+id/Relogio"
+                        android:layout_width="42dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="16dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.6"
-                        app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+                        app:srcCompat="@drawable/relogio" />
+
                     <TextView
-                        android:id="@+id/textoHora"
+                        android:id="@+id/Hora"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:text="Hora:"
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@id/imageView4"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintStart_toEndOf="@+id/Relogio"
+                        app:layout_constraintTop_toTopOf="@+id/Relogio" />
 
+                    <TextView
+                        android:id="@+id/TextoHora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="9:30 - 11:30"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/Relogio"
+                        app:layout_constraintTop_toBottomOf="@+id/Hora" />
 
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnTrocarHorario"
                         style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="163dp"
-                        android:layout_height="37dp"
+                        android:layout_width="130dp"
+                        android:layout_height="43dp"
                         android:text="Trocar horário"
-                        android:textSize="12sp"
-                        app:cornerRadius="8dp"
+                        android:textColor="#2279E6"
+                        android:textSize="10sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="1.0" />
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/TextoHora" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
