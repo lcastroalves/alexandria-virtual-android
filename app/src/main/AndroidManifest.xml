@@ -93,9 +93,6 @@
             android:name=".TelaHoraCabineUsu"
             android:exported="false" />
         <activity
-            android:name=".TelaReservaCabUsu"
-            android:exported="false" />
-        <activity
             android:name=".TelaInformacoesUsu"
             android:exported="false" />
         <activity
