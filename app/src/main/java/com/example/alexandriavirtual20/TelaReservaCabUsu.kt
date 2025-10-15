@@ -6,6 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +27,10 @@ class TelaReservaCabUsu : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private lateinit var textData: TextView
+    private lateinit var textHora: TextView
+    private lateinit var btnTrocarHorario: Button
+    private lateinit var btnConfirmar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +44,34 @@ class TelaReservaCabUsu : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.tela_reserva_cab_usu, container, false)
+        val view = inflater.inflate(R.layout.tela_reserva_cab_usu, container, false)
+
+        textData = view.findViewById(R.id.TextoData)
+        textHora = view.findViewById(R.id.TextoHora)
+        btnTrocarHorario = view.findViewById(R.id.btnTrocarHorario)
+        btnConfirmar = view.findViewById(R.id.Confirmar)
+
+        val dataAtual = LocalDate.now()
+        val horaAtual = LocalTime.now()
+
+        val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-BR"))
+        val formatoHora = DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-BR"))
+
+        textData.text = dataAtual.format(formatoData)
+        textHora.text = (horaAtual.format(formatoHora) + " - " + horaAtual.plusHours(2))
+
+        // Ações dos botões
+        btnTrocarHorario.setOnClickListener {
+            val intent = Intent(requireContext(), TelaHoraCabineUsu::class.java)
+            startActivity(intent)
+        }
+
+        btnConfirmar.setOnClickListener {
+            val intent = Intent(requireContext(), TelaCabDisponUsu::class.java)
+            startActivity(intent)
+        }
+
+        return view
     }
 
     companion object {
