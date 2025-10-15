@@ -7,4 +7,218 @@
     android:layout_height="match_parent"
     tools:context=".AdmTelaCabReserv">
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="141dp"
+            android:layout_height="111dp"
+            android:layout_marginStart="134dp"
+            android:layout_marginTop="75dp"
+            android:layout_marginEnd="134dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logoalexandriavirtual" />
+
+
+        <TextView
+            android:id="@+id/CabinesReservadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="96dp"
+            android:text="Cabines Reservadas"
+            android:textColor="#2279E6"
+            android:textSize="30sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnDiaCompleto"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="159dp"
+            android:layout_height="49dp"
+            android:text="Ver do dia completo"
+            android:textColor="#2279E6"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+
+        <Button
+            android:id="@+id/Confirmar"
+            android:layout_width="220dp"
+            android:layout_height="43dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="200dp"
+            android:backgroundTint="#2279E6"
+            android:text="CONFIRMAR"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnDiaCompleto" />
+
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="413dp"
+            android:layout_height="275dp"
+            android:layout_marginTop="75dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/CabinesReservadas">
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardData"
+                android:layout_width="371dp"
+                android:layout_height="77dp"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="375dp"
+                    android:layout_height="75dp"
+                    android:padding="16dp">
+
+
+
+
+                    <ImageView
+                        android:id="@+id/calendario"
+                        android:layout_width="44dp"
+                        android:layout_height="47dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/calendario" />
+
+
+                    <TextView
+                        android:id="@+id/Data"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Data:"
+                        app:layout_constraintStart_toEndOf="@+id/calendario"
+                        app:layout_constraintTop_toTopOf="@+id/calendario" />
+
+
+                    <TextView
+                        android:id="@+id/TextoData"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="09/10/2025"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/calendario"
+                        app:layout_constraintTop_toBottomOf="@+id/Data" />
+
+
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardHora"
+                android:layout_width="371dp"
+                android:layout_height="77dp"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="4dp">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="375dp"
+                    android:layout_height="75dp"
+                    android:padding="16dp">
+
+
+                    <ImageView
+                        android:id="@+id/Relogio"
+                        android:layout_width="42dp"
+                        android:layout_height="41dp"
+                        android:layout_marginStart="16dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/relogio" />
+
+
+                    <TextView
+                        android:id="@+id/Hora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="Hora:"
+                        app:layout_constraintStart_toEndOf="@+id/Relogio"
+                        app:layout_constraintTop_toTopOf="@+id/Relogio" />
+
+
+                    <TextView
+                        android:id="@+id/TextoHora"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:text="9:30 - 11:30"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/Relogio"
+                        app:layout_constraintTop_toBottomOf="@+id/Hora" />
+
+
+
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnTrocarHorario"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="130dp"
+                        android:layout_height="43dp"
+                        android:text="Trocar horário"
+                        android:textColor="#2279E6"
+                        android:textSize="10sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toEndOf="@+id/TextoHora" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
