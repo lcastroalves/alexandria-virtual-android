@@ -39,7 +39,7 @@ class AMain : AppCompatActivity() {
                     true
                 }
                 R.id.reserva -> {
-                    //replaceFragment(TelaReservaUsu())
+                    replaceFragment(TelaReservaCabUsu())
                     true
                 }
                 R.id.perfil -> {

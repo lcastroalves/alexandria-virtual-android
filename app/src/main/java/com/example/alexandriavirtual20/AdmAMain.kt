@@ -20,7 +20,7 @@ class AdmAMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.adm_a_main)
-        replaceFragment(AdmTelaInicio())
+        //replaceFragment(AdmTelaInicio())
 
     }
 
