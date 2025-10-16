@@ -35,7 +35,7 @@ class AMain : AppCompatActivity() {
                     true
                 }
                 R.id.chatbot -> {
-                    //replaceFragment(TelaChatbotUsu())
+                    replaceFragment(TelaChatbotUsu())
                     true
                 }
                 R.id.reserva -> {
