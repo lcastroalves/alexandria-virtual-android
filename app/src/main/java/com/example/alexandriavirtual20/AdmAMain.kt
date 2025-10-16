@@ -1,7 +1,6 @@
 package com.example.alexandriavirtual20
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -43,7 +42,7 @@ class AdmAMain : AppCompatActivity() {
                     true
                 }
                 R.id.perfil -> {
-                    replaceFragment(AdmPerfil())
+                    replaceFragment(AdmTelaPerfil())
                     true
                 }
                 else -> false

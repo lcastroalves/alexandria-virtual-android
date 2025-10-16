@@ -30,7 +30,7 @@
             android:name=".AdmInfoPessoais"
             android:exported="false" />
         <activity
-            android:name=".AdmPerfil"
+            android:name=".AdmTelaPerfil"
             android:exported="false" />
         <activity
             android:name=".AdmTelaCabReservHorEsp"

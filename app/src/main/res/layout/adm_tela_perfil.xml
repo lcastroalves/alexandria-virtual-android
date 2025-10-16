@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaPerfilUsu">
+    tools:context=".AdmTelaPerfil">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".TelaPerfilUsu">
+        tools:context=".AdmTelaPerfil">
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="30dp"
