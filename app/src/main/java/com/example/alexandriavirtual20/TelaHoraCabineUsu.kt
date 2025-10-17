@@ -4,16 +4,13 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.NumberPicker
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.color.MaterialColors
 
-class TelaHoraCabineUsu : Fragment() {
+class TelaHoraCabineUsu : AppCompatActivity() {
     private lateinit var btnConfirmar: Button
     private lateinit var btnVoltar: Button
     private lateinit var npHora: NumberPicker
@@ -23,19 +20,13 @@ class TelaHoraCabineUsu : Fragment() {
         (0..55 step 5).map { String.format("%02d", it) }.toTypedArray()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.tela_reserva_cab_usu, container, false)
-    }
+    override fun onCreate(savedInstanceState: Bundle?){
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.tela_hora_cabine_usu)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        npHora = view.findViewById(R.id.npHora)
-        npMinuto = view.findViewById(R.id.npMinuto)
-        btnConfirmar = view.findViewById(R.id.btnConfirmar)
+        npHora = findViewById(R.id.npHora)
+        npMinuto = findViewById(R.id.npMinuto)
+        btnConfirmar = findViewById(R.id.Confirmar)
 
         setupPickers()
         setupButton()
@@ -62,11 +53,11 @@ class TelaHoraCabineUsu : Fragment() {
 
     private fun setupButton() {
         btnConfirmar.setOnClickListener {
-            val intent = Intent(requireContext(), TelaCabDisponUsu::class.java)
+            val intent = Intent(this, TelaCabDisponUsu::class.java)
             startActivity(intent)
         }
         btnVoltar.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 
