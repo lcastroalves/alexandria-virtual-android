@@ -1,10 +1,12 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,6 +22,10 @@ class AdmTelaInicio : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private lateinit var btnProd : Button
+    private lateinit var btnUsuCad : Button
+    private lateinit var btnEvent : Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +43,24 @@ class AdmTelaInicio : Fragment() {
         return inflater.inflate(R.layout.adm_tela_inicio, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnProd.setOnClickListener {
+            val intent = Intent(requireContext(), AdmTelaProdutos::class.java)
+            startActivity(intent)
+        }
+
+        btnUsuCad.setOnClickListener {
+            val intent = Intent(requireContext(), AdmTelaUsuCadast::class.java)
+            startActivity(intent)
+        }
+
+        btnEvent.setOnClickListener {
+            val intent = Intent(requireContext(), AdmTelaEventos::class.java)
+            startActivity(intent)
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

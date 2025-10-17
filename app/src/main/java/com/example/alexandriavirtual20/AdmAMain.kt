@@ -48,7 +48,5 @@ class AdmAMain : AppCompatActivity() {
                 else -> false
             }
         }
-
     }
-
 }
