@@ -54,7 +54,7 @@
             android:name=".AdmTelaUsuCadast"
             android:exported="false" />
         <activity
-            android:name=".TelaSplash"
+            android:name=".AdmTelaCadasProd"
             android:exported="false" />
         <activity
             android:name=".AdmTelaEditarProduto"
@@ -138,7 +138,7 @@
             android:name=".TelaLogin"
             android:exported="true" />
         <activity
-            android:name=".AdmTelaCadasProd"
+            android:name=".TelaSplash"
             android:exported="true"
             >
             <intent-filter>
