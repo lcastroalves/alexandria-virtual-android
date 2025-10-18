@@ -9,7 +9,7 @@
     android:background="#FFFFFF">
 
     <ImageButton
-        android:id="@+id/botaoVoltar2"
+        android:id="@+id/botaoVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"

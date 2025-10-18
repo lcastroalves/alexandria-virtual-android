@@ -9,7 +9,7 @@
     android:background="#FFFFFF">
 
     <ImageButton
-        android:id="@+id/botaoVoltar2"
+        android:id="@+id/botaoVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -43,5 +43,103 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoAlexandria2" />
+
+
+    <!-- Botão voltar -->
+
+    <!-- Este texto será alterado conforme data -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
+        android:layout_width="426dp"
+        android:layout_height="133dp"
+        tools:layout_editor_absoluteX="-8dp"
+        tools:layout_editor_absoluteY="239dp" >
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="52dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Nome"
+            android:textColor="#247AE8"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintStart_toEndOf="@+id/logoAlexandria3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView24"
+            android:layout_width="98dp"
+            android:layout_height="26dp"
+            android:layout_marginTop="88dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Descrição"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintStart_toEndOf="@+id/logoAlexandria3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView21"
+            android:layout_width="21dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat"
+            android:text="-"
+            android:textColor="#247AE8"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.268"
+            app:layout_constraintStart_toEndOf="@+id/logoAlexandria3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView22"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Tipo"
+            android:textColor="#247AE8"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.37"
+            app:layout_constraintStart_toEndOf="@+id/logoAlexandria3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView23"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/montserrat"
+            android:text="Data"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.65"
+            app:layout_constraintStart_toEndOf="@+id/logoAlexandria3"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/logoAlexandria3"
+            android:layout_width="95dp"
+            android:layout_height="121dp"
+            android:contentDescription="@string/contDescLogo"
+            app:srcCompat="@drawable/logoalexandriavirtual"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="6dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

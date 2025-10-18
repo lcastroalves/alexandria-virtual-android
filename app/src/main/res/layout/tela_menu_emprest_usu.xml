@@ -33,7 +33,7 @@
         android:layout_marginEnd="43dp"
         android:layout_marginBottom="48dp"
         android:text="Menu de Empréstimo"
-        android:textColor="@android:color/holo_blue_dark"
+        android:textColor="#247AE8"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
