@@ -17,7 +17,7 @@ class TelaEmail : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.tela_email)
 
-        btnVoltar = findViewById(R.id.botaoVoltar2)
+        btnVoltar = findViewById(R.id.botaoVoltar)
         edtEmail = findViewById(R.id.editarEmail)
         btnEnviar = findViewById(R.id.botaoEnviar)
 

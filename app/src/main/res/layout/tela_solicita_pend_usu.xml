@@ -8,20 +8,15 @@
     tools:context=".TelaSolicitaPendUsu">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
-
-        <ImageView
-            android:id="@+id/imgLivro2"
-            android:layout_width="90dp"
-            android:layout_height="130dp"
-            android:contentDescription="Livro 2"
-            android:src="@drawable/livro2" />
+        tools:layout_editor_absoluteY="185dp">
 
         <LinearLayout
             android:layout_width="266dp"
@@ -30,95 +25,8 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtTitulo2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Java como Programar"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="⭐ 105 avaliações"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtAutor2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Paul J. Deitel"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
         </LinearLayout>
 
-        <CheckBox
-            android:id="@+id/checkLivro2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="8dp"
-        android:layout_marginTop="90dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewLivros">
-
-        <ImageView
-            android:id="@+id/imgLivro1"
-            android:layout_width="90dp"
-            android:layout_height="130dp"
-            android:contentDescription="Livro 1"
-            android:src="@drawable/livro1" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/txtTitulo1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
-                android:text="Ciência da Computação e Tecnologias Digitais"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="⭐ 130 avaliações"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/txtAutor1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ernane Rosa Martins"
-                android:textColor="@android:color/black"
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <CheckBox
-            android:id="@+id/checkLivro1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
     </LinearLayout>
 
     <SearchView
@@ -126,7 +34,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="46dp"
         android:layout_weight="1"
         android:iconifiedByDefault="false"
@@ -139,7 +47,7 @@
         android:id="@+id/solicitacoesPendentes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="68dp"
         android:layout_marginEnd="82dp"
         android:text="Solicitações pendentes"
@@ -160,4 +68,162 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="413dp"
+        android:layout_height="148dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
+
+        <ImageView
+            android:id="@+id/imgLivro2"
+            android:layout_width="90dp"
+            android:layout_height="139dp"
+            android:layout_marginStart="4dp"
+            android:contentDescription="Livro 2"
+            android:src="@drawable/livro2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.333" />
+
+        <TextView
+            android:id="@+id/txtTitulo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-140dp"
+            android:layout_marginTop="10dp"
+            android:text="Java como Programar"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-190dp"
+            android:layout_marginTop="25dp"
+            android:text="⭐ 105 avaliações"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro2"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitulo2" />
+
+        <TextView
+            android:id="@+id/txtAutor2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-200dp"
+            android:layout_marginTop="25dp"
+            android:text="Paul J. Deitel"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro2"
+            app:layout_constraintTop_toBottomOf="@+id/textView20" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="Negado!"
+            android:textColor="#F44336"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtTitulo2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/botaoEntrar2"
+            android:layout_width="88dp"
+            android:layout_height="56dp"
+            android:layout_marginTop="76dp"
+            android:layout_marginEnd="-200dp"
+            android:backgroundTint="#247AE8"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="OK"
+            android:textSize="25dp"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.512"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro2"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="413dp"
+        android:layout_height="148dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
+
+        <ImageView
+            android:id="@+id/imgLivro1"
+            android:layout_width="90dp"
+            android:layout_height="130dp"
+            android:contentDescription="Livro 1"
+            android:src="@drawable/livro1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtTitulo1"
+            android:layout_width="244dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="-70dp"
+            android:layout_marginTop="10dp"
+            android:text="Ciência da Computação e Tecnologias Digitais"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/txtAutor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-170dp"
+            android:layout_marginTop="20dp"
+            android:text="Ernane Rosa Martins"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro1"
+            app:layout_constraintTop_toBottomOf="@+id/textView25" />
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-200dp"
+            android:text="⭐ 130 avaliações"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imgLivro1"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitulo1" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txtTitulo1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/clock" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
