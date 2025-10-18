@@ -64,7 +64,7 @@
             android:exported="false" />
         <activity
             android:name=".TelaLivrosFavUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaRedefinirSenha"
             android:exported="false" />
