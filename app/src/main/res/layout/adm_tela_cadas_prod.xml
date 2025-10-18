@@ -2,9 +2,302 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdmTelaCadasProd">
 
+    <ImageButton
+        android:id="@+id/botaoVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/descricaoBotaoVoltar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/seta_azul" />
+
+    <TextView
+        android:id="@+id/label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/trocchi"
+        android:text="Cadastrar produto"
+        android:textColor="#247AE8"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/botaoVoltar"
+        app:layout_constraintTop_toTopOf="@id/botaoVoltar" />
+
+
+    <ScrollView
+        android:id="@+id/scrollConteudo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/label"
+        app:layout_constraintBottom_toTopOf="@id/btnCadastrar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            tools:context=".AdmTelaCadasProd">
+
+            <ImageButton
+                android:id="@+id/btnMudarImg"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="120dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/editing" />
+
+            <ImageView
+                android:id="@+id/capaLivro"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/livro1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnMudarImg" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout5"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Título"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/capaLivro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/titulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout6"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Subtítulo"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/subtitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout7"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Autor"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/autor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout8"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Categoria"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/categoria"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout9"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="55dp"
+                android:hint="Ano de publicação"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout8"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textInputLayout10">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/anoPub"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout10"
+                android:layout_width="116dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="54dp"
+                android:hint="Edição"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toTopOf="@id/textInputLayout9"
+                app:layout_constraintStart_toEndOf="@id/textInputLayout9"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edicao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="40dp"
+                    android:layout_marginStart="10dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout11"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Unidades"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout9"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/unidade"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout12"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:hint="Idioma"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout11"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/idioma"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:minHeight="40dp"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout13"
+                android:layout_width="300dp"
+                android:layout_height="600dp"
+                android:hint="Sinopse"
+                app:boxBackgroundMode="outline"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/textInputLayout12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/sinopse"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="top|start"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:scrollbars="vertical"
+                    android:overScrollMode="always"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnCadastrar"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:text="Cadastrar"
+        android:textSize="22sp"
+        android:backgroundTint="#2B76D7"
+        android:fontFamily="@font/montserrat_medium"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

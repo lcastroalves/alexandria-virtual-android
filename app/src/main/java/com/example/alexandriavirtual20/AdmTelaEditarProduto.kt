@@ -40,7 +40,7 @@ class AdmTelaEditarProduto : AppCompatActivity() {
         }
 
         btnMudarImg.setOnClickListener {
-            abrirGaleria.launch("capaLivro/*")
+            abrirGaleria.launch("image/*")
         }
 
         btnVoltar.setOnClickListener {

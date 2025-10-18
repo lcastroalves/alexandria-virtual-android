@@ -72,7 +72,7 @@ class TelaPerfilUsu : Fragment() {
         }
 
         btnMudarImg.setOnClickListener {
-            abrirGaleria.launch("fotoUsuário/*")
+            abrirGaleria.launch("image/*")
         }
 
         btnInfoPessoais.setOnClickListener {
