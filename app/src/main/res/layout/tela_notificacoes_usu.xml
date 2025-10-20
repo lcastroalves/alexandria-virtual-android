@@ -53,8 +53,10 @@
         android:id="@+id/constraintLayout2"
         android:layout_width="426dp"
         android:layout_height="133dp"
-        tools:layout_editor_absoluteX="-8dp"
-        tools:layout_editor_absoluteY="239dp" >
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <TextView
             android:id="@+id/textView19"
@@ -135,10 +137,23 @@
             android:id="@+id/logoAlexandria3"
             android:layout_width="95dp"
             android:layout_height="121dp"
+            android:layout_marginStart="20dp"
             android:contentDescription="@string/contDescLogo"
-            app:srcCompat="@drawable/logoalexandriavirtual"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="6dp" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logoalexandriavirtual" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp"
+            android:background="@color/white"
+            android:contentDescription="excluir notificação"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/x_1" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
