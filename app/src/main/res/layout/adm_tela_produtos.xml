@@ -34,7 +34,7 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnAdProd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -50,22 +50,32 @@
         android:id="@+id/searchView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="25dp"
         android:iconifiedByDefault="false"
         android:queryHint="Buscar produtos"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnAdProd" />
 
     <ImageButton
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:scaleType="fitCenter"
+        android:layout_marginEnd="10dp"
         android:background="@android:color/transparent"
         android:src="@drawable/trash_vector"
         app:layout_constraintBottom_toBottomOf="@+id/searchView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchView2"
         app:layout_constraintTop_toTopOf="@+id/searchView2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
