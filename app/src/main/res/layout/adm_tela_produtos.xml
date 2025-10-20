@@ -34,6 +34,7 @@
 
 
     <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -44,5 +45,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/InfoPes"
         app:layout_constraintTop_toBottomOf="@+id/InfoPes" />
+
+    <SearchView
+        android:id="@+id/searchView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Buscar produtos"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button" />
+
+    <ImageButton
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="fitCenter"
+        android:background="@android:color/transparent"
+        android:src="@drawable/trash_vector"
+        app:layout_constraintBottom_toBottomOf="@+id/searchView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/searchView2"
+        app:layout_constraintTop_toTopOf="@+id/searchView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
