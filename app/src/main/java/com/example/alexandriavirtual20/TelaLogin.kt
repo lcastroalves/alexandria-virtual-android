@@ -43,7 +43,7 @@ class TelaLogin : AppCompatActivity() {
         }
 
         txtEsqueceuSenha.setOnClickListener {
-            var intent = Intent(this, TelaRedefinirSenha::class.java )
+            var intent = Intent(this, TelaEmail::class.java )
             startActivity(intent)
         }
 
