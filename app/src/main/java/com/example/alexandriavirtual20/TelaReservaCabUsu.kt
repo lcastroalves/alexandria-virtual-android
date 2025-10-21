@@ -57,8 +57,11 @@ class TelaReservaCabUsu : Fragment() {
         val formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.forLanguageTag("pt-BR"))
         val formatoHora = DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-BR"))
 
+        val horaInicio = arredondarPara30(horaAtual)
+        val horaFim = horaInicio.plusHours(2)
+
         textData.text = dataAtual.format(formatoData)
-        textHora.text = (horaAtual.format(formatoHora) + " - " + horaAtual.plusHours(2))
+        textHora.text = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
 
         // Ações dos botões
         btnTrocarHorario.setOnClickListener {
@@ -72,6 +75,15 @@ class TelaReservaCabUsu : Fragment() {
         }
 
         return view
+    }
+
+    private fun arredondarPara30(hora: LocalTime): LocalTime {
+        val minuto = hora.minute
+        return when {
+            minuto < 15 -> hora.withMinute(0).withSecond(0).withNano(0)
+            minuto < 45 -> hora.withMinute(30).withSecond(0).withNano(0)
+            else -> hora.plusHours(1).withMinute(0).withSecond(0).withNano(0)
+        }
     }
 
     companion object {
