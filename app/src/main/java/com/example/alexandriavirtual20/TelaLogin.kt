@@ -2,15 +2,11 @@ package com.example.alexandriavirtual20
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log.e
 import android.widget.Button
-import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import kotlin.jvm.java
 
 class TelaLogin : AppCompatActivity() {
@@ -20,7 +16,7 @@ class TelaLogin : AppCompatActivity() {
         setContentView(R.layout.tela_login)
 
         val edtEmail: TextView = findViewById(R.id.emailLogin)
-        val edtSenha: TextView = findViewById(R.id.senhaLogin)
+        val edtSenha: TextView = findViewById(R.id.horario)
         val txtEsqueceuSenha: TextView = findViewById(R.id.esqueciSenha)
         val btnEntrar: Button = findViewById(R.id.botaoEntrar)
         val txtCadastrar: TextView = findViewById(R.id.txtCadastrar)

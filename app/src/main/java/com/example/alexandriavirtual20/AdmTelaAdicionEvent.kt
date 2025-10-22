@@ -10,6 +10,6 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.adm_tela_adicion_event)
+        setContentView(R.layout.adm_tela_add_evento)
     }
 }
