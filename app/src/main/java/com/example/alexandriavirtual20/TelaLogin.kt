@@ -37,6 +37,9 @@ class TelaLogin : AppCompatActivity() {
 
                 val intent = Intent(this, AMain::class.java)
                 startActivity(intent)
+            } else if(email == "adm@gmail.com" && senha == "1234"){
+                val intent = Intent(this, AdmAMain::class.java)
+                startActivity(intent)
             } else {
                 Toast.makeText(this, "Credenciais incorretas, tente novamente!", Toast.LENGTH_SHORT).show()
             }
