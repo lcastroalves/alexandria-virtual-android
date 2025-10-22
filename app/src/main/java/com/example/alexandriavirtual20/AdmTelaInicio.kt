@@ -46,6 +46,10 @@ class AdmTelaInicio : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        btnProd = view.findViewById(R.id.btnProd)
+        btnUsuCad = view.findViewById(R.id.btnUsuCad)
+        btnEvent = view.findViewById(R.id.btnEventos)
+
         btnProd.setOnClickListener {
             val intent = Intent(requireContext(), AdmTelaProdutos::class.java)
             startActivity(intent)
