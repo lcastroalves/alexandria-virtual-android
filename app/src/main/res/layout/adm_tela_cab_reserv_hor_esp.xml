@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AdmTelaCabReservHorEsp"
-    xmlns:tools="http://schemas.android.com/tools"
     tools:listitem="@layout/u_cardview_cabines"
     tools:itemCount="3">
 

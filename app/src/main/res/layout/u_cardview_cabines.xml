@@ -47,7 +47,6 @@
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
                 android:textStyle="bold"
-                app:layout_constraintMarginStart="8dp"
                 app:layout_constraintStart_toEndOf="@id/iconCabine"
                 app:layout_constraintTop_toTopOf="@id/iconCabine" />
 
