@@ -85,25 +85,25 @@
             android:exported="false" />
         <activity
             android:name=".TelaHistoricoUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaReviewUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaMeusLivrosUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaRetirarLivroUsu"
             android:exported="true" />
         <activity
             android:name=".TelaAvaliacoesUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaEmprestLivrosUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaMenuEmprestUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaCapacitacoesUsu"
             android:exported="false" />
