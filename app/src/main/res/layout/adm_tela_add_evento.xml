@@ -27,7 +27,7 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/trocchi"
-        android:text="Editar evento"
+        android:text="Adicionar evento"
         android:textColor="#247AE8"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView12">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayout14"
+            android:id="@+id/textInputLayout15"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
@@ -137,21 +137,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Título" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/botaoEntrar3"
-            android:layout_width="140dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:backgroundTint="#247AE8"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="Salvar"
-            android:textSize="25dp"
-            app:cornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout14" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
