@@ -17,4 +17,9 @@
         <item name="cornerSize">50%</item> <!-- Pílula totalmente arredondada -->
     </style>
 
+    <style name="Shape.Rounded16">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+
 </resources>
