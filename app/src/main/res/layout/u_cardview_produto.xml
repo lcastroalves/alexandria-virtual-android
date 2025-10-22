@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEF5FF"
+        android:padding="15sp">
+
+
+        <ImageView
+            android:id="@+id/capaLivro"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/livro1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="3"
+            android:text="Ciência da computação"
+            app:layout_constraintStart_toEndOf="@+id/capaLivro"
+            app:layout_constraintTop_toTopOf="@+id/capaLivro" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/montserrat_subrayada_bold"
+            android:text="Autor:"
+            android:textSize="10sp"
+            app:layout_constraintStart_toEndOf="@+id/capaLivro"
+            app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+        <TextView
+            android:id="@+id/autor"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="2"
+            android:text="Ernane Rosa Martins"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView29"
+            app:layout_constraintTop_toTopOf="@+id/textView29" />
+
+        <ImageButton
+            android:id="@+id/btnEditarProd"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/editing"
+            app:layout_constraintBottom_toBottomOf="@+id/checkBox"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox"
+            app:layout_constraintStart_toEndOf="@+id/titulo"
+            app:layout_constraintTop_toTopOf="@+id/checkBox" />
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

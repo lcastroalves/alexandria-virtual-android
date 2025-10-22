@@ -6,13 +6,15 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.color.MaterialColors
 
 class AdmTelaHoraCab : AppCompatActivity() {
     private lateinit var btnConfirmar: Button
-    private lateinit var btnVoltar: Button
+    private lateinit var btnVoltar: ImageButton
+
     private lateinit var npHora: NumberPicker
     private lateinit var npMinuto: NumberPicker
 
@@ -27,6 +29,7 @@ class AdmTelaHoraCab : AppCompatActivity() {
         npHora = findViewById(R.id.npHora)
         npMinuto = findViewById(R.id.npMinuto)
         btnConfirmar = findViewById(R.id.Confirmar)
+        btnVoltar = findViewById(R.id.voltar)
 
         setupPickers()
         setupButton()

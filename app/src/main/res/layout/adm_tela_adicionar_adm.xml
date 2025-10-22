@@ -5,6 +5,53 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdmTelaAdicionarAdm">
+    tools:context=".AdmTelaProdutos">
+
+    <ImageButton
+        android:contentDescription="@string/descricaoBotaoVoltar"
+        android:id="@+id/botaoVoltar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/seta_azul" />
+
+    <TextView
+        android:id="@+id/InfoPes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/trocchi"
+        android:text="Adicionar Administrador"
+        android:textColor="#247AE8"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@id/botaoVoltar"
+        app:layout_constraintTop_toTopOf="@id/botaoVoltar" />
+
+
+    <SearchView
+        android:id="@+id/searchView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:iconifiedByDefault="false"
+        android:queryHint="Buscar produtos"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InfoPes" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchView2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
