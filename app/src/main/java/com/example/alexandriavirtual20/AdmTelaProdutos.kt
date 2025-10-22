@@ -16,6 +16,7 @@ class AdmTelaProdutos : AppCompatActivity() {
 
     private lateinit var btnVoltar : ImageButton
     private lateinit var btnAdProd : Button
+    private lateinit var btnExcProd : ImageButton
     private lateinit var recyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,7 @@ class AdmTelaProdutos : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         btnAdProd = findViewById(R.id.btnAdProd)
+        btnExcProd = findViewById(R.id.btnExcProd)
         recyclerView = findViewById(R.id.recyclerView2)
 
 
@@ -37,14 +39,23 @@ class AdmTelaProdutos : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val produtos = listOf(
+        val produtos = mutableListOf(
             Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
             Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
         )
 
+        // Cria o Adapter e envia a lista produtos para ele
         val adapter = ProdutoAdapter(produtos){ produto ->
             val intent = Intent(this, AdmTelaEditarProduto::class.java)
             startActivity(intent)
+
+            // Somente coisas que dizem respeito ao item individual
+        }
+
+        btnExcProd.setOnClickListener {
+            adapter.excluirSelecionados()
         }
 
         // Precisa definir a orientação (lá ele) do recycleview antes de chamar o adapter, se não ele fica tímido e não aparece

@@ -13,7 +13,7 @@ import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Produto
 
 class ProdutoAdapter (
-    private val produtos: List<Produto>,
+    private val produtos: MutableList<Produto>,
     private val btnEditarClick: (Produto) -> Unit            // uma função que recebe um Produto e não retorna nada. quem criar o adapter decide o que acontece ao clicar no botão de editar
 ) :
     RecyclerView.Adapter<ProdutoAdapter.ViewHolder>(){
@@ -33,7 +33,7 @@ class ProdutoAdapter (
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.u_cardview_produto, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ProdutoAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val produto = produtos[position]
 
         holder.capaLivro.setImageResource(produto.imageRes)
@@ -52,8 +52,15 @@ class ProdutoAdapter (
 
     }
 
+    fun excluirSelecionados(){
+        produtos.removeAll { it.isSelected }        // remove todos que retornar isSelected como true
+        notifyDataSetChanged()                      // Depois que a lista muda, o Adapter precisa ser avisado para redesenhar a tela
+    }
+
     override fun getItemCount(): Int {
         return produtos.size
     }
+
+    companion object
 
 }
