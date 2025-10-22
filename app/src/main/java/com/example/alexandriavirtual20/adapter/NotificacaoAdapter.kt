@@ -3,15 +3,11 @@ package com.example.alexandriavirtual20.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
-import com.example.alexandriavirtual20.adapter.ProdutoAdapter.ViewHolder
-import org.w3c.dom.Text
 
 class NotificacaoAdapter (
     private val notificacoes: List<Notificacao>,
@@ -19,10 +15,10 @@ class NotificacaoAdapter (
     RecyclerView.Adapter<NotificacaoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val imagem: ImageView = view.findViewById(R.id.imagem)
+        val imagem: ImageView = view.findViewById(R.id.imagemTornarAdm)
         val nome: TextView = view.findViewById(R.id.nome)
         val tipo: TextView = view.findViewById(R.id.tipo)
-        val data: TextView = view.findViewById(R.id.data)
+        val data: TextView = view.findViewById(R.id.nomeUsuTornarAdm)
         val mensagem: TextView = view.findViewById(R.id.mensagem)
         val btnExcluir: ImageButton = view.findViewById(R.id.btnExcluir)
     }

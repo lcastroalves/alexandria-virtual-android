@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,11 +22,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toEndOf="@+id/imagem"
+            app:layout_constraintStart_toEndOf="@+id/imagemTornarAdm"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imagem"
+            android:id="@+id/imagemTornarAdm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/livro"
@@ -57,11 +58,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toEndOf="@+id/imagem"
+            app:layout_constraintStart_toEndOf="@+id/imagemTornarAdm"
             app:layout_constraintTop_toBottomOf="@+id/nome" />
 
         <TextView
-            android:id="@+id/data"
+            android:id="@+id/nomeUsuTornarAdm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="100dp"
@@ -83,7 +84,7 @@
             android:src="@drawable/x_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/data"
+            app:layout_constraintStart_toEndOf="@+id/nomeUsuTornarAdm"
             app:layout_constraintTop_toTopOf="parent">
 
         </ImageButton>

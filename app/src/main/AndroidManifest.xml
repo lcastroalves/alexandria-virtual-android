@@ -133,7 +133,7 @@
             android:exported="false" />
         <activity
             android:name=".TelaEmail"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaLogin"
             android:exported="true" />
