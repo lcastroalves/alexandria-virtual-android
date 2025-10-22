@@ -33,7 +33,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageButton"
-            app:srcCompat="@drawable/narak">
+            app:srcCompat="@drawable/dillan">
 
         </ImageView>
 
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_medium"
-            android:text="Narak Carvalho"
+            android:text="Dillan Medeiros"
             android:textColor="#247AE8"
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +53,8 @@
         </TextView>
 
         <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_width="323dp"
+            android:layout_height="256dp"
             android:layout_marginTop="45dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +78,7 @@
                     android:layout_height="30dp"
                     android:layout_marginEnd="12dp"
                     android:src="@drawable/icone_perfil"
-                    app:tint="#606060"/>
+                    app:tint="#606060" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,37 +91,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/botaoHistorLeitur"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="12dp">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginEnd="12dp"
-                    android:src="@drawable/open_book"
-                    app:tint="#606060"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/montserrat_medium"
-                    android:text="Histórico de Leitura"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/botaoFav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_height="78dp"
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
@@ -133,15 +105,22 @@
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:layout_marginEnd="12dp"
-                    android:src="@drawable/wishlist" />
+                    android:src="@drawable/cadeado_1" />
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="46dp"
                     android:fontFamily="@font/montserrat_medium"
-                    android:text="Favoritos"
+                    android:text="Adicionar administrador"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
+
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/cadeado_1" />
 
             </LinearLayout>
 
