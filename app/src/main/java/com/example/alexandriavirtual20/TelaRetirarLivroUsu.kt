@@ -9,13 +9,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.alexandriavirtual20.model.Livro
+import kotlin.collections.joinToString
 
 class TelaRetirarLivroUsu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_retirar_livro_usu)
-        val btnBack: ImageButton = findViewById(R.id.btnvoltar)
+        val btnBack: ImageButton = findViewById(R.id.btnback)
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
 
         btnBack.setOnClickListener {
@@ -25,6 +27,13 @@ class TelaRetirarLivroUsu : AppCompatActivity() {
         btnConfirmar.setOnClickListener {
             Toast.makeText(this, "Livro Solicitado com Sucesso", Toast.LENGTH_SHORT).show()
         }
+        val livrosSelecionados = intent.getParcelableArrayListExtra<Livro>("livrosSelecionados")
+
+        if (livrosSelecionados != null) {
+            val nomes = livrosSelecionados.joinToString("\n") { it.titulo }
+            Toast.makeText(this, "Livros recebidos:\n$nomes", Toast.LENGTH_LONG).show()
+        }
+
 
     }
 }

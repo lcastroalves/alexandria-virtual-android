@@ -2,127 +2,91 @@ package com.example.alexandriavirtual20
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.LivroAdapter
+import com.example.alexandriavirtual20.model.Livro
 import kotlin.jvm.java
 
 class TelaEmprestLivrosUsu : AppCompatActivity() {
-    lateinit var searchView: SearchView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_emprest_livros_usu)
+
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerLivros)
+        val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
+        val btnBack: ImageButton = findViewById(R.id.btnback)
         val spinnerAutor: Spinner = findViewById(R.id.spinnerAutor)
         val spinnerGenero: Spinner = findViewById(R.id.spinnerGenero)
         val spinnerMaisPopulares: Spinner = findViewById(R.id.spinnerMaisPopulares)
         val spinnerLancamento: Spinner = findViewById(R.id.spinnerLancamento)
-        val titulo1: TextView = findViewById(R.id.txtTitulo1)
-        val titulo2: TextView = findViewById(R.id.txtTitulo2)
-        searchView = findViewById(R.id.searchViewLivros)
 
-        val btnAvaliacoes1: TextView = findViewById(R.id.btnAvaliacoes1)
-        val btnAvaliacoes2: TextView = findViewById(R.id.btnAvaliacoes2)
-        val btnback: ImageButton = findViewById(R.id.btnback)
+        ArrayAdapter.createFromResource( this, R.array.autores_array, android.R.layout.simple_spinner_item ).also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerAutor.adapter = adapter }
+        ArrayAdapter.createFromResource( this, R.array.generos_array, android.R.layout.simple_spinner_item ).also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerGenero.adapter = adapter }
+        ArrayAdapter.createFromResource( this, R.array.populares_array, android.R.layout.simple_spinner_item ).also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerMaisPopulares.adapter = adapter }
+        ArrayAdapter.createFromResource( this, R.array.lancamentos_array, android.R.layout.simple_spinner_item ).also { adapter -> adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            spinnerLancamento.adapter = adapter }
 
-        val check1: CheckBox = findViewById(R.id.checkLivro1)
-        val check2: CheckBox = findViewById(R.id.checkLivro2)
+        val livros = listOf(
 
-        val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
+            Livro(
+                "Ciência da Computação e Tecnologias Digitais",
+                "Ernane Rosa Martins",
+                R.drawable.livro1,
+                "⭐ 130 avaliações"
+            ),
+            Livro("Java Como Programar",
+                  "Paul J. Deitel",
+                  R.drawable.livro2,
+                  "⭐ 105 avaliações"),
+            Livro(
+                "Java como Programar",
+                "Paul J. Deitel",
+                R.drawable.livro3,
+                "⭐ 200 avaliações",
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // Quando o usuário pressiona ENTER / Buscar
-                if (!query.isNullOrEmpty()) {
-                    Toast.makeText(this@TelaEmprestLivrosUsu, "Buscando: $query", Toast.LENGTH_SHORT).show()
-                    // Aqui você pode filtrar sua lista de livros
-                }
-                return true
-            }
+                ),
+            Livro("Redes de Computadores",
+                  "Tanenbaum & Wetherall",
+                  R.drawable.livro4,
+                  "⭐ 250 avaliações"
 
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // Quando o texto muda (digitação em tempo real)
-                if (!newText.isNullOrEmpty()) {
-                    // Filtra enquanto o usuário digita
-                }
-                return true
-            }
-        })
+            )
+        )
 
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.autores_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerAutor.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.generos_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerGenero.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.populares_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerMaisPopulares.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.lancamentos_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerLancamento.adapter = adapter
-        }
-        titulo1.setOnClickListener {
-            val intent = Intent(this, TelaInfoLivroUsu::class.java)
-            startActivity(intent)
-        }
-
-        titulo2.setOnClickListener {
-            val intent = Intent(this, TelaInfoLivroUsu::class.java)
-            startActivity(intent)
-        }
-
-        // Clique em avaliações → abre tela de avaliações
-        btnAvaliacoes1.setOnClickListener {
+        val adapter = LivroAdapter(livros) { livro ->
             val intent = Intent(this, TelaAvaliacoesUsu::class.java)
             startActivity(intent)
         }
 
-        btnAvaliacoes2.setOnClickListener {
-            val intent = Intent(this, TelaAvaliacoesUsu::class.java)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+
+        btnConfirmar.setOnClickListener {
+            val selecionados = adapter.getSelecionados()
+
+            if (selecionados.isEmpty()) {
+                Toast.makeText(this, "Nenhum livro selecionado!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
+            val intent = Intent(this, TelaRetirarLivroUsu::class.java)
+            intent.putParcelableArrayListExtra("livrosSelecionados", ArrayList(selecionados))
+
             startActivity(intent)
         }
-        btnback.setOnClickListener {
+
+
+        btnBack.setOnClickListener {
             val intent = Intent(this, TelaMenuEmprestUsu::class.java)
             startActivity(intent)
         }
-
-
-
-        // Botão confirmar → mostra os livros selecionados
-        btnConfirmar.setOnClickListener {
-            val selecionados = mutableListOf<String>()
-
-            if (check1.isChecked) selecionados.add("Ciência da Computação e Tecnologias Digitais")
-            if (check2.isChecked) selecionados.add("Java como Programar")
-
-            Toast.makeText(this, "Selecionados: $selecionados", Toast.LENGTH_SHORT).show()
-        }
     }
 }
-
