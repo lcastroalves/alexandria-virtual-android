@@ -1,19 +1,16 @@
 package com.example.alexandriavirtual20
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import kotlin.collections.toMutableList
-import kotlin.jvm.java
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.LivroAdapterMeus
+import com.example.alexandriavirtual20.model.Livro
 
 class TelaMeusLivrosUsu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,33 +19,39 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
         setContentView(R.layout.tela_meus_livros_usu)
 
         val btnBack: ImageButton = findViewById(R.id.btnback)
-        val btnAvaliarLivros: Button = findViewById(R.id.btnAvaliarLivros)
-        val livro1: ImageView = findViewById(R.id.livro1)
-        val livro2: ImageView = findViewById(R.id.livro2)
-        val livro3: ImageView = findViewById(R.id.livro3)
+        val btnAvaliar: Button = findViewById(R.id.btnAvaliarLivros)
+        val txtProgresso: TextView = findViewById(R.id.txtProgresso)
+        val recyclerView: RecyclerView = findViewById(R.id.recyclerLivros)
         val filtrosAlugados: TextView = findViewById(R.id.filtroAlugados)
         val filtrosLidos: TextView = findViewById(R.id.filtroLidos)
         val filtrosAZ: TextView = findViewById(R.id.filtroAZ)
 
         btnBack.setOnClickListener {
-            var intencao = Intent(this, TelaMenuEmprestUsu::class.java)
-            startActivity(intencao)
+            startActivity(Intent(this, TelaMenuEmprestUsu::class.java))
         }
-        val abrirDetalhes = { nomeLivro: String ->
+
+
+        val listaLivros = listOf(
+            Livro("Ciências da Computação", "Ername Rosa Martins", R.drawable.livro1, "4.5 ★"),
+            Livro("Java Avançado", "Deitel", R.drawable.livro2, "4.8 ★"),
+            Livro("Java como Programar", "Deitel", R.drawable.livro3, "4.7 ★"),
+            Livro("Redes de Computadores", "Tanembaum e wetherall", R.drawable.livro4, "4.6 ★")
+        )
+
+        val adapter = LivroAdapterMeus(listaLivros) { livro ->
             val intent = Intent(this, TelaInfoLivroUsu::class.java)
-            intent.putExtra("livro_nome", nomeLivro)
+            intent.putExtra("livro_nome", livro.titulo)
             startActivity(intent)
         }
 
-        livro1.setOnClickListener { abrirDetalhes("Java Como Programar") }
-        livro2.setOnClickListener { abrirDetalhes("Java Avançado") }
-        livro3.setOnClickListener { abrirDetalhes("Ciência da Computação") }
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerView.adapter = adapter
 
-        btnAvaliarLivros.setOnClickListener {
-            var intencao = Intent(this, TelaReviewUsu::class.java)
-            startActivity(intencao)
+
+        txtProgresso.text = "${listaLivros.size}/12"
+
+        btnAvaliar.setOnClickListener {
+            startActivity(Intent(this, TelaReviewUsu::class.java))
         }
     }
 }
-
-
