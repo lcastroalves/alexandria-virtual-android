@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/icon" />
 
     <ImageView
-        android:id="@+id/logoAlexandria2"
+        android:id="@+id/imagemInfoAtividade"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/logoalexandriavirtual" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nomeInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoAlexandria2" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemInfoAtividade" />
 
     <ImageView
         android:id="@+id/imageView5"
@@ -51,7 +51,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/nomeInfoAtividade"
         app:srcCompat="@drawable/ret_branco_azul" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
