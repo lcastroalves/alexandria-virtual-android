@@ -6,29 +6,28 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="0dp">
 
         <TextView
             android:id="@+id/nome"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:text="Nome"
             android:textColor="#247AE8"
-            android:textSize="18sp"
+            android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toEndOf="@+id/imagemTornarAdm"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/imagemNotificacao"
+            app:layout_constraintTop_toTopOf="@+id/imagemNotificacao" />
 
         <ImageView
-            android:id="@+id/imagemTornarAdm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/imagemNotificacao"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/livro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,34 +40,34 @@
             android:layout_marginStart="20dp"
             android:text="Tipo"
             android:textColor="#247AE8"
-            android:textSize="18sp"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/nome"
             app:layout_constraintTop_toTopOf="@+id/nome" />
 
         <TextView
             android:id="@+id/mensagem"
             android:layout_width="wrap_content"
-            android:layout_height="26dp"
-            android:layout_marginTop="60dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/montserrat"
             android:text="Mensagem"
             android:textColor="#247AE8"
-            android:textSize="18sp"
+            android:textSize="10sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemNotificacao"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toEndOf="@+id/imagemTornarAdm"
+            app:layout_constraintStart_toEndOf="@+id/imagemNotificacao"
             app:layout_constraintTop_toBottomOf="@+id/nome" />
 
         <TextView
-            android:id="@+id/nomeUsuTornarAdm"
+            android:id="@+id/data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="130dp"
             android:text="Data"
             android:textColor="#247AE8"
-            android:textSize="18sp"
+            android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/nome"
             app:layout_constraintTop_toTopOf="@+id/nome" />
 
@@ -76,16 +75,15 @@
             android:id="@+id/btnExcluir"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginBottom="80dp"
+            android:layout_marginStart="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="Botão excluir"
 
             android:src="@drawable/x_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/nomeUsuTornarAdm"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toEndOf="@+id/data"
+            app:layout_constraintTop_toTopOf="@+id/data">
 
         </ImageButton>
 
