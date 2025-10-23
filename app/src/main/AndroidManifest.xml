@@ -118,7 +118,7 @@
             android:exported="false" />
         <activity
             android:name=".TelaInfoEventoUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaEventosFuturUsu"
             android:exported="false" />

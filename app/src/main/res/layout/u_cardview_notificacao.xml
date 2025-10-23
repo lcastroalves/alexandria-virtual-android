@@ -21,11 +21,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toEndOf="@+id/imagemNotificacao"
-            app:layout_constraintTop_toTopOf="@+id/imagemNotificacao" />
+            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
+            app:layout_constraintTop_toTopOf="@+id/imagemEventoLista" />
 
         <ImageView
-            android:id="@+id/imagemNotificacao"
+            android:id="@+id/imagemEventoLista"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/livro"
@@ -34,7 +34,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tipo"
+            android:id="@+id/dataEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@+id/nome" />
 
         <TextView
-            android:id="@+id/mensagem"
+            android:id="@+id/descricaoBreve"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -54,10 +54,10 @@
             android:textColor="#247AE8"
             android:textSize="10sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemNotificacao"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemEventoLista"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toEndOf="@+id/imagemNotificacao"
+            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
             app:layout_constraintTop_toBottomOf="@+id/nome" />
 
         <TextView
