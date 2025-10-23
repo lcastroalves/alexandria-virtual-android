@@ -44,6 +44,10 @@ class AdmTelaProdutos : AppCompatActivity() {
             Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2),
             Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3),
             Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3),
+            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
         )
 
         // Cria o Adapter e envia a lista produtos para ele
@@ -59,7 +63,18 @@ class AdmTelaProdutos : AppCompatActivity() {
         }
 
         // Precisa definir a orientação (lá ele) do recycleview antes de chamar o adapter, se não ele fica tímido e não aparece
-        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        /*
+            ------ OPCAO HORIZONTAL -----
+        recyclerView.layoutManager = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+         */
+
+        recyclerView.layoutManager = LinearLayoutManager(this)  // OPCAO VERTICAL
         recyclerView.adapter = adapter
     }
 }
