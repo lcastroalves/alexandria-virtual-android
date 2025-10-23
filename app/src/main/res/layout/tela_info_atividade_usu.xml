@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logoalexandriavirtual" />
+        app:srcCompat="@drawable/cinema" />
 
     <TextView
         android:id="@+id/nomeInfoAtividade"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/trocchi"
-        android:text="Nome da atividade"
+        android:text="Cinema"
         android:textColor="#247AE8"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Horário x - y"
+        android:text="Aberto: 9:00 - 22:00"
         android:textColor="#247AE8"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:layout_marginTop="240dp"
-            android:text="Local:"
+            android:text="Local: Auditório Principal"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +97,7 @@
             android:layout_width="318dp"
             android:layout_height="207dp"
             android:layout_marginTop="20dp"
-            android:text="Descrição: O auditório da nossa biblioteca"
+            android:text="Descrição: O auditório da nossa biblioteca possui uma programação de filmes que são reproduzidos regularmente para aumentar o repertório cultural da nossa unidade, fique atento ao que está passando na parte de eventos do nosso aplicativo!"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
