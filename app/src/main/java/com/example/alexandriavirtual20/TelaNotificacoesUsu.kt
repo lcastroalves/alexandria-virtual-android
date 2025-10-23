@@ -1,19 +1,49 @@
 package com.example.alexandriavirtual20
 
 import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.Notificacao
+import com.example.alexandriavirtual20.adapter.NotificacaoAdapter
+
 
 class TelaNotificacoesUsu : AppCompatActivity() {
-    private lateinit var btnVoltar: Button
-    private lateinit var btnApagar: Button
+    private lateinit var btnVoltar: ImageButton
+    private lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_notificacoes_usu)
+
+        btnVoltar = findViewById(R.id.botaoVoltar)
+        recyclerView = findViewById(R.id.recy)
+
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        val notificacoes = mutableListOf(
+            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro1),
+            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro2),
+            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro3),
+            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro4),
+
+        )
+
+        var adapter: NotificacaoAdapter? = null
+
+        // Cria o Adapter e envia a lista produtos para ele
+        adapter = NotificacaoAdapter(
+            notificacoes,
+            onExcluirClick = { notificacao ->
+                adapter?.removerNotificacao(notificacao)
+            }
+            )
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 }
 

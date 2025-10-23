@@ -10,15 +10,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
 class NotificacaoAdapter (
-    private val notificacoes: List<Notificacao>,
+    private val notificacoes: MutableList<Notificacao>,
+    private val onExcluirClick: ((Notificacao) -> Unit)? = null
 ) :
     RecyclerView.Adapter<NotificacaoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val imagem: ImageView = view.findViewById(R.id.imagemTornarAdm)
+        val imagem: ImageView = view.findViewById(R.id.imagemNotificacao)
         val nome: TextView = view.findViewById(R.id.nome)
         val tipo: TextView = view.findViewById(R.id.tipo)
-        val data: TextView = view.findViewById(R.id.nomeUsuTornarAdm)
+        val data: TextView = view.findViewById(R.id.data)
         val mensagem: TextView = view.findViewById(R.id.mensagem)
         val btnExcluir: ImageButton = view.findViewById(R.id.btnExcluir)
     }
@@ -40,7 +41,16 @@ class NotificacaoAdapter (
         holder.mensagem.text = notificacao.mensagem
 
         holder.btnExcluir.setOnClickListener {
-            // colocar logica para excluir
+            onExcluirClick?.invoke(notificacao)
+        }
+    }
+
+    fun removerNotificacao(notificacao: Notificacao) {
+        val position = notificacoes.indexOf(notificacao)
+        if (position > -1) {
+            notificacoes.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
         }
     }
 
