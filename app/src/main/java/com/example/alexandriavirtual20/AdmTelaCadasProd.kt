@@ -9,8 +9,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class AdmTelaCadasProd : AppCompatActivity() {
 
@@ -27,7 +25,7 @@ class AdmTelaCadasProd : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         btnMudarImg = findViewById(R.id.btnMudarImg)
-        capaLivro = findViewById(R.id.capaLivro)
+        capaLivro = findViewById(R.id.capaEvento)
         btnCadastrar = findViewById(R.id.btnCadastrar)
 
         abrirGaleria = registerForActivityResult(

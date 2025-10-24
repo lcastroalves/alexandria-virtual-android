@@ -16,8 +16,9 @@
             android:id="@+id/linear_layout"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:orientation="horizontal"
             android:background="@drawable/conteiner_chatbot"
+            android:backgroundTint="@android:color/white"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -27,13 +28,9 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
-                android:translationY="6dp"
-                android:clipToOutline="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/logoalexandriavirtual"
-                app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar"
-                app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
-                app:layout_constraintTop_toTopOf="@+id/botaoVoltar" />
+                android:translationY="6dp" />
 
             <TextView
                 android:layout_width="100dp"
@@ -45,37 +42,84 @@
                 android:textAlignment="center"
                 android:textColor="#247AE8"
                 android:textSize="14sp"
-                android:translationY="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView">
+                android:translationY="14dp">
 
             </TextView>
+
+            <ImageButton
+                android:id="@+id/btnSinoNotif"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="7dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/bell" />
         </LinearLayout>
 
         <SearchView
             android:id="@+id/searchView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:iconifiedByDefault="false"
             android:queryHint="Buscar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linear_layout">
+
         </SearchView>
 
         <TextView
+            android:id="@+id/textView15"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp"
             android:text="Livros do momento"
             android:textSize="14sp"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="30dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/searchView">
 
         </TextView>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewLivros"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:text="Próximos eventos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewLivros" />
+
+        <TextView
+            android:id="@+id/btnVerMaisEventos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ver mais"
+            android:textColor="#247AE8"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewEventos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewLivros" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewEventos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView19" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

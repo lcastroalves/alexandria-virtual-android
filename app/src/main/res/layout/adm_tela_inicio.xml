@@ -17,6 +17,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:orientation="horizontal"
+            android:backgroundTint="@android:color/white"
             android:background="@drawable/conteiner_chatbot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
