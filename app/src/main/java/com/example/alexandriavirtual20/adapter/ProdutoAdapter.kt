@@ -17,7 +17,7 @@ class ProdutoAdapter (
 ) :
     RecyclerView.Adapter<ProdutoAdapter.ViewHolder>(){
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view){
-        val capaLivro: ImageView = view.findViewById(R.id.capaEvento)
+        val capaLivro: ImageView = view.findViewById(R.id.capaLivro)
         val titulo: TextView = view.findViewById(R.id.titulo)
         val autor: TextView = view.findViewById(R.id.autor)
         val btnEditar: ImageButton = view.findViewById(R.id.btnEditarProd)

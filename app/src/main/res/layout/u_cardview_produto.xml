@@ -17,7 +17,7 @@
 
 
         <ImageView
-            android:id="@+id/capaEvento"
+            android:id="@+id/capaLivro"
             android:layout_width="60dp"
             android:layout_height="80dp"
             android:layout_marginStart="10dp"
@@ -35,8 +35,8 @@
             android:fontFamily="@font/montserrat_medium"
             android:maxLines="3"
             android:text="Ciência da computação"
-            app:layout_constraintStart_toEndOf="@+id/capaEvento"
-            app:layout_constraintTop_toTopOf="@+id/capaEvento" />
+            app:layout_constraintStart_toEndOf="@+id/capaLivro"
+            app:layout_constraintTop_toTopOf="@+id/capaLivro" />
 
         <TextView
             android:id="@+id/textView29"
@@ -47,7 +47,7 @@
             android:fontFamily="@font/montserrat_subrayada_bold"
             android:text="Autor:"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/capaEvento"
+            app:layout_constraintStart_toEndOf="@+id/capaLivro"
             app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
         <TextView
