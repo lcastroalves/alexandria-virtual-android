@@ -28,7 +28,7 @@ class ProdutoAdapter (
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ProdutoAdapter.ViewHolder {
+    ): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.u_cardview_produto, parent, false))
     }
 
@@ -59,7 +59,5 @@ class ProdutoAdapter (
     override fun getItemCount(): Int {
         return produtos.size
     }
-
-    companion object
 
 }
