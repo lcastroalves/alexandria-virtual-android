@@ -88,7 +88,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/txtTitulo2"
+                    android:id="@+id/nomeSoliPend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="4dp"
@@ -97,7 +97,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/txtAutor2"
+                    android:id="@+id/autorSoliPend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Paul J. Deitel"
