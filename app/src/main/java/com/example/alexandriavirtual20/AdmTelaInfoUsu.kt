@@ -5,12 +5,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.textfield.TextInputEditText
 
 class AdmTelaInfoUsu : AppCompatActivity() {
@@ -31,7 +28,7 @@ class AdmTelaInfoUsu : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar4)
         btnEditImg = findViewById(R.id.btnEdit2)
-        imgPerfil = findViewById(R.id.imagemPerfil2)
+        imgPerfil = findViewById(R.id.logo)
         editNome = findViewById(R.id.txNome)
         editUsuario = findViewById(R.id.txUsuario)
         editEmail = findViewById(R.id.txEmail)

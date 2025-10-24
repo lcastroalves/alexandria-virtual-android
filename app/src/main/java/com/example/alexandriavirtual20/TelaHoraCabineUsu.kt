@@ -71,19 +71,10 @@ class TelaHoraCabineUsu : AppCompatActivity() {
             if (v is EditText) {
                 v.textSize = 20f
                 v.setTextColor(
-                    MaterialColors.getColor(
-                        v,
-                        com.google.android.material.R.attr.colorOnSurface
-                    )
+                    MaterialColors.getColor(v, com.google.android.material.R.attr.colorOnSurface)
                 )
             }
         }
-        try {
-            val f = NumberPicker::class.java.getDeclaredField("mSelectionDivider")
-            f.isAccessible = true
-            f.set(np, ColorDrawable(Color.TRANSPARENT))
-            np.invalidate()
-        } catch (_: Exception) {  }
     }
 }
 

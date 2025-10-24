@@ -1,15 +1,18 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
+import com.example.alexandriavirtual20.TelaConfirmReservaUsu
 import com.example.alexandriavirtual20.model.Cabine
 
 class CabineAdapter(
@@ -31,7 +34,8 @@ class CabineAdapter(
             nome.text = item.nome
             bloco.text = item.bloco
             reservar.setOnClickListener {
-                onReservarClick(item)
+                val intent = Intent(itemView.context, TelaConfirmReservaUsu::class.java)
+                itemView.context.startActivity(intent)
             }
         }
     }
