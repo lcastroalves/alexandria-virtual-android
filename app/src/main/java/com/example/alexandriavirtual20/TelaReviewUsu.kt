@@ -12,6 +12,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import kotlin.math.round
 
 class TelaReviewUsu : AppCompatActivity() {
@@ -27,6 +30,19 @@ class TelaReviewUsu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_review_usu)
+
+        val recyclerLivros = findViewById<RecyclerView>(R.id.recyclerLivros)
+        val livros = listOf(
+            LivroReview("Ciências da Computação", "Ername Rosa Martins", R.drawable.livro1),
+            LivroReview("Java Avançado", "Paul J. Deitel", R.drawable.livro2),
+            LivroReview("Java como Programar", "Paul J. Deitel", R.drawable.livro3),
+            LivroReview("Redes de Computadores", "Tanembaum e Wetherall", R.drawable.livro4)
+        )
+
+        recyclerLivros.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        recyclerLivros.adapter = LivroReviewAdapter(livros)
+        PagerSnapHelper().attachToRecyclerView(recyclerLivros)
 
         val btnBack : ImageButton = findViewById(R.id.btnback)
         editAvaliacao = findViewById(R.id.editAvaliacao)
