@@ -7,10 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.EventoAdapterTelaInicio
 import com.example.alexandriavirtual20.adapter.LivroAdapterSoCapa
 import com.example.alexandriavirtual20.adapter.ProdutoAdapter
+import com.example.alexandriavirtual20.model.Evento
 import com.example.alexandriavirtual20.model.Livro
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,7 +29,10 @@ private const val ARG_PARAM2 = "param2"
 class TelaInicioUsu : Fragment() {
     // TODO: Rename and change types of parameters
 
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerViewLivros: RecyclerView
+    private lateinit var recyclerViewEventos: RecyclerView
+    private lateinit var btnVerMaisEventos : TextView
+    private lateinit var btnSinoNotifi : ImageButton
     private var param1: String? = null
     private var param2: String? = null
 
@@ -47,7 +53,11 @@ class TelaInicioUsu : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.recyclerView)
+
+        recyclerViewLivros = view.findViewById(R.id.recyclerViewLivros)
+        recyclerViewEventos = view.findViewById(R.id.recyclerViewEventos)
+        btnVerMaisEventos = view.findViewById(R.id.btnVerMaisEventos)
+        btnSinoNotifi = view.findViewById(R.id.btnSinoNotif)
 
         val livros = mutableListOf(
             Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1, "4.5"),
@@ -56,20 +66,55 @@ class TelaInicioUsu : Fragment() {
             Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro4, "4.6")
         )
 
-        val adapter = LivroAdapterSoCapa(livros){ livro ->
+        val eventos = mutableListOf(
+            Evento(imagem = R.drawable.totoro, nome = "Mostra de Cinema Japonês", data = "16 Set", horario = "16:00 - 17:30", descricao = "xfg", breveDescricao = "fsdfg", local = "Auditório Principal"),
+            Evento(imagem = R.drawable.livro1, nome = "Feira Literária Alexandria", data = "22 Set", horario = "09:00 - 18:00", descricao = "fdgs", breveDescricao = "sdfg", local = "Pátio Cultural Alexandria"),
+            Evento(imagem = R.drawable.livro2, nome = "Workshop de Programação Kotlin", data = "28 Set", horario = "14:00 - 17:00", descricao = "dfg", breveDescricao = "dgfdf", local = "Sala de Informática 2"),
+            Evento(imagem = R.drawable.livro3, nome = "Clube do Livro - Ficção Científica", data = "03 Out", horario = "19:00 - 21:00", descricao = "sdf", breveDescricao = "sdfsd", local = "Biblioteca Central"),
+            Evento(imagem = R.drawable.livro4, nome = "Sarau Poético Noturno", data = "10 Out", horario = "20:00 - 22:30", descricao = "sdfs", breveDescricao = "sdfs", local = "Praça das Artes")
+        )
+
+
+        // adapters
+        val adapterLivro = LivroAdapterSoCapa(livros){ livro ->
             val intent = Intent(requireContext(), TelaInfoLivroUsu::class.java)
-            intent.putExtra("livro", livro)
             startActivity(intent)
             // Somente coisas que dizem respeito ao item individual
         }
 
-        recyclerView.layoutManager = LinearLayoutManager(
+        val adapterEvento = EventoAdapterTelaInicio(eventos){ evento ->
+            val intent = Intent(requireContext(), TelaInfoEventoUsu::class.java)
+            startActivity(intent)
+        }
+
+
+        // orientacoes dos recycler views
+        recyclerViewLivros.layoutManager = LinearLayoutManager(
 
             requireContext(),
             LinearLayoutManager.HORIZONTAL,
             false
         )
-        recyclerView.adapter = adapter
+
+        recyclerViewEventos.layoutManager = LinearLayoutManager(
+
+            requireContext(),
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+
+        // chamadas
+        recyclerViewLivros.adapter = adapterLivro
+        recyclerViewEventos.adapter = adapterEvento
+
+        btnVerMaisEventos.setOnClickListener {
+            val intent = Intent(requireContext(), TelaEventosFuturUsu::class.java)
+            startActivity(intent)
+        }
+        btnSinoNotifi.setOnClickListener {
+            val intent = Intent (requireContext(), TelaNotificacoesUsu::class.java)
+            startActivity(intent)
+        }
     }
 
 

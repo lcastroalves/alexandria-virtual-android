@@ -61,7 +61,7 @@
                 app:srcCompat="@drawable/editing" />
 
             <ImageView
-                android:id="@+id/capaLivro"
+                android:id="@+id/capaEvento"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="fitCenter"
@@ -79,7 +79,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/borda_input"
                 app:hintTextColor="#247AE8"
-                app:layout_constraintTop_toBottomOf="@id/capaLivro"
+                app:layout_constraintTop_toBottomOf="@id/capaEvento"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 

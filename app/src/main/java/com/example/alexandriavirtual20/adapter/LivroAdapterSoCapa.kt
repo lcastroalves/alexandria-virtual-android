@@ -16,7 +16,7 @@ class LivroAdapterSoCapa (
 
     //// cria o ViewHolder pegando a ImageView que representa a capa
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val capaLivro: ImageButton = view.findViewById(R.id.capaLivro)
+        val capaLivro: ImageButton = view.findViewById(R.id.capaEvento)
     }
 
     override fun onCreateViewHolder(
@@ -25,7 +25,6 @@ class LivroAdapterSoCapa (
     ): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.u_cardview_livro_so_capa, parent, false))
     }
-
 
     override fun onBindViewHolder(
         holder: LivroAdapterSoCapa.ViewHolder,

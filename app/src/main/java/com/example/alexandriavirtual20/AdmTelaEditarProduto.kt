@@ -8,10 +8,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class AdmTelaEditarProduto : AppCompatActivity() {
 
@@ -28,7 +25,7 @@ class AdmTelaEditarProduto : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         btnMudarImg = findViewById(R.id.btnMudarImg)
-        capaLivro = findViewById(R.id.capaLivro)
+        capaLivro = findViewById(R.id.capaEvento)
         btnSalvar = findViewById(R.id.btnSalvar)
 
         abrirGaleria = registerForActivityResult(

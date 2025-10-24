@@ -6,5 +6,6 @@ data class Evento (
     var data : String,
     var horario : String,
     var descricao : String,
-    var breveDescricao : String
+    var breveDescricao : String,
+    var local : String
     )

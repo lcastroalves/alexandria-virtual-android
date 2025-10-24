@@ -7,7 +7,7 @@
     android:layout_marginStart="20dp">
 
     <ImageButton
-        android:id="@+id/capaLivro"
+        android:id="@+id/capaEvento"
         android:layout_width="70dp"
         android:layout_height="100dp"
         android:background="@android:color/transparent"

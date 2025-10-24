@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -10,7 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class TelaEventosFuturUsu : AppCompatActivity() {
-    private lateinit var btnVoltar: Button
+    private lateinit var btnVoltar: ImageButton
     private lateinit var dataEvento: TextView
     private lateinit var tituloEvento: TextView
     private lateinit var descricaoEvento: TextView
