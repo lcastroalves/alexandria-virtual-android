@@ -13,7 +13,7 @@ import com.example.alexandriavirtual20.model.Produto
 
 class ProdutoAdapter (
     private val produtos: MutableList<Produto>,
-    private val btnEditarClick: (Produto) -> Unit            // uma função que recebe um Produto e não retorna nada. quem criar o adapter decide o que acontece ao clicar no botão de editar
+    private val btnEditarClick: (Produto) -> Unit
 ) :
     RecyclerView.Adapter<ProdutoAdapter.ViewHolder>(){
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view){

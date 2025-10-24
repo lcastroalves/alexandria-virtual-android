@@ -1,15 +1,63 @@
 package com.example.alexandriavirtual20
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.textfield.TextInputEditText
 
 class AdmTelaInfoUsu : AppCompatActivity() {
+    private lateinit var btnVoltar : ImageButton
+    private lateinit var btnEditImg: ImageButton
+    private lateinit var imgPerfil: ImageView
+    private lateinit var abrirGaleria : ActivityResultLauncher<String>
+    private lateinit var editNome: TextInputEditText
+    private lateinit var editUsuario: TextInputEditText
+    private lateinit var editEmail: TextInputEditText
+    private lateinit var editSenha: TextInputEditText
+    private lateinit var btnSalvar: Button
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.adm_tela_info_usu)
+
+        btnVoltar = findViewById(R.id.botaoVoltar4)
+        btnEditImg = findViewById(R.id.btnEdit2)
+        imgPerfil = findViewById(R.id.logo)
+        editNome = findViewById(R.id.txNome)
+        editUsuario = findViewById(R.id.txUsuario)
+        editEmail = findViewById(R.id.txEmail)
+        editSenha = findViewById(R.id.txSenha)
+        btnSalvar = findViewById(R.id.btnSalvar)
+
+        abrirGaleria = registerForActivityResult(
+            ActivityResultContracts.GetContent()
+        ){uri ->
+            if (uri != null){
+                imgPerfil.setImageURI(uri)
+            }
+        }
+
+        btnEditImg.setOnClickListener {
+            abrirGaleria.launch("image/*")
+        }
+
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        btnSalvar.setOnClickListener {
+            val nome = editNome.text.toString()
+            val usuario = editUsuario.text.toString()
+            val email = editEmail.text.toString()
+            val senha = editSenha.text.toString()
+
+            Toast.makeText(this, "Alteração salva", Toast.LENGTH_SHORT).show()
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:allowBackup="true"
@@ -10,9 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AlexandriaVirtual20">
-        <activity
-            android:name=".item_livro_emprestimo"
-            android:exported="false" />
+
         <activity
             android:name=".AdmAMain"
             android:exported="false" />
@@ -48,13 +47,13 @@
             android:exported="false" />
         <activity
             android:name=".AdmTelaCadastUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdmTelaInfoUsu"
             android:exported="false" />
         <activity
             android:name=".AdmTelaUsuCadast"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdmTelaCadasProd"
             android:exported="false" />
@@ -84,7 +83,7 @@
             android:exported="false" />
         <activity
             android:name=".TelaSolicitaPendUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaHistoricoUsu"
             android:exported="true" />
@@ -93,16 +92,17 @@
             android:exported="false" />
         <activity
             android:name=".TelaMeusLivrosUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaRetirarLivroUsu"
             android:exported="true" />
         <activity
             android:name=".TelaAvaliacoesUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaEmprestLivrosUsu"
-            android:exported="true" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".TelaMenuEmprestUsu"
             android:exported="false" />
@@ -114,22 +114,22 @@
             android:exported="false" />
         <activity
             android:name=".TelaInfoAtividadeUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaAtividadesUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaInfoEventoUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaEventosFuturUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaInfoLivroUsu"
             android:exported="false" />
         <activity
             android:name=".TelaNotificacoesUsu"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".TelaCadastro"
             android:exported="false" />
@@ -141,7 +141,8 @@
             android:exported="true" />
         <activity
             android:name=".TelaSplash"
-            android:exported="true">
+            android:exported="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

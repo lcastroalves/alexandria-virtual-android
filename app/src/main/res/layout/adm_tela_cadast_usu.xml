@@ -7,4 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".AdmTelaCadastUsu">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="20sp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/botaoVoltar4"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="2sp"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/descricaoBotaoVoltar"
+                app:srcCompat="@drawable/icon" />
+
+            <TextView
+                android:id="@+id/txUsuarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15sp"
+                android:text="Usuários"
+                android:textColor="#2279E6"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/addUsu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="15sp"
+            android:backgroundTint="#247AE8"
+            android:text="Adicionar novo usuário"
+            app:cornerRadius="5sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+
+            <SearchView
+                android:id="@+id/searchView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:iconifiedByDefault="false"
+                android:queryHint="Pesquisar"
+                app:layout_constraintBottom_toBottomOf="@id/btnExcProd3"
+                app:layout_constraintEnd_toStartOf="@id/btnExcProd3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/btnExcProd3"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="12dp">
+
+            </SearchView>
+
+            <ImageButton
+                android:id="@+id/btnExcProd3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="10dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/trash_vector"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/searchView2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvUsuario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

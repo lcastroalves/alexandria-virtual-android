@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -7,21 +8,39 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.ListaEventoAdapter
+import com.example.alexandriavirtual20.model.Evento
 
 class TelaEventosFuturUsu : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
-    private lateinit var dataEvento: TextView
-    private lateinit var tituloEvento: TextView
-    private lateinit var descricaoEvento: TextView
-    private lateinit var imagemEvento: ImageView
+    private lateinit var recyclerView : RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.tela_eventos_futuros_usu)
         
         btnVoltar = findViewById(R.id.botaoVoltar)
+        recyclerView = findViewById(R.id.recyListaEvento)
 
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        val eventos = mutableListOf(
+            Evento(R.drawable.totoro, "16/09/2025", "16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30","", ""),
+            Evento(R.drawable.cosmos, "16/09/2025", "20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21","", ""),
+            Evento(R.drawable.kiki, "23/09/2025", "16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18","",""),
+            )
+
+        var adapter: ListaEventoAdapter? = null
+
+        adapter = ListaEventoAdapter(eventos) { evento ->
+            val intent = Intent(this, TelaInfoEventoUsu::class.java)
+            startActivity(intent)
+        }
+
+        recyclerView.layoutManager = LinearLayoutManager(this)  // OPCAO VERTICAL
+        recyclerView.adapter = adapter
     }
 }

@@ -16,11 +16,11 @@ class NotificacaoAdapter (
     RecyclerView.Adapter<NotificacaoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val imagem: ImageView = view.findViewById(R.id.imagemNotificacao)
-        val nome: TextView = view.findViewById(R.id.nome)
-        val tipo: TextView = view.findViewById(R.id.tipo)
+        val imagem: ImageView = view.findViewById(R.id.imagemEventoLista)
+        val nome: TextView = view.findViewById(R.id.nomeEventoLista)
+        val tipo: TextView = view.findViewById(R.id.dataEventoLista)
         val data: TextView = view.findViewById(R.id.data)
-        val mensagem: TextView = view.findViewById(R.id.mensagem)
+        val mensagem: TextView = view.findViewById(R.id.descricaoEventoLista)
         val btnExcluir: ImageButton = view.findViewById(R.id.btnExcluir)
     }
 

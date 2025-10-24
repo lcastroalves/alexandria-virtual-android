@@ -21,7 +21,7 @@
         app:srcCompat="@drawable/icon" />
 
     <ImageView
-        android:id="@+id/logoAlexandria2"
+        android:id="@+id/imagemEventosFuturos"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -32,7 +32,7 @@
         app:srcCompat="@drawable/logoalexandriavirtual" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nomeEventosFuturos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -42,7 +42,7 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoAlexandria2" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemEventosFuturos" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recy"
@@ -53,6 +53,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

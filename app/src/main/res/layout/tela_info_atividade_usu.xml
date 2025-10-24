@@ -17,13 +17,13 @@
         android:layout_marginEnd="66dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
-        app:layout_constraintEnd_toStartOf="@+id/logoAlexandria2"
+        app:layout_constraintEnd_toStartOf="@+id/imagemEventosFuturos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
 
     <ImageView
-        android:id="@+id/logoAlexandria2"
+        android:id="@+id/imagemEventosFuturos"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -31,32 +31,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logoalexandriavirtual" />
+        app:srcCompat="@drawable/cinema" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nomeEventosFuturos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/trocchi"
-        android:text="Nome da atividade"
+        android:text="Cinema"
         android:textColor="#247AE8"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoAlexandria2" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemEventosFuturos" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/horarioInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Horário x - y"
+        android:text="Aberto: 9:00 - 22:00"
         android:textColor="#247AE8"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -65,22 +65,8 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
         app:srcCompat="@drawable/retangulo_azul" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="301dp"
-        android:text="Descrição:"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -91,18 +77,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.432"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/localInfoEvento"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
             android:layout_marginTop="240dp"
-            android:text="Local:"
+            android:text="Local: Auditório Principal"
             android:textColor="#FFFFFF"
             android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/descricaoInfoEvento"
+            android:layout_width="318dp"
+            android:layout_height="207dp"
+            android:layout_marginTop="20dp"
+            android:text="Descrição: O auditório da nossa biblioteca possui uma programação de filmes que são reproduzidos regularmente para aumentar o repertório cultural da nossa unidade, fique atento ao que está passando na parte de eventos do nosso aplicativo!"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
 
 class TelaConfirmReservaUsu : AppCompatActivity() {
     private lateinit var btnConfirmar: Button
@@ -17,13 +15,22 @@ class TelaConfirmReservaUsu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_confirm_reserva_usu)
 
+        btnVoltar = findViewById(R.id.botaoVoltar7)
+        btnConfirmar = findViewById(R.id.Confirmar)
+
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         btnConfirmar.setOnClickListener {
-            val intent = Intent(this, TelaInicioUsu::class.java)
-            startActivity(intent)
+//            replaceFragment(TelaInicioUsu())
         }
     }
+
+//    private fun replaceFragment(fragment: Fragment) {
+//        val fragmentManager = supportFragmentManager
+//        val fragmentTransaction = fragmentManager.beginTransaction()
+//        fragmentTransaction.replace(R.id.main, fragment)
+//        fragmentTransaction.commit()
+//    }
 }

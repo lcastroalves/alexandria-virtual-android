@@ -9,7 +9,7 @@
     android:background="#FFFFFF">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/botaoNotificar"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="44dp"
@@ -38,13 +38,13 @@
         android:layout_marginEnd="66dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
-        app:layout_constraintEnd_toStartOf="@+id/logoAlexandria2"
+        app:layout_constraintEnd_toStartOf="@+id/imagemEventosFuturos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
 
     <ImageView
-        android:id="@+id/logoAlexandria2"
+        android:id="@+id/imagemEventosFuturos"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -52,32 +52,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logoalexandriavirtual" />
+        app:srcCompat="@drawable/totoro" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/nomeEventosFuturos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/trocchi"
-        android:text="Nome do evento"
+        android:text="O meu vizinho totoro"
         android:textColor="#247AE8"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoAlexandria2" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemEventosFuturos" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/horarioInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Horário x - y"
+        android:text="16:00 - 17:30"
         android:textColor="#247AE8"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -86,22 +86,8 @@
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
         app:srcCompat="@drawable/retangulo_azul" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="301dp"
-        android:text="Descrição:"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-        app:layout_constraintTop_toTopOf="@+id/imageView8" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -110,11 +96,23 @@
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.432"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
         app:layout_constraintVertical_bias="0.0">
 
+        <TextView
+            android:id="@+id/descricaoInfoEvento"
+            android:layout_width="348dp"
+            android:layout_height="306dp"
+            android:layout_marginTop="20dp"
+            android:text="Descrição: &quot;Meu Vizinho Totoro&quot; é uma história sobre as irmãs Satsuki e Mei, que se mudam com o pai para uma casa no campo, perto do hospital onde a mãe está internada, e fazem amizade com Totoro, um espírito da floresta que guarda a mata. A animação japonesa do Estúdio Ghibli, de 1988, aborda temas como a relação familiar, a transição para a vida adulta e o escapismo infantil através do folclore japonês e da natureza. "
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

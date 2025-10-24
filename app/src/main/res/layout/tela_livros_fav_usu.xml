@@ -10,10 +10,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout5" />
 
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -52,16 +54,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <SearchView
                 android:id="@+id/searchViewLivros"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:queryHint="Pesquisar"
-                android:iconifiedByDefault="false" />
+                android:iconifiedByDefault="false"
+                android:queryHint="Pesquisar" />
         </LinearLayout>
 
         <ScrollView
@@ -72,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -125,7 +127,6 @@
                             android:src="@drawable/coracao_cheio" />
 
 
-
                     </LinearLayout>
                 </LinearLayout>
 
@@ -148,7 +149,7 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/txtTitulo2"
+                            android:id="@+id/nomeSoliPend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="4dp"
@@ -164,12 +165,13 @@
                             android:textSize="14sp" />
 
                         <TextView
-                            android:id="@+id/txtAutor2"
+                            android:id="@+id/autorSoliPend"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Tanenabaum e wetherall"
                             android:textColor="@android:color/black"
                             android:textSize="14sp" />
+
                         <ImageView
                             android:id="@+id/btnFav1"
                             android:layout_width="28dp"
@@ -224,6 +226,7 @@
                             android:text="Ernane Rosa Martins"
                             android:textColor="@android:color/black"
                             android:textSize="14sp" />
+
                         <ImageView
                             android:id="@+id/btnFav2"
                             android:layout_width="28dp"
