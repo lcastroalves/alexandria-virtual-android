@@ -17,9 +17,9 @@ class ListaEventoAdapter (
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val imagem: ImageView = view.findViewById(R.id.imagemEventoLista)
-        val nome: TextView = view.findViewById(R.id.nome)
-        val data: TextView = view.findViewById(R.id.data)
-        val descricao: TextView = view.findViewById(R.id.descricaoBreve)
+        val nome: TextView = view.findViewById(R.id.nomeEventoLista)
+        val data: TextView = view.findViewById(R.id.dataEventoLista)
+        val descricao: TextView = view.findViewById(R.id.descricaoEventoLista)
     }
 
     override fun onCreateViewHolder(
@@ -27,15 +27,7 @@ class ListaEventoAdapter (
         viewType: Int
     ): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.u_cardview_evento_da_lista, parent, false)
-
-        val viewHolder = ViewHolder(view)
-
-        viewHolder.itemView.setOnClickListener {
-            val position = viewHolder.adapterPosition
-            onClick(eventos[position])
-        }
-
-        return viewHolder
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ListaEventoAdapter.ViewHolder, position: Int) {
@@ -45,6 +37,10 @@ class ListaEventoAdapter (
         holder.nome.text = evento.nome
         holder.data.text = evento.data
         holder.descricao.text = evento.descricao
+
+        holder.imagem.setOnClickListener {
+            onClick(evento)
+        }
     }
 
     override fun getItemCount(): Int {

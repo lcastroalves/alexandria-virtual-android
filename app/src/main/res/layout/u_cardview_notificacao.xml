@@ -11,7 +11,7 @@
         android:padding="0dp">
 
         <TextView
-            android:id="@+id/nome"
+            android:id="@+id/nomeEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
@@ -21,11 +21,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toEndOf="@+id/imagemPerfil"
-            app:layout_constraintTop_toTopOf="@+id/imagemPerfil" />
+            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
+            app:layout_constraintTop_toTopOf="@+id/imagemEventoLista" />
 
         <ImageView
-            android:id="@+id/imagemPerfil"
+            android:id="@+id/imagemEventoLista"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/livro"
@@ -34,18 +34,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tipo"
+            android:id="@+id/dataEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="Tipo"
             android:textColor="#247AE8"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/nome"
-            app:layout_constraintTop_toTopOf="@+id/nome" />
+            app:layout_constraintStart_toEndOf="@+id/nomeEventoLista"
+            app:layout_constraintTop_toTopOf="@+id/nomeEventoLista" />
 
         <TextView
-            android:id="@+id/mensagem"
+            android:id="@+id/descricaoEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -54,22 +54,22 @@
             android:textColor="#247AE8"
             android:textSize="10sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemPerfil"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemEventoLista"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toEndOf="@+id/imagemPerfil"
-            app:layout_constraintTop_toBottomOf="@+id/nome" />
+            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
+            app:layout_constraintTop_toBottomOf="@+id/nomeEventoLista" />
 
         <TextView
-            android:id="@+id/nomeUsu"
+            android:id="@+id/data"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="130dp"
             android:text="Data"
             android:textColor="#247AE8"
             android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/nome"
-            app:layout_constraintTop_toTopOf="@+id/nome" />
+            app:layout_constraintStart_toEndOf="@+id/nomeEventoLista"
+            app:layout_constraintTop_toTopOf="@+id/nomeEventoLista" />
 
         <ImageButton
             android:id="@+id/btnExcluir"
@@ -82,8 +82,8 @@
             android:src="@drawable/x_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/nomeUsu"
-            app:layout_constraintTop_toTopOf="@+id/nomeUsu">
+            app:layout_constraintStart_toEndOf="@+id/data"
+            app:layout_constraintTop_toTopOf="@+id/data">
 
         </ImageButton>
 

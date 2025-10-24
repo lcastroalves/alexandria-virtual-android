@@ -29,7 +29,6 @@ class AdmTelaProdutos : AppCompatActivity() {
         btnExcProd = findViewById(R.id.btnExcProd)
         recyclerView = findViewById(R.id.recyclerView2)
 
-
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }

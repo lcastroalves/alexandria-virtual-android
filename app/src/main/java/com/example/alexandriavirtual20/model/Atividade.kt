@@ -1,10 +1,12 @@
 package com.example.alexandriavirtual20.model
 
-data class Evento (
+data class Atividade (
     var nome : String,
-    var data : String,
     var horario : String,
+    var local : String,
     var descricao : String,
     var breveDescricao : String,
     var imagem : Int
-    )
+)
+
+

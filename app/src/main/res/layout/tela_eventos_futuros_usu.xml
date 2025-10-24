@@ -17,13 +17,13 @@
         android:layout_marginEnd="53dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
-        app:layout_constraintEnd_toStartOf="@+id/imagemInfoAtividade"
+        app:layout_constraintEnd_toStartOf="@+id/imagemEventosFuturos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
 
     <ImageView
-        android:id="@+id/imagemInfoAtividade"
+        android:id="@+id/imagemEventosFuturos"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/logoalexandriavirtual" />
 
     <TextView
-        android:id="@+id/nomeInfoAtividade"
+        android:id="@+id/nomeEventosFuturos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -44,6 +44,15 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagemInfoAtividade" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemEventosFuturos" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyListaEvento"
+        android:layout_width="409dp"
+        android:layout_height="487dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
