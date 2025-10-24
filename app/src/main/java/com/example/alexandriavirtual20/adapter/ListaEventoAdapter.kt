@@ -12,7 +12,7 @@ import com.example.alexandriavirtual20.model.Evento
 class ListaEventoAdapter (
     private val eventos: MutableList<Evento>,
     private val onClick: (Evento) -> Unit
-) :
+) : //Construtor do adapter
     RecyclerView.Adapter<ListaEventoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
@@ -21,7 +21,7 @@ class ListaEventoAdapter (
         val data: TextView = view.findViewById(R.id.dataEventoLista)
         val descricao: TextView = view.findViewById(R.id.descricaoEventoLista)
     }
-
+    //View Holder, recicla variáveis pra não gastar tanta memória com destruição e criação em listas
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -29,6 +29,7 @@ class ListaEventoAdapter (
         val view = LayoutInflater.from(parent.context).inflate(R.layout.u_cardview_evento_da_lista, parent, false)
         return ViewHolder(view)
     }
+    // Inflater "infla" o View Holder com elementos do cardview
 
     override fun onBindViewHolder(holder: ListaEventoAdapter.ViewHolder, position: Int) {
         val evento = eventos[position]

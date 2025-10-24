@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEF5FF"
+        android:padding="15sp">
+
+
+        <TextView
+            android:id="@+id/textoHorario"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="2"
+            android:text="Ernane Rosa Martins"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/horarioEventoListaAdm" />
+
+        <ImageView
+            android:id="@+id/imagemEventoListaAdm"
+            android:layout_width="60dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/livro1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.029" />
+
+        <TextView
+            android:id="@+id/nomeEventoListaAdm"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="3"
+            android:text="Ciência da computação"
+            app:layout_constraintStart_toEndOf="@+id/imagemEventoListaAdm"
+            app:layout_constraintTop_toTopOf="@+id/imagemEventoListaAdm" />
+
+        <TextView
+            android:id="@+id/horarioEventoListaAdm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/montserrat_subrayada_bold"
+            android:text="Horário"
+            android:textSize="10sp"
+            app:layout_constraintBottom_toBottomOf="@id/imagemEventoListaAdm"
+            app:layout_constraintStart_toEndOf="@id/imagemEventoListaAdm" />
+
+        <ImageButton
+            android:id="@+id/botaoEditarEventoListaAdm"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="30dp"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/editing"
+            app:layout_constraintStart_toEndOf="@+id/nomeEventoListaAdm"
+            app:layout_constraintTop_toTopOf="@+id/nomeEventoListaAdm" />
+
+        <CheckBox
+            android:id="@+id/checkBoxEventoListaAdm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.382" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>
