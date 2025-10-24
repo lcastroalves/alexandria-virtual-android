@@ -9,7 +9,7 @@
 
     <!-- Botão Voltar -->
     <ImageButton
-        android:id="@+id/botaoVoltar3"
+        android:id="@+id/botaoVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
@@ -28,9 +28,9 @@
         android:text="Histórico"
         android:textColor="#2279E6"
         android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@id/botaoVoltar3"
-        app:layout_constraintTop_toTopOf="@id/botaoVoltar3"
-        app:layout_constraintBottom_toBottomOf="@id/botaoVoltar3"
+        app:layout_constraintStart_toEndOf="@id/botaoVoltar"
+        app:layout_constraintTop_toTopOf="@id/botaoVoltar"
+        app:layout_constraintBottom_toBottomOf="@id/botaoVoltar"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Barra de Pesquisa -->

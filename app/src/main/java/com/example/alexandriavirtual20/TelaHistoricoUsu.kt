@@ -8,8 +8,6 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 
 class TelaHistoricoUsu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +15,7 @@ class TelaHistoricoUsu : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.tela_historico_usu)
 
-        val btnback: ImageButton = findViewById(R.id.botaoVoltar3)
+        val btnback: ImageButton = findViewById(R.id.botaoVoltar)
         lateinit var searchView: SearchView
         searchView = findViewById(R.id.searchViewLivros)
         val btnFav1: ImageView = findViewById(R.id.btnFav1)
