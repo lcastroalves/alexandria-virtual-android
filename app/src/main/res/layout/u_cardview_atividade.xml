@@ -11,7 +11,7 @@
         android:padding="0dp">
 
         <TextView
-            android:id="@+id/nomeEventoLista"
+            android:id="@+id/nomeAtividadeLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
@@ -23,27 +23,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imagemEventoLista"
+            android:id="@+id/imagemAtividadeLista"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/totoro"
+            android:layout_marginEnd="4dp"
+            android:src="@drawable/cinema"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/dataEventoLista"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:text="Data"
-            android:textColor="#247AE8"
-            android:textSize="10sp"
-            app:layout_constraintStart_toEndOf="@+id/nomeEventoLista"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/descricaoEventoLista"
+            android:id="@+id/descricaoAtividadeLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
@@ -53,7 +44,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeEventoLista" />
+            app:layout_constraintTop_toBottomOf="@+id/nomeAtividadeLista" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
