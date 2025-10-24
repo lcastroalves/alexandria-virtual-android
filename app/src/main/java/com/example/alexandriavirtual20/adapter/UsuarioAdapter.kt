@@ -49,7 +49,7 @@ class UsuarioAdapter(
 
             itemView.setOnClickListener {
                 val novo = !(item.id in selecionados)
-                check.isChecked = novo // dispara o listener acima
+                check.isChecked = novo
             }
         }
     }
