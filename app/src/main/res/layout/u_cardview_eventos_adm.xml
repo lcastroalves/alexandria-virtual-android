@@ -24,7 +24,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/montserrat_medium"
             android:maxLines="2"
-            android:text="Ernane Rosa Martins"
+            android:text="16:00 - 17:30"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/horarioEventoListaAdm" />
@@ -34,7 +34,7 @@
             android:layout_width="60dp"
             android:layout_height="80dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/livro1"
+            android:src="@drawable/totoro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -48,7 +48,7 @@
             android:ellipsize="end"
             android:fontFamily="@font/montserrat_medium"
             android:maxLines="3"
-            android:text="Ciência da computação"
+            android:text="Meu vizinho totoro"
             app:layout_constraintStart_toEndOf="@+id/imagemEventoListaAdm"
             app:layout_constraintTop_toTopOf="@+id/imagemEventoListaAdm" />
 
@@ -71,8 +71,9 @@
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
             android:src="@drawable/editing"
+            app:layout_constraintBottom_toBottomOf="@+id/checkBoxEventoListaAdm"
             app:layout_constraintStart_toEndOf="@+id/nomeEventoListaAdm"
-            app:layout_constraintTop_toTopOf="@+id/nomeEventoListaAdm" />
+            app:layout_constraintTop_toTopOf="@+id/checkBoxEventoListaAdm" />
 
         <CheckBox
             android:id="@+id/checkBoxEventoListaAdm"

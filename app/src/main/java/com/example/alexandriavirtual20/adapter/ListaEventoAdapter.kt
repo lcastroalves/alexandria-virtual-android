@@ -16,7 +16,7 @@ class ListaEventoAdapter (
     RecyclerView.Adapter<ListaEventoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view){
-        val imagem: ImageView = view.findViewById(R.id.imagemEventoLista)
+        val imagem: ImageView = view.findViewById(R.id.imagemAddAdm)
         val nome: TextView = view.findViewById(R.id.nomeEventoLista)
         val data: TextView = view.findViewById(R.id.dataEventoLista)
         val descricao: TextView = view.findViewById(R.id.descricaoEventoLista)

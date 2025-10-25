@@ -45,7 +45,7 @@
         app:srcCompat="@drawable/retangulo_azul" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/addImagemEvento"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="-20dp"
@@ -135,13 +135,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tituloEditarEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Título" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/botaoEntrar3"
+            android:id="@+id/botaoSalvarEditarEvento"
             android:layout_width="140dp"
             android:layout_height="56dp"
             android:layout_marginTop="3dp"

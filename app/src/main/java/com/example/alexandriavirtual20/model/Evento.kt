@@ -6,5 +6,6 @@ data class Evento (
     var horario : String,
     var descricao : String,
     var breveDescricao : String,
-    var imagem : Int
+    var imagem : Int,
+    var isSelected: Boolean = false
     )

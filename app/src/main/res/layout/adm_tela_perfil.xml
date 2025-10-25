@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".AdmTelaPerfil">
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/botaoEditarImagemAdm"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="fitCenter"
@@ -24,7 +24,7 @@
             app:srcCompat="@drawable/editing" />
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/fotoPerfilAdm"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_marginTop="10dp"
@@ -32,7 +32,7 @@
             android:clipToOutline="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton"
+            app:layout_constraintTop_toBottomOf="@+id/botaoEditarImagemAdm"
             app:srcCompat="@drawable/dillan">
 
         </ImageView>
@@ -48,7 +48,7 @@
             android:textSize="25sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9">
+            app:layout_constraintTop_toBottomOf="@+id/fotoPerfilAdm">
 
         </TextView>
 
@@ -91,7 +91,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/botaoFav"
+                android:id="@+id/botaoAddAdm"
                 android:layout_width="wrap_content"
                 android:layout_height="78dp"
                 android:layout_marginBottom="10dp"
