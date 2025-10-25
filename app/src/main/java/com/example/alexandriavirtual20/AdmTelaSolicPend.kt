@@ -1,10 +1,21 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.Solicitacao
+import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,6 +34,63 @@ class AdmTelaSolicPend : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        class TelaSolicitacoesPendentes : AppCompatActivity() {
+            override fun onCreate(savedInstanceState: Bundle?) {
+                super.onCreate(savedInstanceState)
+                enableEdgeToEdge()
+                setContentView(R.layout.adm_tela_solic_pend)
+
+                val btnBack = findViewById<ImageButton>(R.id.btnBack)
+                val recycler = findViewById<RecyclerView>(R.id.recyclerSolicitacoes)
+                val btnPendentes = findViewById<TextView>(R.id.tabPendentes)
+                val btnUsuarios = findViewById<TextView>(R.id.tabUsuarios)
+
+                btnPendentes.setOnClickListener {
+                    val intencao = Intent(this, AdmTelaUsuCadast::class.java)
+                    startActivity(intencao)
+                }
+
+                btnBack.setOnClickListener { finish() }
+
+                val solicitacoes = listOf(
+                    Solicitacao(
+                        "Ciências da Computação", "Ername Rosa Martins",
+                        "Felipe Barroso", "felipebvm@gmail.com",
+                        "09 de Set", "12 de Set", "Balcão da Biblioteca",
+                        R.drawable.livro1
+                    ),
+                    Solicitacao(
+                        "Java Avançado", "Paul J. Deitel",
+                        "Lucas Silva", "lucas@gmail.com",
+                        "15 de Set", "18 de Set", "Balcão da Biblioteca",
+                        R.drawable.livro2
+                    )
+                )
+
+                recycler.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+                recycler.adapter = SolicitacaoAdapter(
+                    solicitacoes,
+                    onAutorizar = { solicitacao ->
+                        Toast.makeText(
+                            this,
+                            "Retirada autorizada para ${solicitacao.usuario}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    },
+                    onRecusar = { solicitacao ->
+                        Toast.makeText(
+                            this,
+                            "Solicitação recusada de ${solicitacao.usuario}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                )
+
+                // Faz parar um item por vez (scroll estilo “página”)
+                PagerSnapHelper().attachToRecyclerView(recycler)
+            }
+        }
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
