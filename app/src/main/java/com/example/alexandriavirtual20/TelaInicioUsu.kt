@@ -72,10 +72,10 @@ class TelaInicioUsu : Fragment() {
         btnCap = view.findViewById(R.id.btnCap)
 
         val livros = mutableListOf(
-            Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1, "4.5"),
-            Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2, "4.0"),
-            Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3, "4.3"),
-            Livro("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro4, "4.6")
+            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro1, "4.5"),
+            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro2, "4.0"),
+            Livro("Ciência da computação","", "Ernane Rosa Martins", R.drawable.livro3, "4.3"),
+            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro4, "4.6")
         )
 
         val eventos = mutableListOf(

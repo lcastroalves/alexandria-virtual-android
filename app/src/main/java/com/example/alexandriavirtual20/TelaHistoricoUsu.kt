@@ -8,24 +8,31 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.LivroAdapterHistorico
+import com.example.alexandriavirtual20.model.Livro
 
 class TelaHistoricoUsu : AppCompatActivity() {
+
+
+    private lateinit var btnVoltar : ImageButton
+    private lateinit var searchView: SearchView
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_historico_usu)
 
-        val btnback: ImageButton = findViewById(R.id.botaoVoltar)
-        lateinit var searchView: SearchView
+        btnVoltar= findViewById(R.id.botaoVoltar)
         searchView = findViewById(R.id.searchViewLivros)
-        val btnFav1: ImageView = findViewById(R.id.btnFav1)
-        val btnFav2: ImageView = findViewById(R.id.btnFav2)
-        var isFavorited = false
+        recyclerView = findViewById(R.id.recyclerView)
 
-        btnback.setOnClickListener {
-            var intencao = Intent(this, TelaMenuEmprestUsu::class.java)
-            startActivity(intencao)
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Quando o usuário pressiona ENTER / Buscar
@@ -44,21 +51,38 @@ class TelaHistoricoUsu : AppCompatActivity() {
                 return true
             }
         })
-        btnFav1.setOnClickListener {
-            if (isFavorited) {
-                btnFav1.setImageResource(R.drawable.coracao_vazio) // muda para vazio
-            } else {
-                btnFav1.setImageResource(R.drawable.coracao_cheio) // volta a ficar cheio
+
+        val livros = mutableListOf(
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro," (30 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro2," (10 avaliações)",false),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro1," (60 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro3," (100 avaliações)",false),
+            Livro("Ciencia da computação","e tecnologias digitais","Lupi Barroso Bvm",R.drawable.livro4," (1000 avaliações)",true)
+
+
+        )
+
+        val adapterLivro = LivroAdapterHistorico(
+            livros,
+            onInfoClick = { livro ->
+                val intent = Intent(this, TelaInfoLivroUsu::class.java)
+                startActivity(intent)
+            },
+            onReviewClick = { livro ->
+                val intent = Intent(this, TelaReviewUsu::class.java)
+                startActivity(intent)
+            },
+            onFavotiroClick = { livro ->
+                Toast.makeText(this,"Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
             }
-            isFavorited = !isFavorited
-        }
-        btnFav2.setOnClickListener {
-            if (isFavorited) {
-                btnFav2.setImageResource(R.drawable.coracao_vazio) // muda para vazio
-            } else {
-                btnFav2.setImageResource(R.drawable.coracao_cheio) // volta a ficar cheio
-            }
-            isFavorited = !isFavorited
-        }
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapterLivro
+
+
     }
+
+
+
 }

@@ -5,12 +5,15 @@ import android.os.Parcelable
 
 data class Livro(
     val titulo: String,
+    val subtitulo: String,
     val autor: String,
     val imagem: Int,
-    val avaliacao: String
+    val avaliacao: String,          // talvez mudar para int depois
+    var favorito: Boolean = false
 )
     : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readInt(),
@@ -19,6 +22,7 @@ data class Livro(
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(titulo)
+        parcel.writeString(subtitulo)
         parcel.writeString(autor)
         parcel.writeInt(imagem)
         parcel.writeString(avaliacao)
