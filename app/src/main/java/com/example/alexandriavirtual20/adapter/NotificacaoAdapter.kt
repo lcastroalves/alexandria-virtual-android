@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
@@ -39,6 +40,17 @@ class NotificacaoAdapter (
         holder.tipo.text = notificacao.tipo
         holder.data.text = notificacao.data
         holder.mensagem.text = notificacao.mensagem
+
+        if (notificacao.prazo == 1) {
+            val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
+            holder.mensagem.setTextColor(redColor)
+        } else if (notificacao.prazo == 2) {
+            val yellowColor = ContextCompat.getColor(holder.itemView.context, R.color.yellow)
+            holder.mensagem.setTextColor(yellowColor)
+        } else {
+            val greenColor = ContextCompat.getColor(holder.itemView.context, R.color.green)
+            holder.mensagem.setTextColor(greenColor)
+        }
 
         holder.btnExcluir.setOnClickListener {
             onExcluirClick?.invoke(notificacao)

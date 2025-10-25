@@ -30,64 +30,67 @@
             android:id="@+id/nomeSoliPend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-140dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginStart="100dp"
             android:text="Java como Programar"
+            android:textColor="#247AE8"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemSoliPend"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/imagemSoliPend" />
 
         <TextView
             android:id="@+id/avaliacaoSoliPend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-190dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="10dp"
             android:text="⭐ 105 avaliações"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemSoliPend"
-            app:layout_constraintTop_toBottomOf="@+id/nomeSoliPend" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/subtituloSoliPend" />
 
         <TextView
             android:id="@+id/autorSoliPend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-200dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginStart="100dp"
             android:text="Paul J. Deitel"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemSoliPend"
-            app:layout_constraintTop_toBottomOf="@+id/avaliacaoSoliPend" />
+            app:layout_constraintBottom_toBottomOf="@+id/imagemSoliPend"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/botaoSoliPend"
             android:layout_width="88dp"
             android:layout_height="56dp"
-            android:layout_marginTop="76dp"
-            android:layout_marginEnd="-200dp"
+            android:layout_marginEnd="20dp"
             android:backgroundTint="#247AE8"
             android:fontFamily="@font/montserrat_medium"
             android:text="OK"
             android:textSize="25dp"
             android:visibility="visible"
             app:cornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.512"
-            app:layout_constraintStart_toEndOf="@+id/imagemSoliPend"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toBottomOf="@+id/imagemSoliPend"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/pendenteSoliPend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="42dp"
-            app:layout_constraintStart_toEndOf="@+id/nomeSoliPend"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/nomeSoliPend"
             app:srcCompat="@drawable/negado" />
+
+        <TextView
+            android:id="@+id/subtituloSoliPend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="10dp"
+            android:text="Subtitulo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeSoliPend" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
