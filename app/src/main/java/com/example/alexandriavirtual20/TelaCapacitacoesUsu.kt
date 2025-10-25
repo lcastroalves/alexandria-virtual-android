@@ -14,9 +14,7 @@ class TelaCapacitacoesUsu : AppCompatActivity() {
 
         val botaoVoltar = findViewById<ImageButton>(R.id.botaoVoltar)
         botaoVoltar.setOnClickListener{
-            val intent = Intent(this, TelaInicioUsu::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 }

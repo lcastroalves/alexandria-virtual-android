@@ -89,7 +89,7 @@
             android:exported="true" />
         <activity
             android:name=".TelaReviewUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaMeusLivrosUsu"
             android:exported="true" />

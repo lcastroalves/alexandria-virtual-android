@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#EEF5FF"
+        android:padding="15sp">
+
+
+        <ImageView
+            android:id="@+id/capaEvento"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="10dp"
+            android:src="@drawable/totoro"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="2"
+            android:textColor="#247AE8"
+            android:text="O meu vizinho Totoro "
+            app:layout_constraintStart_toEndOf="@+id/capaEvento"
+            app:layout_constraintTop_toTopOf="@+id/capaEvento" />
+
+        <TextView
+            android:id="@+id/data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16 Set"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/horario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16:00 - 17:30"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/textView29"
+            app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+        <ImageView
+            android:id="@+id/textView29"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/map_pin"
+            app:layout_constraintStart_toEndOf="@+id/capaEvento"
+            app:layout_constraintTop_toBottomOf="@+id/horario" />
+
+        <TextView
+            android:id="@+id/local"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/montserrat_medium"
+            android:maxLines="2"
+            android:text="Auditorio Principal"
+            android:textSize="12sp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/textView29"
+            app:layout_constraintStart_toEndOf="@+id/textView29"
+            app:layout_constraintTop_toTopOf="@+id/textView29" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.cardview.widget.CardView>

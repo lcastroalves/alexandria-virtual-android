@@ -2,15 +2,10 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.ImageButton
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alexandriavirtual20.adapter.CabineAdapter
 import com.example.alexandriavirtual20.adapter.CabineAdmAdapter
-import com.example.alexandriavirtual20.model.Cabine
 import com.example.alexandriavirtual20.model.CabineAdm
 
 class AdmTelaCabReservHorEsp : AppCompatActivity() {
@@ -24,6 +19,7 @@ class AdmTelaCabReservHorEsp : AppCompatActivity() {
 
         rv = findViewById(R.id.rvCabines)
         btnVoltar = findViewById(R.id.imageButton4)
+        adapter = CabineAdmAdapter()
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(this)

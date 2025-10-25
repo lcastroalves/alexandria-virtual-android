@@ -29,10 +29,10 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         btnVoltar = findViewById(R.id.botaoVoltar4)
         btnEditImg = findViewById(R.id.btnEdit2)
         imgPerfil = findViewById(R.id.logo)
-        editNome = findViewById(R.id.txNome)
-        editUsuario = findViewById(R.id.txUsuario)
-        editEmail = findViewById(R.id.txEmail)
-        editSenha = findViewById(R.id.txSenha)
+        editNome = findViewById(R.id.etNome)
+        editUsuario = findViewById(R.id.etUsuario)
+        editEmail = findViewById(R.id.etEmail)
+        editSenha = findViewById(R.id.etSenha)
         btnSalvar = findViewById(R.id.btnSalvar)
 
         abrirGaleria = registerForActivityResult(
@@ -52,10 +52,10 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         }
 
         btnSalvar.setOnClickListener {
-            val nome = editNome.text.toString()
-            val usuario = editUsuario.text.toString()
-            val email = editEmail.text.toString()
-            val senha = editSenha.text.toString()
+            val nome    = editNome.text?.toString().orEmpty()
+            val usuario = editUsuario.text?.toString().orEmpty()
+            val email   = editEmail.text?.toString().orEmpty()
+            val senha   = editSenha.text?.toString().orEmpty()
 
             Toast.makeText(this, "Alteração salva", Toast.LENGTH_SHORT).show()
         }
