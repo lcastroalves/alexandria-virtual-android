@@ -70,23 +70,23 @@ class TelaEmprestLivrosUsu : Fragment() {
         val livros = listOf(
 
             Livro(
-                "Ciência da Computação e Tecnologias Digitais",
+                "Ciência da Computação e Tecnologias Digitais","",
                 "Ernane Rosa Martins",
                 R.drawable.livro1,
                 "⭐ 130 avaliações"
             ),
-            Livro("Java Como Programar",
+            Livro("Java Como Programar","",
                 "Paul J. Deitel",
                 R.drawable.livro2,
                 "⭐ 105 avaliações"),
             Livro(
-                "Java como Programar",
+                "Java como Programar","",
                 "Paul J. Deitel",
                 R.drawable.livro3,
                 "⭐ 200 avaliações",
 
                 ),
-            Livro("Redes de Computadores",
+            Livro("Redes de Computadores","",
                 "Tanenbaum & Wetherall",
                 R.drawable.livro4,
                 "⭐ 250 avaliações"
