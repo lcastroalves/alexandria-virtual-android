@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    android:elevation="3dp">
+
+    <ImageView
+        android:id="@+id/imgLivro"
+        android:layout_width="120dp"
+        android:layout_height="160dp"
+        android:src="@drawable/livro2"
+        android:scaleType="fitXY"
+        android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Solicitação em Andamento"
+        android:textColor="#247AE8"
+        android:textSize="14sp"
+        android:layout_marginTop="4dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="09 de Set"
+        android:textSize="12sp"
+        android:textColor="#888888"
+        android:layout_marginBottom="8dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtTituloLivro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Java como Programar"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginTop="4dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtAutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Autor: Paul Deitel"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/txtUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Usuário: Felipe Barroso"
+        android:textSize="14sp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email: felipebvm@gmail.com"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/txtPrazo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data limite: 12 de Set"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txtLocal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local: Balcão da Biblioteca"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/btnAutorizar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="AUTORIZAR RETIRADA"
+        android:textAllCaps="false"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="8dp" />
+
+    <Button
+        android:id="@+id/btnRecusar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RECUSAR SOLICITAÇÃO"
+        android:textAllCaps="false"
+        android:backgroundTint="#F44336"
+        android:textColor="#FFFFFF" />
+</LinearLayout>
