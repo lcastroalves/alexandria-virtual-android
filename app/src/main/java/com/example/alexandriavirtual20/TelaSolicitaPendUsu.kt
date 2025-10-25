@@ -25,9 +25,9 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
         }
 
         val soliPends = mutableListOf(
-            SoliPend("Ciência da computação - ", "5 estrelas", "Dillan", R.drawable.livro1, true),
-            SoliPend("Ciência da computação - ", "2 estrelas", "Lara",  R.drawable.livro2, false),
-            SoliPend("Ciência da computação - ", "2 estrelas", "Nicolly",  R.drawable.livro4, true)
+            SoliPend("Ciência da computação", "e tecnologias digitais","5 estrelas", "Ernane Rosa Martins", R.drawable.livro1, true),
+            SoliPend("Java como programar", "","2 estrelas", "Paul J. Deitel",  R.drawable.livro2, false),
+            SoliPend("Redes de computadores", "","2 estrelas", "Tanenbaum e Wetherall",  R.drawable.livro4, true)
             )
 
         var adapter: SoliPendAdapter? = null

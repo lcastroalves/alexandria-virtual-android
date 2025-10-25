@@ -4,10 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alexandriavirtual20.adapter.ListaEventoAdapter
+import com.example.alexandriavirtual20.adapter.ListaEventoAdmAdapter
 import com.example.alexandriavirtual20.model.Evento
 
 class AdmTelaEventos : AppCompatActivity() {
@@ -39,11 +40,20 @@ class AdmTelaEventos : AppCompatActivity() {
             Evento(R.drawable.kiki, "23/09/2025", "23/09/2025","16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",true, "Auditório")
         )
 
-        var adapter: ListaEventoAdapter? = null
+        var adapter: ListaEventoAdmAdapter? = null
 
-        adapter = ListaEventoAdapter(eventos) { evento ->
+        adapter = ListaEventoAdmAdapter(eventos) { evento ->
             val intent = Intent(this, TelaInfoEventoUsu::class.java)
             startActivity(intent)
+        }
+
+        btnExcluir.setOnClickListener {
+            if (adapter.isEmpty()) {
+                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                adapter.excluirSelecionados()
+            }
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)

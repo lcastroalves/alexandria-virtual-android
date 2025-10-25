@@ -24,49 +24,50 @@
         android:id="@+id/nomeEventosFuturos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="90dp"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/trocchi"
         android:text="Editar evento"
         android:textColor="#247AE8"
         android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView12"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="40dp"
+        android:id="@+id/imagemEventoEdit"
+        android:layout_width="113dp"
+        android:layout_height="122dp"
+        android:contentDescription="@string/contDescLogo"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos"
-        app:srcCompat="@drawable/retangulo_azul" />
+        app:srcCompat="@drawable/totoro" />
 
     <ImageButton
-        android:id="@+id/addImagemEvento"
+        android:id="@+id/editImagemEvento"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="-20dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-10dp"
+        android:layout_marginEnd="50dp"
         android:background="@android:color/transparent"
         android:contentDescription="editar imagem evento"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
-        app:layout_constraintTop_toTopOf="@+id/imageView12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imagemEventoEdit"
+        app:layout_constraintTop_toTopOf="@+id/imagemEventoEdit"
         app:srcCompat="@drawable/editprofile" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout2"
         android:layout_width="409dp"
         android:layout_height="487dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView12">
+        app:layout_constraintStart_toStartOf="parent">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout14"

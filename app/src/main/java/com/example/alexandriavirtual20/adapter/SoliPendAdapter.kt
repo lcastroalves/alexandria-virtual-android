@@ -22,6 +22,8 @@ class SoliPendAdapter (
         val nome: TextView = view.findViewById(R.id.nomeSoliPend)
         val autor: TextView = view.findViewById(R.id.autorSoliPend)
         val avaliacao: TextView = view.findViewById(R.id.avaliacaoSoliPend)
+        val subtitulo: TextView = view.findViewById(R.id.subtituloSoliPend)
+
         val pendenteImagem: ImageView = view.findViewById(R.id.pendenteSoliPend)
         val btnOk: Button = view.findViewById(R.id.botaoSoliPend)
 
@@ -42,6 +44,7 @@ class SoliPendAdapter (
         holder.nome.text = soliPend.nome
         holder.autor.text = soliPend.autor
         holder.avaliacao.text = soliPend.avaliacao
+        holder.subtitulo.text = soliPend.subtitulo
 
 
         if (soliPend.pendente) {
@@ -52,6 +55,8 @@ class SoliPendAdapter (
         }
         else {
             holder.pendenteImagem.setImageResource(R.drawable.negado)
+
+            holder.btnOk.visibility = View.VISIBLE
 
             holder.btnOk.setOnClickListener {
                 removerSoliPend(soliPend)

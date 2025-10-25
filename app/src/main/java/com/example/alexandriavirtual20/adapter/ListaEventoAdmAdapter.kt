@@ -56,6 +56,10 @@ class ListaEventoAdmAdapter (
         notifyDataSetChanged()                      // Depois que a lista muda, o Adapter precisa ser avisado para redesenhar a tela
     }
 
+    fun isEmpty(): Boolean {
+        return eventos.none { it.isSelected }
+    }
+
     override fun getItemCount(): Int {
         return eventos.size
     }

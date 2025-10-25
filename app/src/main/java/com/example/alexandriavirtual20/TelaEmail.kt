@@ -33,8 +33,12 @@ class TelaEmail : AppCompatActivity() {
 
             if (email.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
-            } else if (email == "alexandria@gmail.com") {
+            }
+            else if (email == "alexandria@gmail.com") {
                 Toast.makeText(this, "E-mail enviado!", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this, "E-mail inválido", Toast.LENGTH_SHORT).show()
             }
 
         }

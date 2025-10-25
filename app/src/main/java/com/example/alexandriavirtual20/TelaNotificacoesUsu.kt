@@ -26,11 +26,9 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         }
 
         val notificacoes = mutableListOf(
-            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro1),
-            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro2),
-            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro3),
-            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução", R.drawable.livro4),
-
+            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução",  1,R.drawable.livro1),
+            Notificacao("Meu vizinho totoro - ", "Evento", "16 set", "Falta uma semana para realização do evento", 1,R.drawable.totoro),
+            Notificacao("Java como programar - ", "Devolução", "23 set", "Faltam duas semanas para fim do prazo de devolução",2, R.drawable.livro3),
         )
 
         var adapter: NotificacaoAdapter? = null
@@ -49,5 +47,3 @@ class TelaNotificacoesUsu : AppCompatActivity() {
 
 //A tela de notificações deverá receber informações de tempo, através de atributos de outros objetos, como prazo de devolução de um livro ou data de eventos (eventos).
 //A tela de notificações deverá exibir as notificações por ordem de proximidade de data
-//A tela de notificações deverá exibir 3 tipos de dados: O evento é hoje / faltam (1 - 6) dias / faltam x semana(s) para o evento
-//A tela de notificações deverá exibir imagem do evento/título do evento/data do evento/um x para remoção do evento

@@ -6,8 +6,8 @@
     android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="154dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:padding="0dp">
 
         <TextView
@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/imagemAddAdm"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/totoro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,16 +39,17 @@
             android:text="Data"
             android:textColor="#247AE8"
             android:textSize="10sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/nomeEventoLista"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/descricaoEventoLista"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:text="Descrição"
-            android:textColor="#247AE8"
+            android:textColor="#000000"
             android:textSize="10sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

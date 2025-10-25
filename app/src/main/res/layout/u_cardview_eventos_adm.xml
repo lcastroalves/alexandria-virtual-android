@@ -17,8 +17,8 @@
 
 
         <TextView
-            android:id="@+id/textoHorario"
-            android:layout_width="150dp"
+            android:id="@+id/horarioEventoListaAdm"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:ellipsize="end"
@@ -27,7 +27,7 @@
             android:text="16:00 - 17:30"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/horarioEventoListaAdm" />
+            app:layout_constraintStart_toEndOf="@+id/textoHorario" />
 
         <ImageView
             android:id="@+id/imagemEventoListaAdm"
@@ -53,15 +53,17 @@
             app:layout_constraintTop_toTopOf="@+id/imagemEventoListaAdm" />
 
         <TextView
-            android:id="@+id/horarioEventoListaAdm"
+            android:id="@+id/textoHorario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/montserrat_subrayada_bold"
-            android:text="Horário"
-            android:textSize="10sp"
+            android:text="Horário:"
+            android:textSize="12sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/imagemEventoListaAdm"
-            app:layout_constraintStart_toEndOf="@id/imagemEventoListaAdm" />
+            app:layout_constraintStart_toEndOf="@id/imagemEventoListaAdm"
+            app:layout_constraintTop_toTopOf="@+id/horarioEventoListaAdm" />
 
         <ImageButton
             android:id="@+id/botaoEditarEventoListaAdm"

@@ -5,5 +5,6 @@ data class Notificacao (
     var tipo: String,
     var data: String,
     var mensagem: String,
+    var prazo: Int,
     var imagem: Int
 )
