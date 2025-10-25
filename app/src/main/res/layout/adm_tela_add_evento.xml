@@ -45,7 +45,7 @@
         app:srcCompat="@drawable/retangulo_azul" />
 
     <ImageButton
-        android:id="@+id/imageButton6"
+        android:id="@+id/addImagemEvento"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="-20dp"
@@ -79,7 +79,7 @@
                 android:hint="Título">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_titulo"
+                    android:id="@+id/addTituloEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -92,7 +92,7 @@
                 android:hint="Data">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_data"
+                    android:id="@+id/addDataEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -105,7 +105,7 @@
                 android:hint="Horário">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_horario"
+                    android:id="@+id/addHorarioEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -118,12 +118,13 @@
                 android:hint="Descrição">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edit_descricao"
+                    android:id="@+id/addDescricaoEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addDescricaoBreveEvento"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -137,7 +138,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_salvar"
+                android:id="@+id/salvarEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"

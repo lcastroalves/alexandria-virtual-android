@@ -1,7 +1,6 @@
 package com.example.alexandriavirtual20
 
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -59,7 +58,7 @@ class TelaPerfilUsu : Fragment() {
         fotoPerfil = view.findViewById(R.id.fotoPerfil)
         btnInfoPessoais = view.findViewById(R.id.botaoInfoPes)
         btnHistoricoLeit = view.findViewById(R.id.botaoHistorLeitur)
-        btnFav = view.findViewById(R.id.botaoFav)
+        btnFav = view.findViewById(R.id.botaoAddAdm)
         btnSair = view.findViewById(R.id.botaoSair)
 
         abrirGaleria = registerForActivityResult(

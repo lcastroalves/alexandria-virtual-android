@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/botaoEnviar2"
+        android:id="@+id/botaoAdEvento"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginStart="175dp"
@@ -41,14 +41,16 @@
         android:id="@+id/solicitacoesPendentes2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="-34dp"
         android:layout_marginEnd="200dp"
+        android:fontFamily="@font/trocchi"
         android:text="Eventos"
         android:textColor="#2279E6"
-        android:textSize="32sp"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/botaoVoltar2"
+        app:layout_constraintTop_toTopOf="@+id/botaoVoltar2" />
 
     <ImageButton
         android:id="@+id/botaoVoltar2"
@@ -62,31 +64,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon" />
 
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="344dp"
-        android:layout_height="160dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchViewLivros"
-        app:srcCompat="@drawable/linear_layout_borda" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="77dp"
-        android:layout_height="66dp"
-        android:layout_marginStart="-200dp"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView10"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
-        app:layout_constraintVertical_bias="0.449"
-        app:srcCompat="@drawable/logoalexandriavirtual" />
-
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/botaoExcluirEventos"
         android:layout_width="48dp"
         android:layout_height="53dp"
         android:layout_marginTop="172dp"
@@ -97,41 +76,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/trash_2" />
 
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-50dp"
-        android:layout_marginTop="40dp"
-        android:text="Nome do evento"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="-80dp"
-        android:layout_marginTop="96dp"
-        android:text="Horário"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10" />
-
-    <ImageButton
-        android:id="@+id/imageButton5"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="48dp"
-        android:background="@color/white"
-        android:contentDescription="Editar evento"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
-        app:srcCompat="@drawable/editprofile" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyListaEventoAdm"
+        android:layout_width="409dp"
+        android:layout_height="504dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botaoExcluirEventos" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

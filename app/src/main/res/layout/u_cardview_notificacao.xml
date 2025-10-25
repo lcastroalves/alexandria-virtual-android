@@ -21,11 +21,11 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.053"
-            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
-            app:layout_constraintTop_toTopOf="@+id/imagemEventoLista" />
+            app:layout_constraintStart_toEndOf="@+id/imagemAddAdm"
+            app:layout_constraintTop_toTopOf="@+id/imagemAddAdm" />
 
         <ImageView
-            android:id="@+id/imagemEventoLista"
+            android:id="@+id/imagemAddAdm"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/livro"
@@ -54,14 +54,14 @@
             android:textColor="#247AE8"
             android:textSize="10sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemEventoLista"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemAddAdm"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toEndOf="@+id/imagemEventoLista"
+            app:layout_constraintStart_toEndOf="@+id/imagemAddAdm"
             app:layout_constraintTop_toBottomOf="@+id/nomeEventoLista" />
 
         <TextView
-            android:id="@+id/data"
+            android:id="@+id/nomeAddAdm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="130dp"
@@ -82,8 +82,8 @@
             android:src="@drawable/x_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/data"
-            app:layout_constraintTop_toTopOf="@+id/data">
+            app:layout_constraintStart_toEndOf="@+id/nomeAddAdm"
+            app:layout_constraintTop_toTopOf="@+id/nomeAddAdm">
 
         </ImageButton>
 

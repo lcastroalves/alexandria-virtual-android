@@ -55,7 +55,7 @@
             android:layout_height="75dp">
 
             <SearchView
-                android:id="@+id/searchView2"
+                android:id="@+id/pesquisaAddAdm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -80,7 +80,7 @@
                 android:src="@drawable/trash_vector"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/searchView2"
+                app:layout_constraintStart_toEndOf="@+id/pesquisaAddAdm"
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

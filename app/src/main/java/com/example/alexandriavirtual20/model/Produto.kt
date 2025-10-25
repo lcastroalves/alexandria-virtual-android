@@ -8,4 +8,3 @@ data class Produto (
     var imageRes: Int,
     var isSelected: Boolean = false
 )
-

@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imagemEventoLista"
+            android:id="@+id/imagemAddAdm"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/totoro"

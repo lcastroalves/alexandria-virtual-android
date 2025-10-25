@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.media.Image
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
