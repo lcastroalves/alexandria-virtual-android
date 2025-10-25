@@ -34,9 +34,9 @@ class AdmTelaEventos : AppCompatActivity() {
         }
 
         val eventos = mutableListOf(
-            Evento("Meu vizinho totoro - ", "16/09/2025", "16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30",R.drawable.totoro),
-            Evento("Palestra Carl Sagan - ", "16/09/2025", "20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21",R.drawable.cosmos),
-            Evento("O serviço de entregas da kiki - ", "23/09/2025", "16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",R.drawable.kiki),
+            Evento(R.drawable.totoro,"Meu vizinho totoro - ", "16/09/2025", "16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", true, "Auditório"),
+            Evento(R.drawable.cosmos, "16/09/2025","16/09/2025", "20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21",true, "Auditório"),
+            Evento(R.drawable.kiki, "23/09/2025", "23/09/2025","16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",true, "Auditório")
         )
 
         var adapter: ListaEventoAdapter? = null
