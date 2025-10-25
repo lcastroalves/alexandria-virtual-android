@@ -11,11 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.CabineAdm
-import com.google.android.material.card.MaterialCardView
 
-class CabineAdmAdapter(
-    private val onItemClick: (CabineAdm) -> Unit
-) : ListAdapter<CabineAdm, CabineAdmAdapter.VH>(Diff) {
+class CabineAdmAdapter() : ListAdapter<CabineAdm, CabineAdmAdapter.VH>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<CabineAdm>() {
         override fun areItemsTheSame(oldItem: CabineAdm, newItem: CabineAdm) = oldItem.id == newItem.id
@@ -23,7 +20,6 @@ class CabineAdmAdapter(
     }
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view) {
-        private val card: MaterialCardView = view.findViewById(R.id.cardExemplo)
         private val foto: ImageView = view.findViewById(R.id.fotoPerfil2)
         private val tvNome: TextView = view.findViewById(R.id.tvCabineNome)
         private val tvCab: TextView = view.findViewById(R.id.tvCabineBloco)

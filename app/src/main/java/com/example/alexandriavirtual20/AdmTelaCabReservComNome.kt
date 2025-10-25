@@ -19,6 +19,7 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
 
         rv = findViewById(R.id.rvCabines)
         btnVoltar = findViewById(R.id.imageButton4)
+        adapter = CabineAdmAdapter()
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(this)

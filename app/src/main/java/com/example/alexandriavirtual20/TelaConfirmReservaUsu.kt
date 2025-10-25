@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -21,14 +22,8 @@ class TelaConfirmReservaUsu : AppCompatActivity() {
         }
 
         btnConfirmar.setOnClickListener {
-//            replaceFragment(TelaInicioUsu())
+//           val intent = Intent(this, TelaReservaCabUsu::class.java)
+//            startActivity(intent)
         }
     }
-
-//    private fun replaceFragment(fragment: Fragment) {
-//        val fragmentManager = supportFragmentManager
-//        val fragmentTransaction = fragmentManager.beginTransaction()
-//        fragmentTransaction.replace(R.id.main, fragment)
-//        fragmentTransaction.commit()
-//    }
 }
