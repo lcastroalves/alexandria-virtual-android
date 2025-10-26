@@ -49,6 +49,7 @@
                 android:id="@+id/btnSinoNotif"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="6dp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/bell" />
 
@@ -57,6 +58,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:background="@drawable/circulo_vermelho_notifcacao"
                 android:text="3"
                 android:textStyle="bold"
