@@ -40,14 +40,30 @@
 
         </TextView>
 
-        <ImageButton
-            android:id="@+id/btnSinoNotif"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="70dp"
-            android:layout_marginTop="7dp"
-            android:background="@android:color/transparent"
-            android:src="@drawable/bell" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="70dp">
+
+            <ImageButton
+                android:id="@+id/btnSinoNotif"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/bell" />
+
+            <TextView
+                android:id="@+id/qntNotific"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="end"
+                android:background="@drawable/circulo_vermelho_notifcacao"
+                android:text="3"
+                android:textStyle="bold"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:textSize="15sp"/>
+        </FrameLayout>
     </LinearLayout>
 
     <ScrollView
