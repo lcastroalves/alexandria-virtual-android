@@ -49,8 +49,7 @@ class TelaReviewUsu : AppCompatActivity() {
         btnEnviar = findViewById(R.id.btnEnviar)
         txtNotaGeral = findViewById(R.id.txtNotaGeral)
         btnBack.setOnClickListener {
-            var intencao = Intent(this, TelaMeusLivrosUsu::class.java )
-            startActivity(intencao)
+            onBackPressedDispatcher.onBackPressed()
         }
         estrelas = listOf(
             findViewById(R.id.estrela1),

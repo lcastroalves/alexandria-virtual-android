@@ -56,8 +56,7 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         recyclerView.adapter = ComentarioAdapter(comentarios)
 
         btnvoltar.setOnClickListener {
-            val intencao = Intent(this, TelaEmprestLivrosUsu::class.java)
-            startActivity(intencao)
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 }

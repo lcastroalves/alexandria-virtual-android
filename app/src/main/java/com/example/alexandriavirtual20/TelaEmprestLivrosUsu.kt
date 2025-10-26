@@ -108,9 +108,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         }
 
         btnBack.setOnClickListener {
-            val intent = Intent(this, TelaMenuEmprestUsu::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressedDispatcher.onBackPressed()
         }
     }
 }
