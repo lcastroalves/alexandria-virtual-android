@@ -31,7 +31,7 @@ class AMain : AppCompatActivity() {
                     true
                 }
                 R.id.emprestimo -> {
-                    replaceFragment(TelaEmprestLivrosUsu())
+                    replaceFragment(TelaMenuEmprestUsu())
                     true
                 }
                 R.id.chatbot -> {

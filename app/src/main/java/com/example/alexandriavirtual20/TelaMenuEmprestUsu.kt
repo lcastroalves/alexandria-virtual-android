@@ -2,26 +2,35 @@ package com.example.alexandriavirtual20
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
-import kotlin.jvm.java
+import androidx.fragment.app.Fragment
 
-class TelaMenuEmprestUsu : AppCompatActivity() {
-    lateinit var btnEmprestimo: LinearLayout
-    lateinit var btnMeusLivros: LinearLayout
+class TelaMenuEmprestUsu : Fragment() {
 
-    lateinit var btnHistoricoLeit: LinearLayout
+    private lateinit var btnEmprestimo: LinearLayout
+    private lateinit var btnMeusLivros: LinearLayout
+    private lateinit var btnHistoricoLeit: LinearLayout
+    private lateinit var btnSolicPendentes: LinearLayout
 
-    lateinit var btnSolicPendentes: LinearLayout
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.tela_menu_emprest_usu)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Conecta o layout XML (tela_menu_emprest_usu.xml) ao fragmento
+        return inflater.inflate(R.layout.tela_menu_emprest_usu, container, false)
+    }
 
-        btnEmprestimo = findViewById(R.id.btnEmprestimo)
-        btnMeusLivros = findViewById(R.id.btnMeusLivros)
-        btnHistoricoLeit = findViewById(R.id.btnHistoricoLeit)
-        btnSolicPendentes = findViewById(R.id.btnSolicPendentes)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnEmprestimo = view.findViewById(R.id.btnEmprestimo)
+        btnMeusLivros = view.findViewById(R.id.btnMeusLivros)
+        btnHistoricoLeit = view.findViewById(R.id.btnHistoricoLeit)
+        btnSolicPendentes = view.findViewById(R.id.btnSolicPendentes)
 
         btnEmprestimo.setOnClickListener {
             trocarParaTelaEmprestimoDeLivros()
@@ -35,25 +44,25 @@ class TelaMenuEmprestUsu : AppCompatActivity() {
         btnSolicPendentes.setOnClickListener {
             trocarParaTelaSolicPendentes()
         }
+    }
 
+    private fun trocarParaTelaEmprestimoDeLivros() {
+        val intent = Intent(requireContext(), TelaEmprestLivrosUsu::class.java)
+        startActivity(intent)
+    }
 
+    private fun trocarParaTelaMeusLivros() {
+        val intent = Intent(requireContext(), TelaMeusLivrosUsu::class.java)
+        startActivity(intent)
     }
-    fun trocarParaTelaEmprestimoDeLivros(){
-        var intencao = Intent(this, TelaEmprestLivrosUsu::class.java)
-        startActivity(intencao)
+
+    private fun trocarParaTelaHistoricoLeitura() {
+        val intent = Intent(requireContext(), TelaHistoricoUsu::class.java)
+        startActivity(intent)
     }
-    fun trocarParaTelaMeusLivros(){
-        var intencao = Intent(this, TelaMeusLivrosUsu::class.java)
-        startActivity(intencao)
-    }
-    fun trocarParaTelaHistoricoLeitura(){
-        var intencao = Intent(this, TelaHistoricoUsu::class.java)
-        startActivity(intencao)
-    }
-    fun trocarParaTelaSolicPendentes(){
-        var intencao = Intent(this, TelaSolicitaPendUsu::class.java)
-        startActivity(intencao)
+
+    private fun trocarParaTelaSolicPendentes() {
+        val intent = Intent(requireContext(), TelaSolicitaPendUsu::class.java)
+        startActivity(intent)
     }
 }
-
-
