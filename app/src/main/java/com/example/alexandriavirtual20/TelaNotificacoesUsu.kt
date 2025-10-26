@@ -26,9 +26,9 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         }
 
         val notificacoes = mutableListOf(
-            Notificacao("Ciência da computação - ", "Devolução", "16 set", "Falta uma semana para fim do prazo de devolução",  1,R.drawable.livro1),
-            Notificacao("Meu vizinho totoro - ", "Evento", "16 set", "Falta uma semana para realização do evento", 1,R.drawable.totoro),
-            Notificacao("Java como programar - ", "Devolução", "23 set", "Faltam duas semanas para fim do prazo de devolução",2, R.drawable.livro3),
+            Notificacao("Ciência da computação ", "- Devolução", "16 set", "Falta uma semana para fim do prazo de devolução",  1,R.drawable.livro1),
+            Notificacao("Meu vizinho totoro ", "- Evento", "16 set", "Falta uma semana para realização do evento", 1,R.drawable.totoro),
+            Notificacao("Java como programar ", "- Devolução", "23 set", "Faltam duas semanas para fim do prazo de devolução",2, R.drawable.livro3),
         )
 
         var adapter: NotificacaoAdapter? = null
