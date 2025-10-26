@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdmTelaSolicPend">
+    tools:context=".TelaChatbotUsu">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -23,17 +23,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageButton
-                android:id="@+id/botaoVoltar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:translationY="12dp"
-                android:background="@android:color/transparent"
-                app:layout_constraintStart_toStartOf="@id/linear_layout"
-                app:layout_constraintTop_toTopOf="@id/linear_layout"
-                app:srcCompat="@drawable/seta_azul" />
-
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="50dp"
@@ -43,10 +32,7 @@
                 android:background="@drawable/icone_redondo"
                 android:clipToOutline="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/hipatia"
-                app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar"
-                app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
-                app:layout_constraintTop_toTopOf="@+id/botaoVoltar" />
+                android:src="@drawable/hipatia"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,11 +42,7 @@
                 android:text="Hipatia"
                 android:textSize="25sp"
                 android:translationY="14dp"
-                android:layout_marginStart="20dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="@+id/imageView">
+                android:layout_marginStart="20dp">
 
             </TextView>
         </LinearLayout>

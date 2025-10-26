@@ -5,6 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.MensagemAdapter
+import com.example.alexandriavirtual20.model.Mensagem
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +24,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class TelaChatbotUsu : Fragment() {
     // TODO: Rename and change types of parameters
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: MensagemAdapter
+    private lateinit var editMensagem: EditText
+    private lateinit var btnEnviar: ImageButton
     private var param1: String? = null
     private var param2: String? = null
 
@@ -40,8 +51,32 @@ class TelaChatbotUsu : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //        Programa aqui dentro
+        recyclerView = view.findViewById(R.id.recyclerView)
+        editMensagem = view.findViewById(R.id.edtMensagem)
+        btnEnviar = view.findViewById(R.id.btnEnviar)
 
+        val adapter = mutableListOf(
+            Mensagem("Olá Narak! Eu sou a Hipatia, sua Assistente virtual da Alexandria Virtual. Como posso ajudar?", false),
+            Mensagem("Oi Hipatia! Quantos Livros eu tenho em empréstimo?", true)
+        )
+
+        // Configurando RecyclerView e Adapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter as RecyclerView.Adapter<*>?
+
+        btnEnviar.setOnClickListener {
+            val texto = editMensagem.text.toString().trim()
+            if (texto.isNotEmpty()) {
+                // Adiciona mensagem do usuário
+                val mensagemUsuario = Mensagem(texto, true)
+
+                recyclerView.scrollToPosition(adapter.itemCount - 1)
+                editMensagem.text.clear()
+
+                // Simula resposta do bot
+                respostaBot("Você disse: $texto")
+            }
+        }
     }
 
     companion object {
