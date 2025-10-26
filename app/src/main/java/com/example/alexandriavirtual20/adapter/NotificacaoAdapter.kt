@@ -45,7 +45,7 @@ class NotificacaoAdapter (
             val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
             holder.mensagem.setTextColor(redColor)
         } else if (notificacao.prazo == 2) {
-            val yellowColor = ContextCompat.getColor(holder.itemView.context, R.color.yellow)
+            val yellowColor = ContextCompat.getColor(holder.itemView.context, R.color.darkYellow)
             holder.mensagem.setTextColor(yellowColor)
         } else {
             val greenColor = ContextCompat.getColor(holder.itemView.context, R.color.green)
