@@ -11,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.alexandriavirtual20.model.Livro
 import kotlin.collections.joinToString
+import kotlin.jvm.java
 
 class TelaRetirarLivroUsu : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,8 @@ class TelaRetirarLivroUsu : AppCompatActivity() {
             startActivity(intencao)
         }
         btnConfirmar.setOnClickListener {
+            var intencao = Intent(this, TelaMenuEmprestUsu::class.java)
+            startActivity(intencao)
             Toast.makeText(this, "Livro Solicitado com Sucesso", Toast.LENGTH_SHORT).show()
         }
         val livrosSelecionados = intent.getParcelableArrayListExtra<Livro>("livrosSelecionados")
