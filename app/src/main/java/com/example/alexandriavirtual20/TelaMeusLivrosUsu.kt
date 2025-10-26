@@ -27,7 +27,7 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
         val filtrosAZ: TextView = findViewById(R.id.filtroAZ)
 
         btnBack.setOnClickListener {
-            startActivity(Intent(this, TelaMenuEmprestUsu::class.java))
+            onBackPressedDispatcher.onBackPressed()
         }
 
 

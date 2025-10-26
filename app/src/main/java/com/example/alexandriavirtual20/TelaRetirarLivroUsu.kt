@@ -22,13 +22,11 @@ class TelaRetirarLivroUsu : AppCompatActivity() {
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
 
         btnBack.setOnClickListener {
-            var intencao = Intent(this, TelaEmprestLivrosUsu::class.java)
-            startActivity(intencao)
+            onBackPressedDispatcher.onBackPressed()
         }
         btnConfirmar.setOnClickListener {
-            var intencao = Intent(this, TelaMenuEmprestUsu::class.java)
-            startActivity(intencao)
-            Toast.makeText(this, "Livro Solicitado com Sucesso", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Livro solicitado com sucesso", Toast.LENGTH_SHORT).show()
+            finish()
         }
         val livrosSelecionados = intent.getParcelableArrayListExtra<Livro>("livrosSelecionados")
 
