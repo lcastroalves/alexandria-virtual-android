@@ -58,8 +58,6 @@ class TelaHistoricoUsu : AppCompatActivity() {
             Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro1," (60 avaliações)",true),
             Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro3," (100 avaliações)",false),
             Livro("Ciencia da computação","e tecnologias digitais","Lupi Barroso Bvm",R.drawable.livro4," (1000 avaliações)",true)
-
-
         )
 
         val adapterLivro = LivroAdapterHistorico(
