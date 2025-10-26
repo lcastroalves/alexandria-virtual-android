@@ -32,7 +32,6 @@
     class AdmTelaSolicPend : Fragment() {
         // TODO: Rename and change types of parameters
 
-        private lateinit var btnBack : ImageButton
         private lateinit var recycler : RecyclerView
         private lateinit var btnPendentes: TextView
         private lateinit var btnUsuarios : TextView
@@ -59,20 +58,17 @@
         override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
             super.onViewCreated(view, savedInstanceState)
 
-            btnBack = view.findViewById(R.id.btnBack)
             recycler = view.findViewById(R.id.recyclerSolicitacoes)
             btnPendentes = view.findViewById(R.id.tabPendentes)
             btnUsuarios = view.findViewById(R.id.tabUsuarios)
 
             btnPendentes.setOnClickListener {
-                val intencao = Intent(requireContext(), AdmTelaUsuCadast::class.java)
-                startActivity(intencao)
+                (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
             }
 
-            btnBack.setOnClickListener {
-                requireActivity().onBackPressedDispatcher.onBackPressed()
+            btnUsuarios.setOnClickListener {
+                (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
             }
-
             val solicitacoes = listOf(
                 Solicitacao(
                     "Ciências da Computação", "Ername Rosa Martins",
