@@ -1,6 +1,5 @@
 package com.example.alexandriavirtual20
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
@@ -20,11 +19,7 @@ class TelaCabDisponUsu : AppCompatActivity() {
 
         rv = findViewById(R.id.rvCabines)
         btnVoltar = findViewById(R.id.imageButton4)
-
-        adapter = CabineAdapter { cabine ->
-            val intent = Intent(this, TelaConfirmReservaUsu::class.java)
-            startActivity(intent)
-        }
+        adapter = CabineAdapter()
 
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter

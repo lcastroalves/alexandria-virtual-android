@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
 import com.google.android.material.button.MaterialButton
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,9 +14,7 @@ import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.TelaConfirmReservaUsu
 import com.example.alexandriavirtual20.model.Cabine
 
-class CabineAdapter(
-    private val onReservarClick: (Cabine) -> Unit
-) : ListAdapter<Cabine, CabineAdapter.VH>(Diff) {
+class CabineAdapter() : ListAdapter<Cabine, CabineAdapter.VH>(Diff) {
     object Diff : DiffUtil.ItemCallback<Cabine>() {
         override fun areItemsTheSame(a: Cabine, b: Cabine) = a.id == b.id
         override fun areContentsTheSame(a: Cabine, b: Cabine) = a == b

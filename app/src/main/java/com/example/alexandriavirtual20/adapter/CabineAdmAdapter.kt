@@ -1,4 +1,3 @@
-// com/example/alexandriavirtual20/adapter/CabineAdmAdapter.kt
 package com.example.alexandriavirtual20.adapter
 
 import android.view.LayoutInflater

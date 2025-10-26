@@ -61,7 +61,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
 
             if (selecionados.isEmpty()) {
                 val toast = Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT)
-                toast.view?.setBackgroundResource(android.R.color.holo_red_light)
                 toast.show()
                 return@setOnClickListener
             }
@@ -82,8 +81,8 @@ class AdmTelaUsuCadast : AppCompatActivity() {
 
                     atualizarEstadoLixeira()
                 }
-                .setNegativeButton("Não", null)
-                .show()
+                    .setNegativeButton("Não", null)
+                    .show()
         }
 
         atualizarEstadoLixeira()

@@ -39,16 +39,18 @@ class AdmTelaCadastUsu : AppCompatActivity() {
             val senha   = editSenha.text.toString()
             val confSenha = editConfSenha.text.toString()
 
-            if(nome.isEmpty() || usuario.isEmpty() || email.isEmpty() || senha.isEmpty() || confSenha.isEmpty()){
-                if(nome == "Narak Oliveira"){
-                    Toast.makeText(this, "Usuário ja cadastrado! Confira os dados ou adicione um novo usuário", Toast.LENGTH_SHORT).show()
-                } else if(senha != confSenha){
-                    Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
-                }
-            } else {
+            if (nome.isEmpty() || usuario.isEmpty() || email.isEmpty() || senha.isEmpty() || confSenha.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             }
-
+            else if (senha != confSenha) {
+                Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
+            }
+            else if (nome == "Narak Oliveira") {
+                Toast.makeText(this, "Usuário já cadastrado! Confira os dados ou adicione um novo usuário", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                Toast.makeText(this, "Usuário salvo com sucesso!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

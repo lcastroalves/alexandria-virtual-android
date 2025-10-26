@@ -96,7 +96,7 @@
                         android:id="@+id/tvLabelDisponiveis"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cabines reservadas"
+                        android:text="Cabines disponíveis"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         android:textStyle="bold" />
 

@@ -1,8 +1,6 @@
 package com.example.alexandriavirtual20
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -35,12 +33,10 @@ class TelaHoraCabineUsu : AppCompatActivity() {
     }
 
     private fun setupPickers() {
-        // Hora 0..23
         npHora.minValue = 0
         npHora.maxValue = 23
         npHora.setFormatter { String.format("%02d", it) }
 
-        // Minuto com step (00, 05, ..., 55)
         npMinuto.displayedValues = null
         npMinuto.minValue = 0
         npMinuto.maxValue = stepsMinutos.lastIndex
