@@ -11,46 +11,40 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.LivroAdapterFavoritos
+import com.example.alexandriavirtual20.adapter.LivroAdapterHistorico
+import com.example.alexandriavirtual20.model.Livro
 
 
 class TelaLivrosFavUsu : AppCompatActivity() {
-    lateinit var searchView: SearchView
+
+    private lateinit var btnVoltar : ImageButton
+    private lateinit var searchView: SearchView
+    private lateinit var recyclerView: RecyclerView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_livros_fav_usu)
-        val btnback: ImageButton = findViewById(R.id.btnback)
-        val btnFav: ImageView = findViewById(R.id.btnFav)
-        val btnFav1: ImageView = findViewById(R.id.btnFav1)
-        val btnFav2: ImageView = findViewById(R.id.btnFav2)
-        searchView = findViewById(R.id.searchViewLivros)
-        var isFavorited = true // começa cheio
 
-        btnFav.setOnClickListener {
-            if (isFavorited) {
-                btnFav.setImageResource(R.drawable.coracao_vazio) // muda para vazio
-            } else {
-                btnFav.setImageResource(R.drawable.coracao_cheio) // volta a ficar cheio
-            }
-            isFavorited = !isFavorited
+        btnVoltar= findViewById(R.id.botaoVoltar)
+        searchView = findViewById(R.id.searchViewLivros)
+        recyclerView = findViewById(R.id.recyclerView)
+
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
         }
-        btnFav1.setOnClickListener {
-            if (isFavorited) {
-                btnFav1.setImageResource(R.drawable.coracao_vazio) // muda para vazio
-            } else {
-                btnFav1.setImageResource(R.drawable.coracao_cheio) // volta a ficar cheio
-            }
-            isFavorited = !isFavorited
-        }
-        btnFav2.setOnClickListener {
-            if (isFavorited) {
-                btnFav2.setImageResource(R.drawable.coracao_vazio) // muda para vazio
-            } else {
-                btnFav2.setImageResource(R.drawable.coracao_cheio) // volta a ficar cheio
-            }
-            isFavorited = !isFavorited
-        }
+
+        val livros = mutableListOf(
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro," (30 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro2," (10 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro1," (60 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro3," (100 avaliações)",true),
+            Livro("Ciencia da computação","e tecnologias digitais","Lupi Barroso Bvm",R.drawable.livro4," (1000 avaliações)",true)
+        )
+
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // Quando o usuário pressiona ENTER / Buscar
@@ -69,10 +63,25 @@ class TelaLivrosFavUsu : AppCompatActivity() {
                 return true
             }
         })
-        btnback.setOnClickListener {
-            val intent = Intent(this, TelaPerfilUsu::class.java)
-            startActivity(intent)
-        }
+
+        val adapterLivro = LivroAdapterFavoritos(
+            livros,
+            onInfoClick = { livro ->
+                val intent = Intent(this, TelaInfoLivroUsu::class.java)
+                startActivity(intent)
+            },
+            onReviewClick = { livro ->
+                val intent = Intent(this, TelaReviewUsu::class.java)
+                startActivity(intent)
+            },
+            onFavotiroClick = { livro ->
+                Toast.makeText(this,"Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapterLivro
+
     }
 }
 
