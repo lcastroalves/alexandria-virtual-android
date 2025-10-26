@@ -43,7 +43,7 @@ class AdmTelaEventos : AppCompatActivity() {
         var adapter: ListaEventoAdmAdapter? = null
 
         adapter = ListaEventoAdmAdapter(eventos) { evento ->
-            val intent = Intent(this, TelaInfoEventoUsu::class.java)
+            val intent = Intent(this, AdmTelaEditEvent::class.java)
             startActivity(intent)
         }
 
