@@ -59,12 +59,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
         btnLixeira.setOnClickListener {
             val selecionados = adapter.getSelecionados()
 
-            // Mostrar Toast caso nada esteja selecionado
-            if (selecionados.isEmpty()) {
-                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             val mensagem = if (selecionados.size == 1) {
                 "Tem certeza que deseja excluir o usuário \"${selecionados.first().nome}\"?"
             } else {
