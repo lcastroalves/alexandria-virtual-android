@@ -28,7 +28,7 @@
                 android:layout_marginStart="2sp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/descricaoBotaoVoltar"
-                app:srcCompat="@drawable/icon" />
+                app:srcCompat="@drawable/seta_azul" />
 
             <TextView
                 android:id="@+id/txUsuarios"

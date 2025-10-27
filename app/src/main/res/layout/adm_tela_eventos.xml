@@ -41,14 +41,12 @@
         android:id="@+id/solicitacoesPendentes2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="-34dp"
-        android:layout_marginEnd="200dp"
         android:fontFamily="@font/trocchi"
         android:text="Eventos"
         android:textColor="#2279E6"
         android:textSize="20sp"
+        android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar2"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/botaoVoltar2"
         app:layout_constraintTop_toTopOf="@+id/botaoVoltar2" />
 
@@ -62,7 +60,7 @@
         android:contentDescription="@string/descricaoBotaoVoltar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/seta_azul" />
 
     <ImageButton
         android:id="@+id/botaoExcluirEventos"
