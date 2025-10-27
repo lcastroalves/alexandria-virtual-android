@@ -27,7 +27,7 @@ class AdmTelaHoraCab : AppCompatActivity() {
         npHora = findViewById(R.id.npHora)
         npMinuto = findViewById(R.id.npMinuto)
         btnConfirmar = findViewById(R.id.Confirmar)
-        btnVoltar = findViewById(R.id.voltar)
+        btnVoltar = findViewById(R.id.botaoVoltar5)
 
         setupPickers()
         setupButton()
