@@ -51,6 +51,10 @@ class ProdutoAdapter (
 
     }
 
+    fun temSelecionado(): Boolean {
+        return produtos.any { it.isSelected }
+    }
+
     fun excluirSelecionados(){
         produtos.removeAll { it.isSelected }        // remove todos que retornar isSelected como true
         notifyDataSetChanged()                      // Depois que a lista muda, o Adapter precisa ser avisado para redesenhar a tela

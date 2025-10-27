@@ -24,7 +24,7 @@
         android:id="@+id/botaoAdEvento"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_marginStart="175dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginTop="120dp"
         android:backgroundTint="#247AE8"
         android:fontFamily="@font/montserrat"
@@ -34,7 +34,6 @@
         android:textSize="16sp"
         app:cornerRadius="10sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -64,15 +63,16 @@
 
     <ImageButton
         android:id="@+id/botaoExcluirEventos"
-        android:layout_width="48dp"
-        android:layout_height="53dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginTop="172dp"
         android:layout_marginEnd="16dp"
+        android:scaleType="fitCenter"
         android:background="@android:color/transparent"
         android:contentDescription="Excluir evento"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/trash_2" />
+        app:srcCompat="@drawable/trash_vector" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyListaEventoAdm"
