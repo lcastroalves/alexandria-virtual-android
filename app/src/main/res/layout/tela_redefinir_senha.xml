@@ -139,7 +139,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/botaoCadastrar"
+            android:id="@+id/botaoRedefinir"
             android:layout_width="220dp"
             android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
