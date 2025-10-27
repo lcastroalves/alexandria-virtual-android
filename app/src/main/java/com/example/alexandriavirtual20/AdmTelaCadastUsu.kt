@@ -41,12 +41,25 @@ class AdmTelaCadastUsu : AppCompatActivity() {
 
             if (nome.isEmpty() || usuario.isEmpty() || email.isEmpty() || senha.isEmpty() || confSenha.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-            else if (senha != confSenha) {
-                Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
-            }
-            else if (nome == "Narak Oliveira") {
+            if (nome == "Narak Oliveira") {
                 Toast.makeText(this, "Usuário já cadastrado!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val senhaValida = senha.length >= 8 &&
+                    senha.any { it.isDigit() }
+            if (!senhaValida) {
+                Toast.makeText(
+                    this,
+                    "A senha deve ter pelo menos 8 caracteres, incluindo um número.",
+                    Toast.LENGTH_LONG
+                ).show()
+                return@setOnClickListener
+            }
+            if (senha != confSenha) {
+                Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
             else {
                 Toast.makeText(this, "Usuário salvo com sucesso!", Toast.LENGTH_SHORT).show()
