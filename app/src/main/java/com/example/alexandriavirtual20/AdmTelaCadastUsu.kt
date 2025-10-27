@@ -46,7 +46,7 @@ class AdmTelaCadastUsu : AppCompatActivity() {
                 Toast.makeText(this, "As senhas não correspondem", Toast.LENGTH_SHORT).show()
             }
             else if (nome == "Narak Oliveira") {
-                Toast.makeText(this, "Usuário já cadastrado! Confira os dados ou adicione um novo usuário", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Usuário já cadastrado!", Toast.LENGTH_SHORT).show()
             }
             else {
                 Toast.makeText(this, "Usuário salvo com sucesso!", Toast.LENGTH_SHORT).show()

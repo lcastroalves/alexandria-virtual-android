@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -58,6 +59,13 @@ class AdmTelaProdutos : AppCompatActivity() {
         }
 
         btnExcProd.setOnClickListener {
+            // Se nenhum item estiver selecionado, exibe o Toast
+            if (!adapter.temSelecionado()) {
+                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Se tiver item selecionado, pode excluir
             adapter.excluirSelecionados()
         }
 

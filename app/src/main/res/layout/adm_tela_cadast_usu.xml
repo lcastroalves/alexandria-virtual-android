@@ -28,7 +28,7 @@
                 android:layout_marginStart="2sp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/descricaoBotaoVoltar"
-                app:srcCompat="@drawable/icon" />
+                app:srcCompat="@drawable/seta_azul" />
 
             <TextView
                 android:id="@+id/txUsuarios"
@@ -58,15 +58,14 @@
                 android:id="@+id/pesquisaAddAdm"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="28dp"
+                android:layout_marginEnd="12dp"
                 android:iconifiedByDefault="false"
                 android:queryHint="Pesquisar"
-                app:layout_constraintBottom_toBottomOf="@id/btnExcProd3"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btnExcProd3"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/btnExcProd3"
-                android:layout_marginStart="28dp"
-                android:layout_marginEnd="12dp">
+                app:layout_constraintStart_toStartOf="parent">
 
             </SearchView>
 

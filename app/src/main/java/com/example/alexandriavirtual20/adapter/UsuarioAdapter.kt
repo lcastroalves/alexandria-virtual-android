@@ -47,8 +47,7 @@ class UsuarioAdapter(
             }
 
             itemView.setOnClickListener {
-                val novo = !(item.id in selecionados)
-                check.isChecked = novo
+                check.performClick()
             }
         }
     }

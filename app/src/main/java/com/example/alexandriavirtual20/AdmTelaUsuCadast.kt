@@ -59,12 +59,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
         btnLixeira.setOnClickListener {
             val selecionados = adapter.getSelecionados()
 
-            if (selecionados.isEmpty()) {
-                val toast = Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT)
-                toast.show()
-                return@setOnClickListener
-            }
-
             val mensagem = if (selecionados.size == 1) {
                 "Tem certeza que deseja excluir o usuário \"${selecionados.first().nome}\"?"
             } else {
@@ -78,11 +72,10 @@ class AdmTelaUsuCadast : AppCompatActivity() {
                     val novaLista = adapter.currentList.filterNot { it.id in idsExcluir }
                     adapter.submitList(novaLista)
                     adapter.clearSelecao()
-
                     atualizarEstadoLixeira()
                 }
-                    .setNegativeButton("Não", null)
-                    .show()
+                .setNegativeButton("Não", null)
+                .show()
         }
 
         atualizarEstadoLixeira()

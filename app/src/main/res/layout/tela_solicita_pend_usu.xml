@@ -48,13 +48,11 @@
         android:id="@+id/solicitacoesPendentes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
         android:layout_marginTop="68dp"
-        android:layout_marginEnd="82dp"
+        android:layout_marginStart="5dp"
         android:text="Solicitações pendentes"
         android:textColor="#2279E6"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,13 +60,13 @@
         android:id="@+id/botaoVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/seta_azul" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recySoliPend"
