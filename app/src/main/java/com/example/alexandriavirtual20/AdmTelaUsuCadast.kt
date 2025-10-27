@@ -59,9 +59,9 @@ class AdmTelaUsuCadast : AppCompatActivity() {
         btnLixeira.setOnClickListener {
             val selecionados = adapter.getSelecionados()
 
+            // Mostrar Toast caso nada esteja selecionado
             if (selecionados.isEmpty()) {
-                val toast = Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT)
-                toast.show()
+                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -78,11 +78,10 @@ class AdmTelaUsuCadast : AppCompatActivity() {
                     val novaLista = adapter.currentList.filterNot { it.id in idsExcluir }
                     adapter.submitList(novaLista)
                     adapter.clearSelecao()
-
                     atualizarEstadoLixeira()
                 }
-                    .setNegativeButton("Não", null)
-                    .show()
+                .setNegativeButton("Não", null)
+                .show()
         }
 
         atualizarEstadoLixeira()
