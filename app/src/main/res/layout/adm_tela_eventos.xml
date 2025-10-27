@@ -9,16 +9,15 @@
 
     <SearchView
         android:id="@+id/searchViewLivros"
-        android:layout_width="366dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="-80dp"
-        android:layout_marginTop="175dp"
         android:layout_weight="1"
         android:iconifiedByDefault="false"
         android:queryHint="Buscar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/botaoAdEvento" />
 
     <Button
         android:id="@+id/botaoAdEvento"
@@ -79,10 +78,9 @@
         android:layout_width="409dp"
         android:layout_height="504dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
         android:layout_marginEnd="1dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botaoExcluirEventos" />
+        app:layout_constraintTop_toBottomOf="@+id/searchViewLivros" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
