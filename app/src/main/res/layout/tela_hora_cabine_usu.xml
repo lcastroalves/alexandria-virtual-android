@@ -27,7 +27,7 @@
             android:contentDescription="@string/descricaoBotaoVoltar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/icon" />
+            app:srcCompat="@drawable/seta_azul" />
 
         <ImageView
             android:id="@+id/imageView"
