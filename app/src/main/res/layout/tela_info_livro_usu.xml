@@ -46,18 +46,29 @@
 
     <TextView
         android:id="@+id/tituloLivro"
-        android:contentDescription="@string/descricaoTituloLivro"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/descricaoTituloLivro"
         android:ellipsize="end"
         android:fontFamily="@font/montserrat_medium"
         android:maxLines="3"
-        android:text="Java como Programar"
+        android:text="Java "
+        android:layout_marginTop="5dp"
         android:textColor="#247AE8"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="como Programar"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="@+id/tituloLivro"
+        app:layout_constraintStart_toStartOf="@+id/tituloLivro"
+        app:layout_constraintTop_toBottomOf="@+id/tituloLivro" />
 
     <TextView
         android:id="@+id/autorLivroSuperior"
