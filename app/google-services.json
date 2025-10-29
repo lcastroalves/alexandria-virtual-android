@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "92492670661",
-    "project_id": "alexandria-virtual",
-    "storage_bucket": "alexandria-virtual.firebasestorage.app"
+    "project_number": "504759322248",
+    "project_id": "alexandria-virtual-ac666",
+    "storage_bucket": "alexandria-virtual-ac666.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92492670661:android:6ddf969275b493f907f2ac",
+        "mobilesdk_app_id": "1:504759322248:android:b79a4c68644f5f0fc6c13d",
         "android_client_info": {
           "package_name": "com.example.alexandriavirtual20"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC85HXoXODjgq-HwbuFdsyY4S9UyuanrGs"
+          "current_key": "AIzaSyCcHvcgIT8rzJfRkNfV8r0ltUejH1AJbOU"
         }
       ],
       "services": {
