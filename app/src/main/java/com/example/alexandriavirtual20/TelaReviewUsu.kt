@@ -15,6 +15,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.model.Livro
 import kotlin.math.round
 
 class TelaReviewUsu : AppCompatActivity() {
@@ -32,7 +33,7 @@ class TelaReviewUsu : AppCompatActivity() {
         setContentView(R.layout.tela_review_usu)
 
         val recyclerLivros = findViewById<RecyclerView>(R.id.recyclerLivros)
-        val livros = listOf(
+        val livros = mutableListOf(
             LivroReview("Ciências da Computação", "Ername Rosa Martins", R.drawable.livro1),
             LivroReview("Java Avançado", "Paul J. Deitel", R.drawable.livro2),
             LivroReview("Java como Programar", "Paul J. Deitel", R.drawable.livro3),
