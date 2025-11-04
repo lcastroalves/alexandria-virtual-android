@@ -15,10 +15,16 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnAdicionar: Button
     private lateinit var btnADicionarImagem: ImageButton
-    private lateinit var titulo: TextInputEditText
     private lateinit var abrirGaleria: ActivityResultLauncher<String>
     private lateinit var imagemEvento: ImageView
     private lateinit var fb : FirebaseFirestore
+    private lateinit var titulo: TextInputEditText
+    private lateinit var data: TextInputEditText
+    private lateinit var horario: TextInputEditText
+    private lateinit var descricao: TextInputEditText
+    private lateinit var breveDescricao: TextInputEditText
+    private lateinit var local: TextInputEditText
+    private lateinit var nomeEvento: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,9 +34,18 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         btnVoltar = findViewById(R.id.botaoVoltar)
         btnAdicionar = findViewById(R.id.salvarEvento)
         btnADicionarImagem = findViewById(R.id.editImagemEvento)
-        titulo = findViewById(R.id.addTituloEvento)
-        imagemEvento = findViewById(R.id.imagemEventoAdd)
         fb = FirebaseFirestore.getInstance()
+
+        imagemEvento = findViewById(R.id.imagemEventoAdd)
+        titulo = findViewById(R.id.addTituloEvento)
+        horario = findViewById(R.id.addHorarioEvento)
+        data = findViewById(R.id.addDataEvento)
+        descricao = findViewById(R.id.addDescricaoEvento)
+        breveDescricao = findViewById(R.id.addDescricaoBreveEvento)
+        local = findViewById(R.id.addLocalEvento)
+        //Informações que serão passadas ao banco de dados
+
+        nomeEvento = titulo.text.toString().trim().uppercase()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -50,26 +65,50 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         }
 
         btnAdicionar.setOnClickListener {
-            if (titulo.text.toString() == "Meu vizinho totoro") {
-                Toast.makeText(
-                    this,
-                    "Evento já cadastrado! Confira os dados ou insira um novo evento",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                Toast.makeText(this, "Evento adicionado", Toast.LENGTH_SHORT).show()
-                enviarDados()
-            }
+            verificarCamposEAdd()
         }
     }
+    private fun campoVazio(): Boolean {
+        val campos: List<TextInputEditText> = listOf(titulo, data, horario, descricao, breveDescricao, local)
 
-    fun enviarDados() {
-        fb.collection("evento").add(mapOf("nome" to titulo.text.toString()))
-            .addOnSuccessListener {
-                Toast.makeText(this, "Enviado com sucesso!", Toast.LENGTH_SHORT).show()
+        return campos.any { it.text.isNullOrEmpty() }
+    }
+    // Função para conferir se todos os campos estão preenchidos
+
+    private fun verificarCamposEAdd() {
+        if (campoVazio()) {
+            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        nomeEvento = titulo.text.toString().trim()
+
+        fb.collection("evento")
+            .whereEqualTo("nome", nomeEvento)
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                if (querySnapshot.isEmpty) {
+                    enviarDados()
+                }
+                else {
+                    Toast.makeText(this, "Evento já cadastrado! Confira os dados ou insira um novo evento", Toast.LENGTH_SHORT).show()
+                }
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_LONG).show()
+    }
+
+    private fun enviarDados() {
+        val dadosEvento = hashMapOf(
+            "nome" to nomeEvento,
+            "data" to data.text.toString().trim(),
+            "horario" to horario.text.toString().trim(),
+            "descricao" to descricao.text.toString().trim(),
+            "breveDescricao" to breveDescricao.text.toString().trim(),
+            "local" to local.text.toString().trim(),
+            "imagem" to imagemEvento
+        )
+        fb.collection("evento").add(dadosEvento)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Evento adicionado", Toast.LENGTH_SHORT).show()
             }
     }
 }

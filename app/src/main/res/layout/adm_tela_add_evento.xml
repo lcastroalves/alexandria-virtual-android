@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos"
-        app:srcCompat="@drawable/totoro" />
+        app:srcCompat="@drawable/padraopng" />
 
     <ImageButton
         android:id="@+id/botaoVoltar"
@@ -133,7 +133,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addDescricaoBreveEvento"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -141,7 +140,20 @@
             android:hint="Descrição breve">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_descricao_breve"
+                android:id="@+id/addDescricaoBreveEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="Local">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/addLocalEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
