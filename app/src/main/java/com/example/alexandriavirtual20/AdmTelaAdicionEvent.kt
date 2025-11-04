@@ -25,6 +25,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     private lateinit var breveDescricao: TextInputEditText
     private lateinit var local: TextInputEditText
     private lateinit var nomeEvento: String
+    private var colocouImagem: Boolean = false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             if(uri != null){
                 // imagem capturada
                 imagemEvento.setImageURI(uri)
+                colocouImagem = true
             }
         }
 
@@ -71,7 +73,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     private fun campoVazio(): Boolean {
         val campos: List<TextInputEditText> = listOf(titulo, data, horario, descricao, breveDescricao, local)
 
-        return campos.any { it.text.isNullOrEmpty() }
+        return campos.any { it.text.isNullOrEmpty() } || !colocouImagem
     }
     // Função para conferir se todos os campos estão preenchidos
 
@@ -104,7 +106,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             "descricao" to descricao.text.toString().trim(),
             "breveDescricao" to breveDescricao.text.toString().trim(),
             "local" to local.text.toString().trim(),
-            "imagem" to imagemEvento
+            "imagem" to imagemEvento.toString()
         )
         fb.collection("evento").add(dadosEvento)
             .addOnSuccessListener {
