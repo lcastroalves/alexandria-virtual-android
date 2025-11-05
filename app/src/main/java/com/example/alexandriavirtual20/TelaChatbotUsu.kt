@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageButton
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.MensagemAdapter
 import com.example.alexandriavirtual20.model.Mensagem
+import com.google.ai.client.generativeai.GenerativeModel
+import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,6 +33,8 @@ class TelaChatbotUsu : Fragment() {
     private lateinit var adapter: MensagemAdapter
     private lateinit var editMensagem: EditText
     private lateinit var btnEnviar: ImageButton
+    private lateinit var generativeModel: GenerativeModel
+    private lateinit var prePrompt: String
     private var param1: String? = null
     private var param2: String? = null
 
@@ -65,13 +70,31 @@ class TelaChatbotUsu : Fragment() {
             Mensagem("Olá! Eu sou a Hipátia. Como posso ajudar?", false)
         )
 
+        generativeModel = GenerativeModel(
+            modelName = "gemini-2.5-flash",
+            apiKey = "AIzaSyCb0iIhwqmICRCrOcT64gsVH4bzb9WRsfk")
+
+        prePrompt = "A pergunta a seguir, responda como uma bibliotecária simpática que adora livros de ficção científica"
+    }
+
+    //AIzaSyCb0iIhwqmICRCrOcT64gsVH4bzb9WRsfk
+    override fun onStart() {
+        super.onStart()
+
         btnEnviar.setOnClickListener {
             val texto = editMensagem.text.toString().trim()
             if (texto.isNotEmpty()) {
-                enviarMensagemUsuario(texto)
+                enviarMensagemUsuario(editMensagem.text.toString())
                 editMensagem.text.clear()
             }
+
+            //thread paralela
+            lifecycleScope.launch {{
+                val response = generativeModel.generateContent(editMensagem.text.toString())
+                response.text ?: "Sem resposta do modelo"
+            }
         }
+
     }
     private fun enviarMensagemUsuario(texto: String) {
         // Adiciona mensagem do usuário
