@@ -31,6 +31,7 @@ class MensagemAdapter (
     inner class BotViewHolder(view: View) : RecyclerView.ViewHolder(view){
         val conteudoMensagem: TextView = view.findViewById(R.id.msgChatbot)
     }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
