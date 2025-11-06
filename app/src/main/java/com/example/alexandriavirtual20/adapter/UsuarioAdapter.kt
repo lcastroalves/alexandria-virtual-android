@@ -23,7 +23,7 @@ class UsuarioAdapter(
         override fun areContentsTheSame(a: Usuario, b: Usuario) = a == b
     }
 
-    private var selecionados = mutableSetOf<Long>()
+    private var selecionados = mutableSetOf<String>()
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view){
         private val imgFoto: ImageView = view.findViewById(R.id.imagemPerfil)

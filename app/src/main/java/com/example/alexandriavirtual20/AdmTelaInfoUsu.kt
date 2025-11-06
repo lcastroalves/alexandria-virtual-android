@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.firestore.FirebaseFirestore
 
 class AdmTelaInfoUsu : AppCompatActivity() {
+    private lateinit var fb : FirebaseFirestore
     private lateinit var btnVoltar : ImageButton
     private lateinit var btnEditImg: ImageButton
     private lateinit var imgPerfil: ImageView
@@ -34,6 +35,7 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         editEmail = findViewById(R.id.etEmail)
         editSenha = findViewById(R.id.etSenha)
         btnSalvar = findViewById(R.id.btnSalvar)
+        fb = FirebaseFirestore.getInstance()
 
         abrirGaleria = registerForActivityResult(
             ActivityResultContracts.GetContent()
@@ -52,12 +54,18 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         }
 
         btnSalvar.setOnClickListener {
-            val nome    = editNome.text?.toString().orEmpty()
-            val usuario = editUsuario.text?.toString().orEmpty()
-            val email   = editEmail.text?.toString().orEmpty()
-            val senha   = editSenha.text?.toString().orEmpty()
+//            val nome    = editNome.text?.toString().orEmpty()
+//            val usuario = editUsuario.text?.toString().orEmpty()
+//            val email   = editEmail.text?.toString().orEmpty()
+//            val senha   = editSenha.text?.toString().orEmpty()
+//
+//            Toast.makeText(this, "Alteração salva", Toast.LENGTH_SHORT).show()
 
-            Toast.makeText(this, "Alteração salva", Toast.LENGTH_SHORT).show()
         }
     }
+
+//    fun editarDados(){
+//        fb.collection("usuario")
+//
+//    }
 }
