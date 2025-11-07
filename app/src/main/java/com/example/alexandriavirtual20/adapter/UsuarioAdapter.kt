@@ -1,5 +1,8 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.LruCache
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Usuario
+import android.util.Base64
 
 class UsuarioAdapter(
     private val onEditar: (Usuario) -> Unit,
@@ -23,7 +27,17 @@ class UsuarioAdapter(
         override fun areContentsTheSame(a: Usuario, b: Usuario) = a == b
     }
 
+    private val fotoCache = object : LruCache<String, Bitmap>(/* ~4MB aprox */ 4 * 1024 * 1024) {
+        override fun sizeOf(key: String, value: Bitmap): Int = value.byteCount
+    }
+
     private var selecionados = mutableSetOf<String>()
+
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long = getItem(position).id.hashCode().toLong()
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view){
         private val imgFoto: ImageView = view.findViewById(R.id.imagemPerfil)
@@ -31,8 +45,24 @@ class UsuarioAdapter(
         private val btnEditar: ImageButton = view.findViewById(R.id.btnEdit)
         private val check: CheckBox = view.findViewById(R.id.checkBox2)
         fun bind(item: Usuario) {
-            imgFoto.setImageResource(item.fotoPerfil)
             tvNome.text = item.nome
+
+            val cacheKey = item.id
+            val bmpFromCache = fotoCache.get(cacheKey)
+
+            when {
+                bmpFromCache != null -> imgFoto.setImageBitmap(bmpFromCache)
+                !item.fotoPerfil.isNullOrBlank() -> {
+                    val bmp = decodeBase64Safe(item.fotoPerfil)
+                    if (bmp != null) {
+                        fotoCache.put(cacheKey, bmp)
+                        imgFoto.setImageBitmap(bmp)
+                    } else {
+                        imgFoto.setImageResource(R.drawable.narak) // fallback
+                    }
+                }
+                else -> imgFoto.setImageResource(R.drawable.narak) // sem foto
+            }
 
             check.setOnCheckedChangeListener(null)
             check.isChecked = item.id in selecionados
@@ -69,5 +99,12 @@ class UsuarioAdapter(
     fun clearSelecao() {
         selecionados.clear()
         notifyDataSetChanged()
+    }
+
+    private fun decodeBase64Safe(b64: String): Bitmap? = try {
+        val bytes = Base64.decode(b64, Base64.DEFAULT)
+        BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+    } catch (_: Throwable) {
+        null
     }
 }

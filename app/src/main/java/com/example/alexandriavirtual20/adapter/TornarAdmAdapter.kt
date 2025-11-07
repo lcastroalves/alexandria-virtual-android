@@ -33,7 +33,7 @@ class TornarAdmAdapter (
     override fun onBindViewHolder(holder: TornarAdmAdapter.ViewHolder, position: Int) {
         val usuario = usuarios[position]
 
-        holder.imagem.setImageResource(usuario.fotoPerfil)
+//        holder.imagem.setImageResource(usuario.fotoPerfil)
         holder.nome.text = usuario.nome
 
         holder.btnTornarAdm.setOnClickListener {

@@ -78,6 +78,8 @@
             app:boxBackgroundMode="outline"
             android:enabled="false"
             app:boxStrokeColor="#2196F3"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo">
@@ -99,6 +101,8 @@
             app:boxBackgroundMode="outline"
             android:enabled="false"
             app:boxStrokeColor="#2196F3"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txNome">
@@ -120,6 +124,8 @@
             app:boxBackgroundMode="outline"
             android:enabled="false"
             app:boxStrokeColor="#2196F3"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txUsuario">
@@ -141,6 +147,8 @@
             app:boxBackgroundMode="outline"
             android:enabled="false"
             app:boxStrokeColor="#2196F3"
+            android:textColor="@android:color/black"
+            android:textColorHint="#888888"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txEmail">

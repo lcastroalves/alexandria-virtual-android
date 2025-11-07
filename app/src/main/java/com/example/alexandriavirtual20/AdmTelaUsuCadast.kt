@@ -81,8 +81,7 @@ class AdmTelaUsuCadast : AppCompatActivity() {
                         nome = d.getString("nome").orEmpty(),
                         usuario = d.getString("usuario").orEmpty(),
                         email = d.getString("email").orEmpty(),
-                        fotoPerfil = R.drawable.narak
-//                      fotoUrl = d.getString("fotoUrl")
+                        fotoPerfil = d.getString("imgPerfil").orEmpty()
                     )
                 }
                 adapter.submitList(cache)
