@@ -26,24 +26,24 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        val usuarios = mutableListOf(
-            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
-            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
-            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
-            Usuario(12349876, R.drawable.narak, "Narak Oliveira")
-
-            )
+//        val usuarios = mutableListOf(
+//            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
+//            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
+//            Usuario(12349876, R.drawable.narak, "Narak Oliveira"),
+//            Usuario(12349876, R.drawable.narak, "Narak Oliveira")
+//
+//            )
 
         var adapter: TornarAdmAdapter? = null
 
         // Cria o Adapter e envia a lista produtos para ele
-        adapter = TornarAdmAdapter(
-            usuarios,
-            onClick = { usuario ->
-                adapter?.tornarAdm(usuario)
-                Toast.makeText(this, "Adicionado com sucesso", Toast.LENGTH_SHORT).show()
-            }
-        )
+//        adapter = TornarAdmAdapter(
+//            usuarios,
+//            onClick = { usuario ->
+//                adapter?.tornarAdm(usuario)
+//                Toast.makeText(this, "Adicionado com sucesso", Toast.LENGTH_SHORT).show()
+//            }
+//        )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }

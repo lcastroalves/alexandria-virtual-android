@@ -37,6 +37,8 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         btnSalvar = findViewById(R.id.btnSalvar)
         fb = FirebaseFirestore.getInstance()
 
+        val userId = intent.getStringExtra("documentID")
+
         abrirGaleria = registerForActivityResult(
             ActivityResultContracts.GetContent()
         ){uri ->
@@ -62,6 +64,7 @@ class AdmTelaInfoUsu : AppCompatActivity() {
 //            Toast.makeText(this, "Alteração salva", Toast.LENGTH_SHORT).show()
 
         }
+        //preencherCampos(userId)
     }
 
 //    fun editarDados(){

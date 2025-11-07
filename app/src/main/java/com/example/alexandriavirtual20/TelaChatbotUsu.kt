@@ -78,28 +78,30 @@ class TelaChatbotUsu : Fragment() {
     }
 
     //AIzaSyCb0iIhwqmICRCrOcT64gsVH4bzb9WRsfk
-    override fun onStart() {
-        super.onStart()
-
-        btnEnviar.setOnClickListener {
-            val texto = editMensagem.text.toString().trim()
-            if (texto.isNotEmpty()) {
-                enviarMensagemUsuario(editMensagem.text.toString())
-                editMensagem.text.clear()
-            }
-
-            //thread paralela
-            lifecycleScope.launch {{
-                val response = generativeModel.generateContent(editMensagem.text.toString())
-                response.text ?: "Sem resposta do modelo"
-            }
-        }
-
+//    override fun onStart() {
+//        super.onStart()
+//
+//        btnEnviar.setOnClickListener {
+//            val texto = editMensagem.text.toString().trim()
+//            if (texto.isNotEmpty()) {
+//                enviarMensagemUsuario(editMensagem.text.toString())
+//                editMensagem.text.clear()
+//            }
+//
+//            //thread paralela
+//            lifecycleScope.launch {
+//                {
+//                    val response = generativeModel.generateContent(editMensagem.text.toString())
+//                    response.text ?: "Sem resposta do modelo"
+//                }
+//            }
+//
+//        }
+//        private fun enviarMensagemUsuario(texto: String) {
+//            // Adiciona mensagem do usuário
+//            adapter.adicionarMensagem(Mensagem(texto, true))
+//            recyclerView.scrollToPosition(adapter.itemCount - 1)
+//        }
+//
+//    }
     }
-    private fun enviarMensagemUsuario(texto: String) {
-        // Adiciona mensagem do usuário
-        adapter.adicionarMensagem(Mensagem(texto, true))
-        recyclerView.scrollToPosition(adapter.itemCount - 1)
-    }
-
-}

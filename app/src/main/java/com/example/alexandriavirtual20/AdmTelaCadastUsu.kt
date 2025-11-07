@@ -57,7 +57,7 @@ class AdmTelaCadastUsu : AppCompatActivity() {
         }
 
         //senha válida?
-        if (senha.length < 8 || senha.any { it.isDigit() }) {
+        if (senha.length < 8 || !senha.any { it.isDigit() }) {
             Toast.makeText(
                 this,
                 "A senha deve ter pelo menos 8 caracteres, incluindo um número.",
