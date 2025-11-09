@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +37,20 @@ class ProdutoAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val produto = produtos[position]
 
-        holder.capaLivro.setImageResource(produto.imageRes)
         holder.titulo.text = produto.titulo
         holder.autor.text = produto.autor
 
+        // Decodifica imagem base64
+        if (produto.imageBase64.isNotEmpty()) {
+            val imagemBytes = Base64.decode(produto.imageBase64, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
+            holder.capaLivro.setImageBitmap(bitmap)
+        } else {
+            holder.capaLivro.setImageResource(R.drawable.iconelivro)
+        }
+
         // para a checkbox. clicar duas vezes
+        holder.checkBox.setOnCheckedChangeListener(null)   //para limpar e evitar comportamento incorreto
         holder.checkBox.isChecked = produto.isSelected
         holder.checkBox.setOnCheckedChangeListener { _, isChecked ->
             produto.isSelected = isChecked
@@ -51,10 +62,6 @@ class ProdutoAdapter (
 
     }
 
-    fun temSelecionado(): Boolean {
-        return produtos.any { it.isSelected }
-    }
-
     fun excluirSelecionados(){
         produtos.removeAll { it.isSelected }        // remove todos que retornar isSelected como true
         notifyDataSetChanged()                      // Depois que a lista muda, o Adapter precisa ser avisado para redesenhar a tela
@@ -64,4 +71,13 @@ class ProdutoAdapter (
         return produtos.size
     }
 
+    fun atualizarLista(novaLista: MutableList<Produto>) {
+        produtos.clear()
+        produtos.addAll(novaLista)
+        notifyDataSetChanged()
+    }
+
+    fun getSelecionados(): List<Produto> {
+        return produtos.filter { it.isSelected }
+    }
 }

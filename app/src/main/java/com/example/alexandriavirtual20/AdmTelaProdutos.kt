@@ -1,9 +1,12 @@
 package com.example.alexandriavirtual20
 
+import androidx.appcompat.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ProdutoAdapter
 import com.example.alexandriavirtual20.model.Produto
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class AdmTelaProdutos : AppCompatActivity() {
@@ -19,6 +23,12 @@ class AdmTelaProdutos : AppCompatActivity() {
     private lateinit var btnAdProd : Button
     private lateinit var btnExcProd : ImageButton
     private lateinit var recyclerView : RecyclerView
+    private lateinit var searchView: SearchView
+    private lateinit var firestore: FirebaseFirestore
+    private lateinit var adapter: ProdutoAdapter
+
+
+    private var listaProdutos = mutableListOf<Produto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +39,9 @@ class AdmTelaProdutos : AppCompatActivity() {
         btnAdProd = findViewById(R.id.btnAdProd)
         btnExcProd = findViewById(R.id.btnExcProd)
         recyclerView = findViewById(R.id.recyTornarAdm)
+        searchView = findViewById(R.id.searchView)
+
+        firestore = FirebaseFirestore.getInstance()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -39,49 +52,103 @@ class AdmTelaProdutos : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val produtos = mutableListOf(
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro2),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro3),
-            Produto("Ciência da computação", "Ernane Rosa Martins", R.drawable.livro1),
-        )
+        recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Cria o Adapter e envia a lista produtos para ele
-        val adapter = ProdutoAdapter(produtos){ produto ->
+        adapter = ProdutoAdapter(listaProdutos){ produto ->
             val intent = Intent(this, AdmTelaEditarProduto::class.java)
+            intent.putExtra("titulo", produto.titulo)
             startActivity(intent)
-
-            // Somente coisas que dizem respeito ao item individual
         }
+        recyclerView.adapter = adapter
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filtrarProdutos(newText ?: "")
+                return true
+            }
+        })
 
         btnExcProd.setOnClickListener {
-            // Se nenhum item estiver selecionado, exibe o Toast
-            if (!adapter.temSelecionado()) {
-                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            // Se tiver item selecionado, pode excluir
-            adapter.excluirSelecionados()
+            confirmarExclusao()
         }
 
-        // Precisa definir a orientação (lá ele) do recycleview antes de chamar o adapter, se não ele fica tímido e não aparece
-
-        /*
-            ------ OPCAO HORIZONTAL -----
-        recyclerView.layoutManager = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-         */
-
-        recyclerView.layoutManager = LinearLayoutManager(this)  // OPCAO VERTICAL
-        recyclerView.adapter = adapter
+        carregarProdutos()
     }
+
+    private fun carregarProdutos() {
+
+        firestore.collection("produtos")
+            .addSnapshotListener { snaps, e ->
+                if (e != null || snaps == null) return@addSnapshotListener
+
+                listaProdutos.clear()
+                for (doc in snaps.documents) {
+                    val produto = Produto(
+                        titulo = doc.getString("titulo") ?: "",
+                        autor = doc.getString("autor") ?: "",
+                        imageBase64 = doc.getString("imagem") ?: ""
+                    )
+                    listaProdutos.add(produto)
+                }
+                adapter.atualizarLista(listaProdutos)
+            }
+
+    }
+
+    private fun filtrarProdutos(query: String) {
+        val listaFiltrada = listaProdutos.filter {
+            it.titulo.contains(query, ignoreCase = true) || it.autor.contains(query, ignoreCase = true)
+        }
+        adapter.atualizarLista(listaFiltrada.toMutableList())
+    }
+
+    private fun confirmarExclusao() {
+        val selecionados = adapter.getSelecionados()
+        if (selecionados.isEmpty()) {
+            Toast.makeText(this, "Selecione um item.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val mensagem = if (selecionados.size == 1) {
+            "Tem certeza que deseja excluir o produto \"${selecionados[0].titulo}\"?"
+        } else {
+            "Tem certeza que deseja excluir ${selecionados.size} produtos?"
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Confirmação")
+            .setMessage(mensagem)
+            .setPositiveButton("Sim") { dialog, _ ->
+                excluirDoFirestore(selecionados)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Não") { dialog, _ -> dialog.dismiss() }
+            .show()
+
+    }
+
+    private fun excluirDoFirestore(selecionados: List<Produto>) {
+        val colecao = firestore.collection("produtos")
+        var deletados = 0
+        val total = selecionados.size
+
+        for (produto in selecionados) {
+            colecao.whereEqualTo("titulo", produto.titulo).get().addOnSuccessListener { query ->
+                    for (doc in query) {
+                        colecao.document(doc.id).delete()
+                            .addOnSuccessListener {
+                                deletados++
+                                if (deletados == total) {
+
+                                    adapter.excluirSelecionados()
+                                    carregarProdutos()
+                                }
+                            }
+                    }
+                }
+        }
+    }
+
+
 }
