@@ -131,6 +131,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
                 }
 
                 imagemEvento.setImageResource(R.drawable.padraopng)
+                colocouImagem = false
             }
     }
 }
