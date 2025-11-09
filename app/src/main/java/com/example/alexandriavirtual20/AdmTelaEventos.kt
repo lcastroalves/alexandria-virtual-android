@@ -10,12 +10,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ListaEventoAdmAdapter
 import com.example.alexandriavirtual20.model.Evento
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 class AdmTelaEventos : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnExcluir: ImageButton
     private lateinit var btnAdEvento: Button
     private lateinit var recyclerView: RecyclerView
+    private lateinit var fb : FirebaseFirestore
+    private val listaEventos = mutableListOf<Evento>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.adm_tela_eventos)
@@ -24,6 +29,7 @@ class AdmTelaEventos : AppCompatActivity() {
         btnAdEvento = findViewById(R.id.botaoAdEvento)
         btnExcluir = findViewById(R.id.botaoExcluirEventos)
         recyclerView = findViewById(R.id.recyListaEventoAdm)
+        fb = FirebaseFirestore.getInstance()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -34,15 +40,9 @@ class AdmTelaEventos : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val eventos = mutableListOf(
-            Evento(R.drawable.totoro,"Meu vizinho totoro - ", "16/09/2025", "16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", "O filme de animação será reproduzido no auditório das 16 - 17:30", "Auditório", true),
-            Evento(R.drawable.cosmos, "Palestra Carl Sagan","16/09/2025", "20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Auditório",true),
-            Evento(R.drawable.kiki, "O serviço de entregas da Kiki", "23/09/2025","16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18", "Auditório",true)
-        )
-
         var adapter: ListaEventoAdmAdapter? = null
 
-        adapter = ListaEventoAdmAdapter(eventos) { evento ->
+        adapter = ListaEventoAdmAdapter(carregarEventos()) { evento ->
             val intent = Intent(this, AdmTelaEditEvent::class.java)
             startActivity(intent)
         }
@@ -58,5 +58,33 @@ class AdmTelaEventos : AppCompatActivity() {
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+    }
+
+    private fun carregarEventos() : MutableList<Evento> {
+        val eventos = mutableListOf<Evento>()
+
+        fb.collection("evento")
+            .get()
+            .addOnSuccessListener { result ->
+                listaEventos.clear()
+                for (document in result) {
+                    val evento = Evento(
+                        imagem = document.getString("imagem")!!.toInt(),
+                        nome = document.getString("nome") ?: "",
+                        data = document.getString("data") ?: "",
+                        horario = document.getString("horario") ?: "",
+                        descricao = document.getString("descricao") ?: "",
+                        breveDescricao = document.getString("breveDescricao") ?: "",
+                        local = document.getString("local") ?: "",
+                        isSelected = false
+                    )
+                    listaEventos.add(evento)
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
+            }
+
+        return eventos
     }
 }

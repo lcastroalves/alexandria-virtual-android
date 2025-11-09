@@ -1,6 +1,9 @@
 package com.example.alexandriavirtual20
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Base64
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -10,15 +13,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.ByteArrayOutputStream
 
 class AdmTelaAdicionEvent : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnAdicionar: Button
     private lateinit var btnADicionarImagem: ImageButton
+    private lateinit var titulo: TextInputEditText
     private lateinit var abrirGaleria: ActivityResultLauncher<String>
     private lateinit var imagemEvento: ImageView
     private lateinit var fb : FirebaseFirestore
-    private lateinit var titulo: TextInputEditText
     private lateinit var data: TextInputEditText
     private lateinit var horario: TextInputEditText
     private lateinit var descricao: TextInputEditText
@@ -99,6 +103,17 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     }
 
     private fun enviarDados() {
+        val campos: List<TextInputEditText> = listOf(titulo, data, horario, descricao, breveDescricao, local)
+
+        val imagemEnviada = (imagemEvento.drawable as? BitmapDrawable)?.bitmap
+        val imagemBase64 = if (imagemEnviada != null) {
+            val outputStream = ByteArrayOutputStream()
+            imagemEnviada.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+        } else {
+            ""
+        }
+
         val dadosEvento = hashMapOf(
             "nome" to nomeEvento,
             "data" to data.text.toString().trim(),
@@ -106,11 +121,16 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             "descricao" to descricao.text.toString().trim(),
             "breveDescricao" to breveDescricao.text.toString().trim(),
             "local" to local.text.toString().trim(),
-            "imagem" to imagemEvento.toString()
+            "imagem" to imagemBase64
         )
         fb.collection("evento").add(dadosEvento)
             .addOnSuccessListener {
                 Toast.makeText(this, "Evento adicionado", Toast.LENGTH_SHORT).show()
+                campos.forEach {
+                    it.text?.clear()
+                }
+
+                imagemEvento.setImageResource(R.drawable.padraopng)
             }
     }
 }
