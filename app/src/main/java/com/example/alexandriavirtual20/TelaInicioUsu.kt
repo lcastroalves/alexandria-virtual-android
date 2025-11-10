@@ -79,11 +79,8 @@ class TelaInicioUsu : Fragment() {
         )
 
         val eventos = mutableListOf(
-            Evento(imagem = R.drawable.totoro, nome = "O meu Amigo Totoro", data = "16 Set", horario = "16:00 - 17:30", descricao = "xfg", breveDescricao = "fsdfg", local = "Auditório Principal"),
-            Evento(imagem = R.drawable.livro1, nome = "Feira Literária Alexandria", data = "22 Set", horario = "09:00 - 18:00", descricao = "fdgs", breveDescricao = "sdfg", local = "Pátio Cultural Alexandria"),
-            Evento(imagem = R.drawable.livro2, nome = "Workshop de Programação Kotlin", data = "28 Set", horario = "14:00 - 17:00", descricao = "dfg", breveDescricao = "dgfdf", local = "Sala de Informática 2"),
-            Evento(imagem = R.drawable.livro3, nome = "Clube do Livro - Ficção Científica", data = "03 Out", horario = "19:00 - 21:00", descricao = "sdf", breveDescricao = "sdfsd", local = "Biblioteca Central"),
-            Evento(imagem = R.drawable.livro4, nome = "Sarau Poético Noturno", data = "10 Out", horario = "20:00 - 22:30", descricao = "sdfs", breveDescricao = "sdfs", local = "Praça das Artes")
+            Evento(imagem = (R.drawable.totoro).toString(), nome = "O meu Amigo Totoro", data = "16 Set", horario = "16:00 - 17:30", descricao = "xfg", breveDescricao = "fsdfg", local = "Auditório Principal"),
+            Evento(imagem = (R.drawable.livro4).toString(), nome = "Sarau Poético Noturno", data = "10 Out", horario = "20:00 - 22:30", descricao = "sdfs", breveDescricao = "sdfs", local = "Praça das Artes")
         )
 
         val atividades = mutableListOf(

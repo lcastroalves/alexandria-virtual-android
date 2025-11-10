@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ListaEventoAdmAdapter
 import com.example.alexandriavirtual20.model.Evento
 import com.google.firebase.firestore.FirebaseFirestore
+private lateinit var adapter: ListaEventoAdmAdapter
+private val eventos = mutableListOf<Evento>()
 
 
 class AdmTelaEventos : AppCompatActivity() {
@@ -19,7 +21,6 @@ class AdmTelaEventos : AppCompatActivity() {
     private lateinit var btnAdEvento: Button
     private lateinit var recyclerView: RecyclerView
     private lateinit var fb : FirebaseFirestore
-    private val listaEventos = mutableListOf<Evento>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,15 +62,14 @@ class AdmTelaEventos : AppCompatActivity() {
     }
 
     private fun carregarEventos() : MutableList<Evento> {
-        val eventos = mutableListOf<Evento>()
 
         fb.collection("evento")
             .get()
             .addOnSuccessListener { result ->
-                listaEventos.clear()
+                eventos.clear()
                 for (document in result) {
                     val evento = Evento(
-                        imagem = document.getString("imagem")!!.toInt(),
+                        imagem = document.getString("imagem").toString(),
                         nome = document.getString("nome") ?: "",
                         data = document.getString("data") ?: "",
                         horario = document.getString("horario") ?: "",
@@ -78,8 +78,9 @@ class AdmTelaEventos : AppCompatActivity() {
                         local = document.getString("local") ?: "",
                         isSelected = false
                     )
-                    listaEventos.add(evento)
+                    eventos.add(evento)
                 }
+                adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
