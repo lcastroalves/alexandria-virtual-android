@@ -53,7 +53,7 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
                         nome = document.getString("nome") ?: "",
                         usuario = document.getString("usuario") ?: "",
                         email = document.getString("email") ?: "",
-                        fotoPerfil = document.getString("fotoPerfil") // pode ser nula
+                        fotoPerfil = document.getString("fotoPerfil")
                     )
                     listaUsuarios.add(usuario)
                 }
@@ -73,16 +73,35 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
             "cargo" to "Administrador"
         )
 
-        fb.collection("administradores")
-            .add(dadosAdm)
+        val usuariosRef = fb.collection("usuario").document(usuario.id)
+        val adminsRef = fb.collection("administradores")
+
+        // Adiciona o usuário na coleção de administradores
+        adminsRef.add(dadosAdm)
             .addOnSuccessListener {
-                Toast.makeText(this, "${usuario.nome} agora é Administrador!", Toast.LENGTH_SHORT).show()
-                adapter.tornarAdm(usuario)
+                // Depois de adicionar, remove da coleção de usuários
+                usuariosRef.delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            this,
+                            "${usuario.nome} agora é Administrador!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        // Remove da lista do RecyclerView também
+                        listaUsuarios.remove(usuario)
+                        adapter.notifyDataSetChanged()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this,
+                            "Erro ao remover usuário da lista de usuários.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao promover usuário.", Toast.LENGTH_SHORT).show()
             }
-        fb.collection("usuario")
-            .whereEqualTo("cargo", "Administrador") // ou outro campo que identifique
     }
-}
+    }
