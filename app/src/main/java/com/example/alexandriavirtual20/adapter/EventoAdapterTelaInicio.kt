@@ -38,7 +38,7 @@ class EventoAdapterTelaInicio (
     ) {
         val evento = eventos[position]
 
-        holder.capaEvento.setImageResource(evento.imagem)
+        holder.capaEvento.setImageResource((evento.imagem).toInt())
         holder.titulo.text = evento.nome
         holder.data.text = evento.data
         holder.horario.text = evento.horario

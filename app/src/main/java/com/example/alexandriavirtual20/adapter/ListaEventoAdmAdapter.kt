@@ -35,7 +35,7 @@ class ListaEventoAdmAdapter (
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val evento = eventos[position]
 
-        holder.imagem.setImageResource(evento.imagem)
+        holder.imagem.setImageResource((evento.imagem).toInt())
         holder.nome.text = evento.nome
         holder.horario.text = evento.horario
 
