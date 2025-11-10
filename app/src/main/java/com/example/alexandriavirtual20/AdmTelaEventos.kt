@@ -11,65 +11,75 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ListaEventoAdmAdapter
 import com.example.alexandriavirtual20.model.Evento
 import com.google.firebase.firestore.FirebaseFirestore
-private lateinit var adapter: ListaEventoAdmAdapter
-private val eventos = mutableListOf<Evento>()
-
 
 class AdmTelaEventos : AppCompatActivity() {
+
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnExcluir: ImageButton
     private lateinit var btnAdEvento: Button
     private lateinit var recyclerView: RecyclerView
-    private lateinit var fb : FirebaseFirestore
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var adapter: ListaEventoAdmAdapter
+    private val listaEventos = mutableListOf<Evento>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.adm_tela_eventos)
 
-        btnVoltar = findViewById(R.id.botaoVoltar2)
-        btnAdEvento = findViewById(R.id.botaoAdEvento)
-        btnExcluir = findViewById(R.id.botaoExcluirEventos)
-        recyclerView = findViewById(R.id.recyListaEventoAdm)
+        // Inicializações
         fb = FirebaseFirestore.getInstance()
+        fb.clearPersistence() // limpa o cache local
+        recyclerView = findViewById(R.id.recyListaEventoAdm)
+        btnVoltar = findViewById(R.id.botaoVoltar2)
+        btnExcluir = findViewById(R.id.botaoExcluirEventos)
+        btnAdEvento = findViewById(R.id.botaoAdEvento)
 
-        btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
-        btnAdEvento.setOnClickListener {
-            intent = Intent(this, AdmTelaAdicionEvent::class.java)
-            startActivity(intent)
-        }
-
-        var adapter: ListaEventoAdmAdapter? = null
-
-        adapter = ListaEventoAdmAdapter(carregarEventos()) { evento ->
+        // Configura o adapter com o clique em um item
+        adapter = ListaEventoAdmAdapter(listaEventos) { evento ->
             val intent = Intent(this, AdmTelaEditEvent::class.java)
+            intent.putExtra("nomeEvento", evento.nome)
             startActivity(intent)
-        }
-
-        btnExcluir.setOnClickListener {
-            if (adapter.isEmpty()) {
-                Toast.makeText(this, "Selecione um item", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                adapter.excluirSelecionados()
-            }
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        // Carrega os eventos em tempo real
+        observarEventos()
+
+        // Botão voltar
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        // Botão adicionar evento
+        btnAdEvento.setOnClickListener {
+            startActivity(Intent(this, AdmTelaAdicionEvent::class.java))
+        }
+
+        // Botão excluir eventos selecionados
+        btnExcluir.setOnClickListener {
+            val selecionados = listaEventos.filter { it.isSelected }
+            if (selecionados.isEmpty()) {
+                Toast.makeText(this, "Selecione pelo menos um evento.", Toast.LENGTH_SHORT).show()
+            } else {
+                excluirEventosSelecionados(selecionados)
+            }
+        }
     }
 
-    private fun carregarEventos() : MutableList<Evento> {
-
+    private fun observarEventos() {
         fb.collection("evento")
-            .get()
-            .addOnSuccessListener { result ->
-                eventos.clear()
-                for (document in result) {
+            .addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    Toast.makeText(this, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
+                }
+
+                listaEventos.clear()
+                for (document in snapshots!!) {
                     val evento = Evento(
-                        imagem = document.getString("imagem").toString(),
+                        imagem = document.getString("imagem") ?: "",
                         nome = document.getString("nome") ?: "",
                         data = document.getString("data") ?: "",
                         horario = document.getString("horario") ?: "",
@@ -78,14 +88,23 @@ class AdmTelaEventos : AppCompatActivity() {
                         local = document.getString("local") ?: "",
                         isSelected = false
                     )
-                    eventos.add(evento)
+                    listaEventos.add(evento)
                 }
                 adapter.notifyDataSetChanged()
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
-            }
+    }
 
-        return eventos
+    private fun excluirEventosSelecionados(eventosSelecionados: List<Evento>) {
+        for (evento in eventosSelecionados) {
+            fb.collection("evento")
+                .whereEqualTo("nome", evento.nome)
+                .get()
+                .addOnSuccessListener { docs ->
+                    for (doc in docs) {
+                        fb.collection("evento").document(doc.id).delete()
+                    }
+                }
+        }
+        Toast.makeText(this, "Evento(s) excluído(s).", Toast.LENGTH_SHORT).show()
     }
 }

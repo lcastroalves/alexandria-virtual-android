@@ -40,6 +40,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         btnAdicionar = findViewById(R.id.salvarEvento)
         btnADicionarImagem = findViewById(R.id.editImagemEvento)
         fb = FirebaseFirestore.getInstance()
+        fb.clearPersistence()
 
         imagemEvento = findViewById(R.id.imagemEventoAdd)
         titulo = findViewById(R.id.addTituloEvento)
@@ -99,6 +100,9 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
                 else {
                     Toast.makeText(this, "Evento já cadastrado! Confira os dados ou insira um novo evento", Toast.LENGTH_SHORT).show()
                 }
+            }
+            .addOnFailureListener { querySnapshot ->
+                Toast.makeText(this, "Erro ao verificar evento", Toast.LENGTH_SHORT).show()
             }
     }
 
