@@ -1,14 +1,13 @@
 package com.example.alexandriavirtual20
 
-import androidx.appcompat.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,18 +15,15 @@ import com.example.alexandriavirtual20.adapter.ProdutoAdapter
 import com.example.alexandriavirtual20.model.Produto
 import com.google.firebase.firestore.FirebaseFirestore
 
-
 class AdmTelaProdutos : AppCompatActivity() {
 
-    private lateinit var btnVoltar : ImageButton
-    private lateinit var btnAdProd : Button
-    private lateinit var btnExcProd : ImageButton
-    private lateinit var recyclerView : RecyclerView
+    private lateinit var btnVoltar: ImageButton
+    private lateinit var btnAdProd: Button
+    private lateinit var btnExcProd: ImageButton
+    private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var firestore: FirebaseFirestore
     private lateinit var adapter: ProdutoAdapter
-
-
     private var listaProdutos = mutableListOf<Produto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,32 +31,48 @@ class AdmTelaProdutos : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.adm_tela_produtos)
 
+        // Inicializações
         btnVoltar = findViewById(R.id.botaoVoltar)
         btnAdProd = findViewById(R.id.btnAdProd)
         btnExcProd = findViewById(R.id.btnExcProd)
         recyclerView = findViewById(R.id.recyTornarAdm)
         searchView = findViewById(R.id.searchView)
-
         firestore = FirebaseFirestore.getInstance()
 
+        // Botão Voltar
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
+        // Botão Adicionar Produto
         btnAdProd.setOnClickListener {
-            intent = Intent(this, AdmTelaCadasProd::class.java)
+            val intent = Intent(this, AdmTelaCadasProd::class.java)
             startActivity(intent)
         }
 
+        // Configura RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-        adapter = ProdutoAdapter(listaProdutos){ produto ->
+        adapter = ProdutoAdapter(mutableListOf()) { produto ->
             val intent = Intent(this, AdmTelaEditarProduto::class.java)
             intent.putExtra("titulo", produto.titulo)
             startActivity(intent)
         }
         recyclerView.adapter = adapter
 
+        firestore.collection("produtos")
+            .get()
+            .addOnSuccessListener { snapshots ->
+                val lista = snapshots.map { doc ->
+                    Produto(
+                        titulo = doc.getString("titulo") ?: "",
+                        autor = doc.getString("autor") ?: "",
+                        imageBase64 = doc.getString("imagem") ?: ""
+                    )
+                }.toMutableList()
+                adapter.atualizarLista(lista)
+            }
+
+        // Filtro de busca
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
             override fun onQueryTextChange(newText: String?): Boolean {
@@ -69,21 +81,19 @@ class AdmTelaProdutos : AppCompatActivity() {
             }
         })
 
-        btnExcProd.setOnClickListener {
-            confirmarExclusao()
-        }
+        // Exclusão
+        btnExcProd.setOnClickListener { confirmarExclusao() }
 
+        // Carrega produtos do Firestore
         carregarProdutos()
     }
 
     private fun carregarProdutos() {
-
         firestore.collection("produtos")
-            .addSnapshotListener { snaps, e ->
-                if (e != null || snaps == null) return@addSnapshotListener
-
+            .addSnapshotListener { snapshots, e ->
+                if (e != null || snapshots == null) return@addSnapshotListener
                 listaProdutos.clear()
-                for (doc in snaps.documents) {
+                for (doc in snapshots.documents) {
                     val produto = Produto(
                         titulo = doc.getString("titulo") ?: "",
                         autor = doc.getString("autor") ?: "",
@@ -93,7 +103,6 @@ class AdmTelaProdutos : AppCompatActivity() {
                 }
                 adapter.atualizarLista(listaProdutos)
             }
-
     }
 
     private fun filtrarProdutos(query: String) {
@@ -125,22 +134,20 @@ class AdmTelaProdutos : AppCompatActivity() {
             }
             .setNegativeButton("Não") { dialog, _ -> dialog.dismiss() }
             .show()
-
     }
 
     private fun excluirDoFirestore(selecionados: List<Produto>) {
         val colecao = firestore.collection("produtos")
         var deletados = 0
         val total = selecionados.size
-
         for (produto in selecionados) {
-            colecao.whereEqualTo("titulo", produto.titulo).get().addOnSuccessListener { query ->
+            colecao.whereEqualTo("titulo", produto.titulo).get()
+                .addOnSuccessListener { query ->
                     for (doc in query) {
                         colecao.document(doc.id).delete()
                             .addOnSuccessListener {
                                 deletados++
                                 if (deletados == total) {
-
                                     adapter.excluirSelecionados()
                                     carregarProdutos()
                                 }
@@ -149,6 +156,4 @@ class AdmTelaProdutos : AppCompatActivity() {
                 }
         }
     }
-
-
 }

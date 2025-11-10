@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20.adapter
 
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -72,6 +73,7 @@ class ProdutoAdapter (
     }
 
     fun atualizarLista(novaLista: MutableList<Produto>) {
+        Log.d("ADAPTER", "Atualizando lista com ${novaLista.size} itens")
         produtos.clear()
         produtos.addAll(novaLista)
         notifyDataSetChanged()
@@ -80,4 +82,9 @@ class ProdutoAdapter (
     fun getSelecionados(): List<Produto> {
         return produtos.filter { it.isSelected }
     }
+
+    fun temSelecionado(): Boolean {
+        return produtos.any { it.isSelected }
+    }
+
 }
