@@ -71,7 +71,7 @@
                 app:layout_constraintTop_toBottomOf="@id/btnMudarImg" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout5"
+                android:id="@+id/inputTitulo"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -102,7 +102,7 @@
                 app:boxBackgroundMode="outline"
                 app:boxStrokeColor="@color/borda_input"
                 app:hintTextColor="#247AE8"
-                app:layout_constraintTop_toBottomOf="@id/textInputLayout5"
+                app:layout_constraintTop_toBottomOf="@id/inputTitulo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 

@@ -40,7 +40,9 @@ class AdmTelaProdutos : AppCompatActivity() {
         firestore = FirebaseFirestore.getInstance()
 
         // Botão Voltar
-        btnVoltar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
 
         // Botão Adicionar Produto
         btnAdProd.setOnClickListener {
@@ -52,6 +54,7 @@ class AdmTelaProdutos : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = ProdutoAdapter(mutableListOf()) { produto ->
             val intent = Intent(this, AdmTelaEditarProduto::class.java)
+            intent.putExtra("titulo", produto.titulo)
             startActivity(intent)
         }
         recyclerView.adapter = adapter
@@ -104,8 +107,7 @@ class AdmTelaProdutos : AppCompatActivity() {
 
     private fun filtrarProdutos(query: String) {
         val listaFiltrada = listaProdutos.filter {
-            it.titulo.contains(query, ignoreCase = true) ||
-                    it.autor.contains(query, ignoreCase = true)
+            it.titulo.contains(query, ignoreCase = true) || it.autor.contains(query, ignoreCase = true)
         }
         adapter.atualizarLista(listaFiltrada.toMutableList())
     }
