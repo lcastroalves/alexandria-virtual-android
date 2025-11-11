@@ -17,16 +17,16 @@
         android:layout_marginEnd="66dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
-        app:layout_constraintEnd_toStartOf="@+id/imagemEventosFuturos"
+        app:layout_constraintEnd_toStartOf="@+id/imagemInfoAtividade"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/seta_azul" />
 
     <ImageView
-        android:id="@+id/imagemEventosFuturos"
+        android:id="@+id/imagemInfoAtividade"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="60dp"
         android:contentDescription="@string/contDescLogo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
         app:srcCompat="@drawable/cinema" />
 
     <TextView
-        android:id="@+id/nomeEventosFuturos"
+        android:id="@+id/nomeInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -44,7 +44,7 @@
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagemEventosFuturos" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemInfoAtividade" />
 
     <TextView
         android:id="@+id/horarioInfoAtividade"
@@ -56,7 +56,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeInfoAtividade" />
 
     <ImageView
         android:id="@+id/imageView8"
@@ -81,7 +81,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
-            android:id="@+id/localInfoEvento"
+            android:id="@+id/localInfoAtividade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
@@ -93,7 +93,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/descricaoInfoEvento"
+            android:id="@+id/descricaoInfoAtividade"
             android:layout_width="318dp"
             android:layout_height="207dp"
             android:layout_marginTop="20dp"

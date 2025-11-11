@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeEventosFuturos"
+        app:layout_constraintTop_toBottomOf="@+id/nomeInfoAtividade"
         app:srcCompat="@drawable/padraopng" />
 
     <ImageButton
@@ -33,7 +33,7 @@
         app:srcCompat="@drawable/icon" />
 
     <TextView
-        android:id="@+id/nomeEventosFuturos"
+        android:id="@+id/nomeInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="90dp"

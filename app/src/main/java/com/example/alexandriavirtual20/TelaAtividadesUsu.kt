@@ -38,6 +38,11 @@ class TelaAtividadesUsu : AppCompatActivity() {
 
         adapter = AtividadeAdapter(atividades) { atividade ->
             val intent = Intent(this, TelaInfoAtividadeUsu::class.java)
+            intent.putExtra("nomeAtividade", atividade.nome)
+            intent.putExtra("horarioAtividade", atividade.horario)
+            intent.putExtra("localAtividade", atividade.local)
+            intent.putExtra("descricaoAtividade", atividade.descricao)
+            intent.putExtra("imagemAtividade", atividade.imagem)
             startActivity(intent)
         }
 
