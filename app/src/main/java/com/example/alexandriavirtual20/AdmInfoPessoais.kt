@@ -11,6 +11,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdmInfoPessoais : AppCompatActivity() {
+
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnRedefinirSenha: Button
     private lateinit var btnSalvarAlteracoes: Button
@@ -36,28 +37,78 @@ class AdmInfoPessoais : AppCompatActivity() {
         btnRedefinirSenha = findViewById(R.id.botaoRedefinirSenha)
         btnSalvarAlteracoes = findViewById(R.id.botaoSalvarAlteracoes)
 
-        nomeCompleto = findViewById(R.id.nomeUsuario)
-        nomeUsuario = findViewById(R.id.nomeCompleto)
+        nomeCompleto = findViewById(R.id.nomeCompleto)
+        nomeUsuario = findViewById(R.id.nomeUsuario)
         email = findViewById(R.id.email)
         senha = findViewById(R.id.senha)
         cargo = findViewById(R.id.cargo)
         contato = findViewById(R.id.contato)
 
-        // Botão Voltar
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // Redefinir senha
         btnRedefinirSenha.setOnClickListener {
             val intent = Intent(this, TelaRedefinirSenha::class.java)
             startActivity(intent)
         }
 
-        // Salvar Alterações
         btnSalvarAlteracoes.setOnClickListener {
             verificarCamposEAtualizar()
         }
+
+        // Carregar os dados do administrador Dillan
+        carregarDadosAdm()
+    }
+
+    private fun carregarDadosAdm() {
+        val emailAdm = "Dillan@gmail.com".trim().lowercase()
+
+        // 🔸 primeiro tenta em "administradores"
+        fb.collection("administradores")
+            .get()
+            .addOnSuccessListener { query ->
+                val doc = query.documents.find {
+                    it.getString("email")?.trim()?.lowercase() == emailAdm
+                }
+
+                if (doc != null) {
+                    preencherCamposComDoc(doc.id, doc.data)
+                } else {
+                    // 🔸 se não achou, tenta na coleção "usuario"
+                    fb.collection("usuario")
+                        .get()
+                        .addOnSuccessListener { queryUser ->
+                            val docUser = queryUser.documents.find {
+                                it.getString("email")?.trim()?.lowercase() == emailAdm
+                            }
+
+                            if (docUser != null) {
+                                preencherCamposComDoc(docUser.id, docUser.data)
+                            } else {
+                                Toast.makeText(this, "Administrador não encontrado.", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this, "Erro ao buscar em 'usuario'.", Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao buscar administrador.", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun preencherCamposComDoc(id: String, data: MutableMap<String, Any>?) {
+        if (data == null) return
+
+        nomeCompleto.setText(data["nomeCompleto"] as? String ?: data["nome"] as? String ?: "")
+        nomeUsuario.setText(data["nomeUsuario"] as? String ?: data["usuario"] as? String ?: "")
+        email.setText(data["email"] as? String ?: "")
+        senha.setText(data["senha"] as? String ?: "")
+
+        cargo.setText("")
+        contato.setText("")
     }
 
     private fun camposVazios(): Boolean {
@@ -73,7 +124,6 @@ class AdmInfoPessoais : AppCompatActivity() {
 
         val emailAdm = email.text.toString().trim()
 
-        // Verifica se já existe um ADM com esse e-mail
         fb.collection("administradores")
             .whereEqualTo("email", emailAdm)
             .get()
