@@ -54,22 +54,29 @@ class AdmTelaCabReserv : Fragment() {
         val horaInicio = arredondarPara30(horaAtual)
         val horaFim = horaInicio.plusHours(2)
 
-        textData.text = dataAtual.format(formatoData)
-        textHora.text = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
+        val dataFormatada = dataAtual.format(formatoData)
+        val horaFormatada = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
+
+        textData.text = dataFormatada
+        textHora.text = horaFormatada
 
         // Ações dos botões
         btnTrocarHorario.setOnClickListener {
             val intent = Intent(requireContext(), AdmTelaHoraCab::class.java)
+            intent.putExtra("dataFormatada", dataFormatada)
             startActivity(intent)
         }
 
         btnConfirmar.setOnClickListener {
             val intent = Intent(requireContext(), AdmTelaCabReservHorEsp::class.java)
+            intent.putExtra("dataFormatada", dataFormatada)
+            intent.putExtra("horaFormatada", horaFormatada)
             startActivity(intent)
         }
 
         btnDiaCompleto.setOnClickListener {
             val intent = Intent(requireContext(), AdmTelaCabReservComNome::class.java)
+            intent.putExtra("dataFormatada", dataFormatada)
             startActivity(intent)
         }
 

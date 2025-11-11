@@ -52,16 +52,22 @@ class TelaReservaCabUsu : Fragment() {
         val horaInicio = arredondarPara30(horaAtual)
         val horaFim = horaInicio.plusHours(2)
 
-        textData.text = dataAtual.format(formatoData)
-        textHora.text = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
+        val dataFormatada = dataAtual.format(formatoData)
+        val horaFormatada = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
+
+        textData.text = dataFormatada
+        textHora.text = horaFormatada
 
         btnTrocarHorario.setOnClickListener {
             val intent = Intent(requireContext(), TelaHoraCabineUsu::class.java)
+            intent.putExtra("dataFormatada", dataFormatada)
             startActivity(intent)
         }
 
         btnConfirmar.setOnClickListener {
             val intent = Intent(requireContext(), TelaCabDisponUsu::class.java)
+            intent.putExtra("dataFormatada", dataFormatada)
+            intent.putExtra("periodo", horaFormatada)
             startActivity(intent)
         }
 

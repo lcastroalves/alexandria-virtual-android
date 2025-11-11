@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
     private lateinit var adapter: CabineAdmAdapter
     private lateinit var rv: RecyclerView
     private lateinit var btnVoltar: ImageButton
+    private lateinit var etData: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,11 +21,16 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
 
         rv = findViewById(R.id.rvCabines)
         btnVoltar = findViewById(R.id.imageButton4)
+        etData = findViewById(R.id.tvPeriodo)
+
         adapter = CabineAdmAdapter()
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
+
+        val data = intent.getStringExtra("dataFormatada")
+        etData.text = data
 
         val listaAdm = listOf(
             CabineAdm(1, "Cabine 102", "Lara Castro"),

@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.NumberPicker
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.color.MaterialColors
+import java.util.Locale
 
 class AdmTelaHoraCab : AppCompatActivity() {
     private lateinit var btnConfirmar: Button
@@ -54,7 +55,19 @@ class AdmTelaHoraCab : AppCompatActivity() {
 
     private fun setupButton() {
         btnConfirmar.setOnClickListener {
+            val hora = npHora.value
+            val minutoSelecionado = stepsMinutos[npMinuto.value]
+            val minuto = minutoSelecionado.toIntOrNull() ?: 0
+
+            val inicio = java.time.LocalTime.of(hora, minuto)
+            val fim = inicio.plusHours(2)
+            val fmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-BR"))
+            val periodo = "${inicio.format(fmt)} - ${fim.format(fmt)}"
+            val dataFormatada = intent.getStringExtra("dataFormatada")
+
             val intent = Intent(this, AdmTelaCabReservHorEsp::class.java)
+            intent.putExtra("horaFormatada", periodo)
+            intent.putExtra("dataFormatada", dataFormatada)
             startActivity(intent)
         }
         btnVoltar.setOnClickListener {
