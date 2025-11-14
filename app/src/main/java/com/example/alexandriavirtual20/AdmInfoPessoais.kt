@@ -37,8 +37,8 @@ class AdmInfoPessoais : AppCompatActivity() {
         btnRedefinirSenha = findViewById(R.id.botaoRedefinirSenha)
         btnSalvarAlteracoes = findViewById(R.id.botaoSalvarAlteracoes)
 
-        nomeCompleto = findViewById(R.id.nomeCompleto)
-        nomeUsuario = findViewById(R.id.nomeUsuario)
+        nomeCompleto = findViewById(R.id.inputNomeUsu)
+        nomeUsuario = findViewById(R.id.nomeComp)
         email = findViewById(R.id.email)
         senha = findViewById(R.id.senha)
         cargo = findViewById(R.id.cargo)

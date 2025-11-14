@@ -33,8 +33,8 @@ class TelaCadastro : AppCompatActivity() {
 
         botaoCadastrar = findViewById(R.id.botaoCadastrar)
         botaoTenhoCadastro = findViewById(R.id.botaoTenhoCadastro)
-        inputNomeComp = findViewById(R.id.nomeCompleto)
-        inputNomeUsu = findViewById(R.id.nomeUsuario)
+        inputNomeComp = findViewById(R.id.inputNomeUsu)
+        inputNomeUsu = findViewById(R.id.nomeComp)
         inputEmail = findViewById(R.id.email)
         inputSenha1 = findViewById(R.id.senha)
         inputSenha2 = findViewById(R.id.segundaSenha)

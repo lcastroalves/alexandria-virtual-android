@@ -46,7 +46,7 @@
 
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imagemUsu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -68,10 +68,10 @@
             android:text="Dillan Medeiros"
             android:textSize="25sp"
             android:translationY="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemUsu"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toTopOf="@+id/imageView">
+            app:layout_constraintStart_toEndOf="@+id/imagemUsu"
+            app:layout_constraintTop_toTopOf="@+id/imagemUsu">
 
         </TextView>
     </LinearLayout>
@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linear_layout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nomeUsuario"
+            android:id="@+id/nomeComp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPersonName"
@@ -123,7 +123,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/nomeCompleto"
+            android:id="@+id/inputNomeUsu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPersonName"
