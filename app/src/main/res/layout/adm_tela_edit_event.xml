@@ -24,7 +24,7 @@
 
     <!-- Título -->
     <TextView
-        android:id="@+id/nomeEventosFuturos"
+        android:id="@+id/nomeInfoAtividade"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="90dp"
@@ -42,7 +42,7 @@
         android:layout_width="113dp"
         android:layout_height="122dp"
         android:contentDescription="@string/contDescLogo"
-        app:layout_constraintTop_toBottomOf="@id/nomeEventosFuturos"
+        app:layout_constraintTop_toBottomOf="@id/nomeInfoAtividade"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/totoro" />
