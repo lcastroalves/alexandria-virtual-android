@@ -14,7 +14,9 @@ import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.TelaConfirmReservaUsu
 import com.example.alexandriavirtual20.model.Cabine
 
-class CabineAdapter() : ListAdapter<Cabine, CabineAdapter.VH>(Diff) {
+class CabineAdapter(
+    private val onReservarClick: (Cabine) -> Unit
+) : ListAdapter<Cabine, CabineAdapter.VH>(Diff) {
     object Diff : DiffUtil.ItemCallback<Cabine>() {
         override fun areItemsTheSame(a: Cabine, b: Cabine) = a.id == b.id
         override fun areContentsTheSame(a: Cabine, b: Cabine) = a == b
@@ -22,14 +24,11 @@ class CabineAdapter() : ListAdapter<Cabine, CabineAdapter.VH>(Diff) {
 
     inner class VH(view: View) : RecyclerView.ViewHolder(view)  {
         val icon = view.findViewById<ImageView>(R.id.iconCabine)
-        private val nome = view.findViewById<TextView>(R.id.tvCabineNome)
-        private val bloco = view.findViewById<TextView>(R.id.tvCabineBloco)
+        private val numero = view.findViewById<TextView>(R.id.tvCabineNome)
         private val reservar = view.findViewById<MaterialButton>(R.id.btnReservar)
 
         fun bind(item: Cabine) {
-            icon.setImageResource(item.iconRes)
-            nome.text = item.nome
-            bloco.text = item.bloco
+            numero.text = "Cabine ${item.numero}"
             reservar.setOnClickListener {
                 val intent = Intent(itemView.context, TelaConfirmReservaUsu::class.java)
                 itemView.context.startActivity(intent)

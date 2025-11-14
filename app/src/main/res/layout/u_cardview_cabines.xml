@@ -43,23 +43,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Cabine 102"
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@id/iconCabine"
                 app:layout_constraintTop_toTopOf="@id/iconCabine" />
-
-            <TextView
-                android:id="@+id/tvCabineBloco"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Bloco B"
-                android:textColor="?attr/colorOnSurfaceVariant"
-                android:textSize="13sp"
-                app:layout_constraintStart_toStartOf="@id/tvCabineNome"
-                app:layout_constraintTop_toBottomOf="@id/tvCabineNome"
-                app:layout_constraintBottom_toBottomOf="parent" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnReservar"
@@ -70,9 +60,7 @@
                 android:textColor="#2279E6"
                 android:textSize="10sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/tvCabineBloco" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

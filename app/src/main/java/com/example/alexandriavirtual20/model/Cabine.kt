@@ -1,10 +1,13 @@
 package com.example.alexandriavirtual20.model
 
-import com.example.alexandriavirtual20.R
+import com.google.firebase.firestore.DocumentId
 
 data class Cabine (
-    val id: Int,
-    val nome: String,
-    val bloco: String,
-    val iconRes: Int = R.drawable.livro_cab
+    @DocumentId
+    var id: String = " ",
+    var numero: String = " ",
+    var dia: String = " ",
+    var aluno: String = " ",
+    var horario: String = " ",
+    var livre: Boolean = true
 )

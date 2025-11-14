@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.CabineAdmAdapter
-import com.example.alexandriavirtual20.model.CabineAdm
+import com.google.firebase.firestore.FirebaseFirestore
+import com.example.alexandriavirtual20.model.Cabine
 
 class AdmTelaCabReservHorEsp : AppCompatActivity() {
+    private lateinit var fb : FirebaseFirestore
     private lateinit var adapter: CabineAdmAdapter
     private lateinit var rv: RecyclerView
     private lateinit var btnVoltar: ImageButton
@@ -23,7 +25,9 @@ class AdmTelaCabReservHorEsp : AppCompatActivity() {
         btnVoltar = findViewById(R.id.imageButton4)
         etPeriodo = findViewById(R.id.tvPeriodo)
 
-        adapter = CabineAdmAdapter()
+        fb = FirebaseFirestore.getInstance()
+
+        adapter = CabineAdmAdapter(::buscarFotoAlunoPorNome)
 
         rv.setHasFixedSize(true)
         rv.layoutManager = LinearLayoutManager(this)
@@ -34,14 +38,38 @@ class AdmTelaCabReservHorEsp : AppCompatActivity() {
 
         etPeriodo.text = data + " - " + periodo
 
-        val listaAdm = listOf(
-            CabineAdm(1, "Cabine 102", "Lara Castro"),
-            CabineAdm(2, "Cabine 95", "Thiago Narak"),
-        )
-        adapter.submitList(listaAdm)
+        if (data != null && periodo != null) {
+            carregarCabinesDoDiaEHorario(data, periodo)
+        }
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    private fun buscarFotoAlunoPorNome(nome: String, callback: (String?) -> Unit) {
+        fb.collection("usuarios")
+            .whereEqualTo("nome", nome)
+            .limit(1)
+            .get()
+            .addOnSuccessListener { snap ->
+                val foto = snap.documents.firstOrNull()?.getString("fotoPerfil")
+                callback(foto)
+            }
+            .addOnFailureListener { callback(null) }
+    }
+
+    private fun carregarCabinesDoDiaEHorario(dia: String, horario: String) {
+        fb.collection("cabines")
+            .whereEqualTo("dia", dia)
+            .whereEqualTo("horario", horario)
+            .whereEqualTo("livre", false)
+            .get()
+            .addOnSuccessListener { snap ->
+                val lista = snap.documents.mapNotNull { doc ->
+                    doc.toObject(Cabine::class.java)
+                }
+                adapter.submitList(lista)
+            }
     }
 }
