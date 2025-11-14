@@ -7,20 +7,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
 import android.widget.EditText
 import android.widget.Toast
+import com.example.alexandriavirtual20.model.Usuario
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaCadastro : AppCompatActivity() {
 
     private lateinit var botaoCadastrar : Button
     private lateinit var botaoTenhoCadastro : Button
-    private val emailsCadastrados = listOf("alexandria@gmail.com",
-                                            "adm@gmail.br"
-                                        )
 
     private lateinit var inputNomeComp : EditText
     private lateinit var inputNomeUsu: EditText
     private lateinit var inputEmail : EditText
     private lateinit var inputSenha1 : EditText
     private lateinit var inputSenha2 : EditText
+
+    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var fbAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +33,14 @@ class TelaCadastro : AppCompatActivity() {
 
         botaoCadastrar = findViewById(R.id.botaoCadastrar)
         botaoTenhoCadastro = findViewById(R.id.botaoTenhoCadastro)
-        inputNomeComp = findViewById(R.id.nomeCompleto)
-        inputNomeUsu = findViewById(R.id.nomeUsuario)
+        inputNomeComp = findViewById(R.id.inputNomeUsu)
+        inputNomeUsu = findViewById(R.id.nomeComp)
         inputEmail = findViewById(R.id.email)
         inputSenha1 = findViewById(R.id.senha)
         inputSenha2 = findViewById(R.id.segundaSenha)
+
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
 
         botaoCadastrar.setOnClickListener {
             val nomeCompleto = inputNomeComp.text.toString()
@@ -47,22 +54,10 @@ class TelaCadastro : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Valida email já cadastrado
-            if (emailsCadastrados.contains(email)) {
-                Toast.makeText(this, "O e-mail informado já está em uso", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
             // Valida a senha
-            val senhaValida = senha.length >= 8 &&
-                    senha.any { it.isDigit() }
-
+            val senhaValida = senha.length >= 8 && senha.any { it.isDigit() }
             if (!senhaValida) {
-                Toast.makeText(
-                    this,
-                    "A senha deve ter pelo menos 8 caracteres, incluindo um número.",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(this, "A senha deve ter pelo menos 8 caracteres, incluindo um número.", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
 
@@ -72,10 +67,44 @@ class TelaCadastro : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            // Se tudo certo, ta liberado
-            val intent = Intent(this, AMain::class.java)
-            startActivity(intent)
-            finish()
+            if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                Toast.makeText(this, "Formato de E-mail inválido", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            // Se tudo certo, confere o email e cria o usuario
+            FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, senha).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    val userID = task.result?.user?.uid ?: return@addOnCompleteListener
+
+                    val usuario = Usuario(
+                        id = userID,
+                        nome = nomeCompleto,
+                        usuario = nomeUsuario,
+                        email = email,
+                        senha = senha,
+                        fotoPerfil = null,
+                        isAdmin = false
+                    )
+
+                    fireBase.collection("usuario").document(userID).set(usuario).addOnSuccessListener {
+                        Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
+
+                        startActivity(Intent(this, TelaLogin::class.java))
+                        finish()
+                    }
+
+                } else {
+                    if (task.exception is FirebaseAuthUserCollisionException) {
+                        // Email já está em uso
+                        Toast.makeText(this, "E-mail já está cadastrado", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this, "Erro ao cadastrar", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            }
         }
 
         botaoTenhoCadastro.setOnClickListener {

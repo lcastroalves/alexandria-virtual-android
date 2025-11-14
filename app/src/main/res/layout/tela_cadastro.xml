@@ -66,7 +66,7 @@
             app:hintTextColor="#247AE8">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nomeCompleto"
+                android:id="@+id/inputNomeUsu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="40dp"
@@ -93,7 +93,7 @@
             app:hintTextColor="#247AE8">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nomeUsuario"
+                android:id="@+id/nomeComp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="40dp"

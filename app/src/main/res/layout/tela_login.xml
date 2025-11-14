@@ -109,7 +109,7 @@
             app:hintTextColor="#247AE8">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/horario"
+                android:id="@+id/senha"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="40dp"

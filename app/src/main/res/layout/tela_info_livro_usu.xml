@@ -35,7 +35,7 @@
 
     <ImageView
         android:contentDescription="@string/descricaoCapaLivro"
-        android:id="@+id/imageView"
+        android:id="@+id/imagemUsu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
@@ -57,8 +57,8 @@
         android:textColor="#247AE8"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/imagemUsu"
+        app:layout_constraintTop_toTopOf="@+id/imagemUsu" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,8 +83,8 @@
         android:textColor="#000000"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/imagemUsu"
+        app:layout_constraintTop_toTopOf="@+id/imagemUsu" />
 
     <TextView
         android:id="@+id/sinopseLivro"
@@ -101,7 +101,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/imagemUsu" />
 
     <ImageView
         android:contentDescription="@null"
