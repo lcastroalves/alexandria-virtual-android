@@ -25,38 +25,32 @@ class TelaSplash : AppCompatActivity() {
         fbAuth = FirebaseAuth.getInstance()
         fireBase = FirebaseFirestore.getInstance()
 
-        val usuarioLogado = fbAuth.currentUser
+        Handler(Looper.getMainLooper()).postDelayed({
+            val usuarioLogado = fbAuth.currentUser
 
-        if(usuarioLogado != null){
-            fireBase.collection("usuario").document(usuarioLogado.uid).get().addOnSuccessListener { doc ->
+            if (usuarioLogado != null) {
+                fireBase.collection("usuario").document(usuarioLogado.uid).get().addOnSuccessListener { doc ->
+                        val isAdmin = doc.getBoolean("admin") ?: false
 
-                val isAdmin = doc.getBoolean("admin") ?: false
-
-                if(isAdmin){
-                    val intent = Intent(this, AdmAMain::class.java)
-                    startActivity(intent)
-                    finish()
-                } else {
-                    val intent = Intent(this, AMain::class.java)
-                    startActivity(intent)
-                    finish()
+                        if (isAdmin) {
+                            startActivity(Intent(this, AdmAMain::class.java))
+                            finish()
+                        }else{
+                            startActivity(Intent(this,AMain::class.java))
+                            finish()
+                        }
                 }
+            } else {
+                startActivity(Intent(this, TelaLogin::class.java))
+                finish()
             }
-        } else {
-            val intent = Intent(this, TelaLogin::class.java)
-            startActivity(intent)
-            finish()
-        }
+
+        }, 3000)
+
 
         val windowInsetsController = WindowCompat.getInsetsController(window, window.decorView)
         windowInsetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         windowInsetsController.hide(WindowInsetsCompat.Type.navigationBars())
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            val intent = Intent (this, TelaLogin::class.java)
-            startActivity(intent)
-            finish()
-        },3000)
     }
 }
