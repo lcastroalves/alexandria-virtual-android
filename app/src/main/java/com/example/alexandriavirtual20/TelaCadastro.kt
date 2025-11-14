@@ -54,9 +54,6 @@ class TelaCadastro : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
-
-
             // Valida a senha
             val senhaValida = senha.length >= 8 && senha.any { it.isDigit() }
             if (!senhaValida) {

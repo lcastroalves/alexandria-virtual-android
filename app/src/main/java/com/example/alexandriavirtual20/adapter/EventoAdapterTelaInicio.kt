@@ -3,7 +3,6 @@ package com.example.alexandriavirtual20.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +20,7 @@ class EventoAdapterTelaInicio (
         val capaEvento: ImageView = view.findViewById(R.id.capaEvento)
         val titulo : TextView = view.findViewById(R.id.titulo)
         val data : TextView = view.findViewById(R.id.data)
-        val horario : TextView = view.findViewById(R.id.horario)
+        val horario : TextView = view.findViewById(R.id.senha)
         val local : TextView = view.findViewById(R.id.local)
     }
 
