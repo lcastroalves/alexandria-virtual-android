@@ -83,8 +83,6 @@ class ProdutoAdapter (
         return produtos.filter { it.isSelected }
     }
 
-    fun temSelecionado(): Boolean {
-        return produtos.any { it.isSelected }
-    }
+
 
 }

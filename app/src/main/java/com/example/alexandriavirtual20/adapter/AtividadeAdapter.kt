@@ -32,7 +32,7 @@ class AtividadeAdapter (
     override fun onBindViewHolder(holder: AtividadeAdapter.ViewHolder, position: Int) {
         val atividade = atividades[position]
 
-        holder.imagem.setImageResource(atividade.imagem)
+        //holder.imagem.setImageResource(atividade.imagem)
         holder.nome.text = atividade.nome
         holder.descricao.text = atividade.breveDescricao
 
