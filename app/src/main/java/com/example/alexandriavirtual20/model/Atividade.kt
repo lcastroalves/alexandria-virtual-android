@@ -6,7 +6,7 @@ data class Atividade (
     var local : String,
     var descricao : String,
     var breveDescricao : String,
-    var imagem : String
+    var imagem : Int
 )
 
 

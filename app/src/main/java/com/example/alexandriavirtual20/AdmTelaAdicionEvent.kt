@@ -120,11 +120,11 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
 
         val dadosEvento = hashMapOf(
             "nome" to nomeEvento,
-            "data" to data.text.toString().trim(),
-            "horario" to horario.text.toString().trim(),
-            "descricao" to descricao.text.toString().trim(),
-            "breveDescricao" to breveDescricao.text.toString().trim(),
-            "local" to local.text.toString().trim(),
+            "data" to data.text.toString(),
+            "horario" to horario.text.toString(),
+            "descricao" to descricao.text.toString(),
+            "breveDescricao" to breveDescricao.text.toString(),
+            "local" to local.text.toString(),
             "imagem" to imagemBase64
         )
         fb.collection("evento").add(dadosEvento)

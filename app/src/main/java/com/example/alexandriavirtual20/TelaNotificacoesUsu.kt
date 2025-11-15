@@ -13,6 +13,7 @@ import com.example.alexandriavirtual20.adapter.NotificacaoAdapter
 class TelaNotificacoesUsu : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var recyclerView : RecyclerView
+    private lateinit var adapter : NotificacaoAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,12 +27,11 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         }
 
         val notificacoes = mutableListOf(
-            Notificacao("Ciência da computação ", "- Devolução", "16 set", "Falta uma semana para fim do prazo de devolução",  1,R.drawable.livro1),
-            Notificacao("Meu vizinho totoro ", "- Evento", "16 set", "Falta uma semana para realização do evento", 1,R.drawable.totoro),
-            Notificacao("Java como programar ", "- Devolução", "23 set", "Faltam duas semanas para fim do prazo de devolução",2, R.drawable.livro3),
+            Notificacao("Ciência da computação ", "16 set",R.drawable.livro1,"- Devolução",  "Falta uma semana para fim do prazo de devolução",1),
+            Notificacao("Meu vizinho totoro ", "16 set",R.drawable.totoro,"- Evento",  "Falta uma semana para realização do evento", 1),
+            Notificacao("Java como programar ", "23 set",R.drawable.livro3,"- Devolução",  "Faltam duas semanas para fim do prazo de devolução", 1 ),
         )
 
-        var adapter: NotificacaoAdapter? = null
 
         // Cria o Adapter e envia a lista produtos para ele
         adapter = NotificacaoAdapter(
@@ -39,7 +39,7 @@ class TelaNotificacoesUsu : AppCompatActivity() {
             onExcluirClick = { notificacao ->
                 adapter?.removerNotificacao(notificacao)
             }
-            )
+        )
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }

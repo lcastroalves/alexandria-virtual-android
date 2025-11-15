@@ -91,9 +91,31 @@ class TelaCadastro : AppCompatActivity() {
                     fireBase.collection("usuario").document(userID).set(usuario).addOnSuccessListener {
                         Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
 
+                        // ➜ Cria notificação de boas-vindas
+                        val primeiraNotificacao = mapOf(
+                            "titulo" to "Bem-vindo!",
+                            "mensagem" to "Sua conta foi criada com sucesso.",
+                            "timestamp" to System.currentTimeMillis(),
+                            "lida" to false
+                        )
+
+                        FirebaseFirestore.getInstance()
+                            .collection("usuario")         // cuidado: seu código usa "usuario", não "usuarios"
+                            .document(userID)
+                            .collection("notificacoes")
+                            .add(primeiraNotificacao)
+                            .addOnSuccessListener {
+                                // Notificação criada com sucesso (opcional fazer algo)
+                            }
+                            .addOnFailureListener {
+                                // Caso dê erro ao registrar a notificação (opcional também)
+                            }
+
+                        // Vai para tela de login
                         startActivity(Intent(this, TelaLogin::class.java))
                         finish()
                     }
+
 
                 } else {
                     if (task.exception is FirebaseAuthUserCollisionException) {
