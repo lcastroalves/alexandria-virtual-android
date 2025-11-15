@@ -159,23 +159,20 @@ class TelaInicioUsu : Fragment() {
     }
 
     private fun carregarAtividades(){
-        val atividades = mutableListOf<Atividade>()
 
-        fireBase.collection("atividade").get().addOnSuccessListener { query ->
-
-            for(doc in query.documents){
-                val nomeAtividade = doc.getString("nome") ?: ""
-                val horaAtividade = doc.getString("horario")?: ""
-                val localAtividade = doc.getString("local")?: ""
-                val descricaoAtividade = doc.getString("descricao")?: ""
-                val breveDescAtividade = doc.getString("breveDescricao")?: ""
-                val capaAtividade = doc.getString("imagem")?: ""
-
-                atividades.add(Atividade(nomeAtividade, horaAtividade, localAtividade, descricaoAtividade, breveDescAtividade,capaAtividade))
-            }
+        val atividades = mutableListOf(
+            Atividade("Cinema", "9 - 22", "Auditório Principal", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!",R.drawable.cinema),
+            Atividade("Sala de Jogos", "9 - 22", "Sala 2", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21",R.drawable.jogos),
+            Atividade("Clube do Livro", "9 - 22", "Auditório Principal", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",R.drawable.iconelivro)
+        )
 
             val adapterAtividade = AtividadeAdapterTelaInicio(atividades){ atividade ->
                 val intent = Intent(requireContext(), TelaInfoAtividadeUsu::class.java)
+                intent.putExtra("nomeAtividade", atividade.nome)
+                intent.putExtra("horarioAtividade", atividade.horario)
+                intent.putExtra("imagemAtividade", atividade.imagem)
+                intent.putExtra("descricaoAtividade", atividade.descricao)
+                intent.putExtra("localAtividade", atividade.local)
                 startActivity(intent)
             }
 
@@ -187,6 +184,5 @@ class TelaInicioUsu : Fragment() {
             )
 
             recyclerViewAtividades.adapter = adapterAtividade
-        }
     }
 }

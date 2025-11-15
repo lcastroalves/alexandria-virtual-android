@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,10 +36,17 @@ class ListaEventoAdapter (
     override fun onBindViewHolder(holder: ListaEventoAdapter.ViewHolder, position: Int) {
         val evento = eventos[position]
 
-        holder.imagem.setImageResource((evento.imagem).toInt())
+        if (!evento.imagem.isNullOrEmpty()) {
+            val imageBytes = Base64.decode(evento.imagem, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+            holder.imagem.setImageBitmap(bitmap)
+        } else {
+            holder.imagem.setImageResource(R.drawable.padraopng)
+        }
+
         holder.nome.text = evento.nome
         holder.data.text = evento.data
-        holder.descricao.text = evento.descricao
+        holder.descricao.text = evento.breveDescricao
 
         holder.imagem.setOnClickListener {
             onClick(evento)

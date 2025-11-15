@@ -36,14 +36,6 @@ class AtividadeAdapterTelaInicio(
     ) {
         val atividade = atividades[position]
 
-        holder.capaAtividade
-        if (!atividade.imagem.isNullOrEmpty()) {
-            val imagemBytes = Base64.decode(atividade.imagem, Base64.DEFAULT)
-            val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
-            holder.capaAtividade.setImageBitmap(bitmap)
-        } else {
-            holder.capaAtividade.setImageResource(R.drawable.livro3)
-        }
 
         holder.nomeAtividade.text = atividade.nome
 

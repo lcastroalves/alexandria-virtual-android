@@ -57,7 +57,7 @@ class AdmTelaEditEvent : AppCompatActivity() {
 
         // Buscar dados do evento pelo nome
         firestore.collection("evento")
-            .whereEqualTo("nome", nomeEvento.trim().lowercase())
+            .whereEqualTo("nome", nomeEvento)
             .get()
             .addOnSuccessListener { snapshots ->
                 if (!snapshots.isEmpty) {
