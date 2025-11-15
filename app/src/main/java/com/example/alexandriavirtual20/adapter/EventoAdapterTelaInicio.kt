@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +39,15 @@ class EventoAdapterTelaInicio (
     ) {
         val evento = eventos[position]
 
-        holder.capaEvento.setImageResource((evento.imagem).toInt())
+        holder.capaEvento
+        if (!evento.imagem.isNullOrEmpty()) {
+            val imagemBytes = Base64.decode(evento.imagem, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
+            holder.capaEvento.setImageBitmap(bitmap)
+        } else {
+            holder.capaEvento.setImageResource(R.drawable.livro3)
+        }
+
         holder.titulo.text = evento.nome
         holder.data.text = evento.data
         holder.horario.text = evento.horario

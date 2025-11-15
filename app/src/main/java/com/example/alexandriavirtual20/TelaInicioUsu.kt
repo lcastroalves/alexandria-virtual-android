@@ -1,7 +1,9 @@
 package com.example.alexandriavirtual20
 
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,17 +21,11 @@ import com.example.alexandriavirtual20.adapter.ProdutoAdapter
 import com.example.alexandriavirtual20.model.Atividade
 import com.example.alexandriavirtual20.model.Evento
 import com.example.alexandriavirtual20.model.Livro
+import com.example.alexandriavirtual20.model.Produto
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TelaInicioUsu.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TelaInicioUsu : Fragment() {
     // TODO: Rename and change types of parameters
 
@@ -41,15 +37,12 @@ class TelaInicioUsu : Fragment() {
     private lateinit var btnSinoNotifi : ImageButton
     private lateinit var btnLevBib : Button
     private lateinit var btnCap : Button
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var fbAuth: FirebaseAuth
+    private lateinit var fireBase: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
@@ -71,66 +64,14 @@ class TelaInicioUsu : Fragment() {
         btnLevBib = view.findViewById(R.id.btnLevBib)
         btnCap = view.findViewById(R.id.btnCap)
 
-        val livros = mutableListOf(
-            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro1, "4.5"),
-            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro2, "4.0"),
-            Livro("Ciência da computação","", "Ernane Rosa Martins", R.drawable.livro3, "4.3"),
-            Livro("Ciência da computação", "","Ernane Rosa Martins", R.drawable.livro4, "4.6")
-        )
+        fbAuth = FirebaseAuth.getInstance()
+        fireBase = FirebaseFirestore.getInstance()
 
-        val eventos = mutableListOf(
-            Evento(imagem = (R.drawable.totoro).toString(), nome = "O meu Amigo Totoro", data = "16 Set", horario = "16:00 - 17:30", descricao = "xfg", breveDescricao = "fsdfg", local = "Auditório Principal"),
-            Evento(imagem = (R.drawable.livro4).toString(), nome = "Sarau Poético Noturno", data = "10 Out", horario = "20:00 - 22:30", descricao = "sdfs", breveDescricao = "sdfs", local = "Praça das Artes")
-        )
 
-        val atividades = mutableListOf(
-            Atividade("Sala de Jogos", "", "","","",R.drawable.jogos),
-            Atividade("Cinema", "", "","","",R.drawable.cinema)
-        )
+        carregarLivros()
+        carregarEventos()
+        carregarAtividades()
 
-        // adapters
-        val adapterLivro = LivroAdapterSoCapa(livros){ livro ->
-            val intent = Intent(requireContext(), TelaInfoLivroUsu::class.java)
-            startActivity(intent)
-            // Somente coisas que dizem respeito ao item individual
-        }
-
-        val adapterEvento = EventoAdapterTelaInicio(eventos){ evento ->
-            val intent = Intent(requireContext(), TelaInfoEventoUsu::class.java)
-            startActivity(intent)
-        }
-
-        val adapterAtividade = AtividadeAdapterTelaInicio(atividades){ atividade ->
-            val intent = Intent(requireContext(), TelaInfoAtividadeUsu::class.java)
-            startActivity(intent)
-        }
-
-        // orientacoes dos recycler views
-        recyclerViewLivros.layoutManager = LinearLayoutManager(
-
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        recyclerViewEventos.layoutManager = LinearLayoutManager(
-
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        recyclerViewAtividades.layoutManager = LinearLayoutManager(
-
-            requireContext(),
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-
-        // chamadas
-        recyclerViewLivros.adapter = adapterLivro
-        recyclerViewEventos.adapter = adapterEvento
-        recyclerViewAtividades.adapter = adapterAtividade
 
         btnVerMaisEventos.setOnClickListener {
             val intent = Intent(requireContext(), TelaEventosFuturUsu::class.java)
@@ -155,24 +96,97 @@ class TelaInicioUsu : Fragment() {
         }
     }
 
+    private fun carregarLivros(){
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BlankFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TelaInicioUsu().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+        val produtos = mutableListOf<Produto>()
+
+        fireBase.collection("produtos").get().addOnSuccessListener { query ->
+
+            for (doc in query.documents){
+                val titulo = doc.getString("titulo") ?: ""
+                val autor = doc.getString("autor") ?: ""
+                val imagemBase64 = doc.getString("imagem") ?: ""
+
+                produtos.add(Produto(titulo, autor, imagemBase64, false))
             }
+
+            val adapterLivro = LivroAdapterSoCapa(produtos){ livro ->
+                val intent = Intent(requireContext(), TelaInfoLivroUsu::class.java)
+                startActivity(intent)
+                // Somente coisas que dizem respeito ao item individual
+            }
+
+            recyclerViewLivros.layoutManager = LinearLayoutManager(
+
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            recyclerViewLivros.adapter = adapterLivro
+        }
+    }
+
+    private fun carregarEventos(){
+        val eventos = mutableListOf<Evento>()
+
+        fireBase.collection("evento").get().addOnSuccessListener { query ->
+
+            for(doc in query.documents){
+                val nomeEvento = doc.getString("nome") ?: ""
+                val horaEvento = doc.getString("horario")?: ""
+                val localEvento = doc.getString("local")?: ""
+                val dataEvento = doc.getString("data")?: ""
+                val capaEvento = doc.getString("imagem")?: ""
+
+                eventos.add(Evento(capaEvento,nomeEvento,dataEvento,horaEvento,"","",localEvento))
+            }
+
+            val adapterEvento = EventoAdapterTelaInicio(eventos){ evento ->
+                val intent = Intent(requireContext(), TelaInfoEventoUsu::class.java)
+                startActivity(intent)
+            }
+
+            recyclerViewEventos.layoutManager = LinearLayoutManager(
+
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            recyclerViewEventos.adapter = adapterEvento
+        }
+    }
+
+    private fun carregarAtividades(){
+        val atividades = mutableListOf<Atividade>()
+
+        fireBase.collection("atividade").get().addOnSuccessListener { query ->
+
+            for(doc in query.documents){
+                val nomeAtividade = doc.getString("nome") ?: ""
+                val horaAtividade = doc.getString("horario")?: ""
+                val localAtividade = doc.getString("local")?: ""
+                val descricaoAtividade = doc.getString("descricao")?: ""
+                val breveDescAtividade = doc.getString("breveDescricao")?: ""
+                val capaAtividade = doc.getString("imagem")?: ""
+
+                atividades.add(Atividade(nomeAtividade, horaAtividade, localAtividade, descricaoAtividade, breveDescAtividade,capaAtividade))
+            }
+
+            val adapterAtividade = AtividadeAdapterTelaInicio(atividades){ atividade ->
+                val intent = Intent(requireContext(), TelaInfoAtividadeUsu::class.java)
+                startActivity(intent)
+            }
+
+            recyclerViewAtividades.layoutManager = LinearLayoutManager(
+
+                requireContext(),
+                LinearLayoutManager.HORIZONTAL,
+                false
+            )
+
+            recyclerViewAtividades.adapter = adapterAtividade
+        }
     }
 }

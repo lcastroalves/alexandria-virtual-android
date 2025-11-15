@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -34,7 +36,15 @@ class AtividadeAdapterTelaInicio(
     ) {
         val atividade = atividades[position]
 
-        holder.capaAtividade.setImageResource(atividade.imagem)
+        holder.capaAtividade
+        if (!atividade.imagem.isNullOrEmpty()) {
+            val imagemBytes = Base64.decode(atividade.imagem, Base64.DEFAULT)
+            val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
+            holder.capaAtividade.setImageBitmap(bitmap)
+        } else {
+            holder.capaAtividade.setImageResource(R.drawable.livro3)
+        }
+
         holder.nomeAtividade.text = atividade.nome
 
         holder.constraintLayout.setOnClickListener {
