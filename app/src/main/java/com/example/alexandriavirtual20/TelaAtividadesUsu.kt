@@ -8,9 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.AtividadeAdapter
-import com.example.alexandriavirtual20.adapter.ListaEventoAdapter
 import com.example.alexandriavirtual20.model.Atividade
-import com.example.alexandriavirtual20.model.Evento
 
 class TelaAtividadesUsu : AppCompatActivity() {
     private lateinit var btnVoltar : ImageButton

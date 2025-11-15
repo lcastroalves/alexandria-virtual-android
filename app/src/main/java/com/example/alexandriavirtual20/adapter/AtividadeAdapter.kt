@@ -34,7 +34,7 @@ class AtividadeAdapter (
 
         //holder.imagem.setImageResource(atividade.imagem)
         holder.nome.text = atividade.nome
-        holder.descricao.text = atividade.descricao
+        holder.descricao.text = atividade.breveDescricao
 
         holder.imagem.setOnClickListener {
             onClick(atividade)
