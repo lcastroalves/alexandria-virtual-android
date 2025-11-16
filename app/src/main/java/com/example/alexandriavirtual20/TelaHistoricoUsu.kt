@@ -36,30 +36,29 @@ class TelaHistoricoUsu : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // ----------------------------
-        // LISTA DE LIVROS (pode vir do Firebase)
-        // ----------------------------
+        // --------------------------------------------------------------------
+        // ⚠️ VERIFIQUE SE SUA CLASSE Livro TEM ESTES CAMPOS:
+        // titulo, autor, imagem, favorito, etc…
+        // E SE IMPLEMENTA Serializable OU Parcelable.
+        // --------------------------------------------------------------------
+
         listaOriginal.addAll(
             listOf(
-                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, "130"),
-                Livro("222222222", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, "130"),
-                Livro("33333333", "Java como Programar", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro2, "230"),
-                Livro("44444444", "Java Avançado", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro3, "150"),
-                Livro("555555555", "Redes de Computadores", "Tanenbaum & Wetherall", "Tanenbaum & Wetherall", R.drawable.livro4, "170")
+                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, 130),
+                Livro("222222222", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, 130),
+                Livro("33333333", "Java como Programar", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro2, 230),
+                Livro("44444444", "Java Avançado", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro3, 150),
+                Livro("555555555", "Redes de Computadores", "Tanenbaum & Wetherall", "Tanenbaum & Wetherall", R.drawable.livro4, 170)
             )
         )
 
-        // Lista filtrada começa igual à original
         listaFiltro.addAll(listaOriginal)
 
-        // ----------------------------
-        // ADAPTER
-        // ----------------------------
         adapter = LivroAdapterHistorico(
             listaFiltro,
             onInfoClick = { livro ->
                 val intent = Intent(this, TelaInfoLivroUsu::class.java)
-                intent.putExtra("livro", livro)
+                intent.putExtra("livro", livro) // PRECISA SER Serializable/Parcelable
                 startActivity(intent)
             },
             onReviewClick = { livro ->
@@ -78,9 +77,9 @@ class TelaHistoricoUsu : AppCompatActivity() {
         configurarPesquisa()
     }
 
-    // ----------------------------------------
+    // --------------------------------------------------------------------
     // 🔍 FILTRO DA BARRA DE PESQUISA
-    // ----------------------------------------
+    // --------------------------------------------------------------------
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
@@ -93,10 +92,8 @@ class TelaHistoricoUsu : AppCompatActivity() {
                 listaFiltro.clear()
 
                 if (texto.isEmpty()) {
-                    // mostra tudo
                     listaFiltro.addAll(listaOriginal)
                 } else {
-                    // filtra por título OU autor
                     listaFiltro.addAll(
                         listaOriginal.filter { livro ->
                             livro.titulo.lowercase().contains(texto) ||
