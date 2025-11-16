@@ -2,13 +2,13 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.TornarAdmAdapter
 import com.example.alexandriavirtual20.model.Usuario
-import android.util.Base64
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -16,9 +16,16 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
 
     private lateinit var btnVoltar: ImageButton
     private lateinit var recyclerView: RecyclerView
+    private lateinit var searchView: SearchView
     private lateinit var fb: FirebaseFirestore
     private lateinit var adapter: TornarAdmAdapter
+
+    // Lista completa vinda do Firebase
     private val listaUsuarios = mutableListOf<Usuario>()
+
+
+    // Lista que aparece na tela (filtrada)
+    private val listaFiltrada = mutableListOf<Usuario>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,11 +33,13 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
         FirebaseApp.initializeApp(this)
 
         fb = FirebaseFirestore.getInstance()
+
         btnVoltar = findViewById(R.id.botaoVoltar)
         recyclerView = findViewById(R.id.recyTornarAdm)
+        searchView = findViewById(R.id.pesquisaAddAdm)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        adapter = TornarAdmAdapter(listaUsuarios) { usuario ->
+        adapter = TornarAdmAdapter(listaFiltrada) { usuario ->
             tornarAdministrador(usuario)
         }
         recyclerView.adapter = adapter
@@ -40,6 +49,7 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
         }
 
         carregarUsuarios()
+        configurarBusca()
     }
 
     private fun carregarUsuarios() {
@@ -47,6 +57,8 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
             .get()
             .addOnSuccessListener { result ->
                 listaUsuarios.clear()
+                listaFiltrada.clear()
+
                 for (document in result) {
                     val usuario = Usuario(
                         id = document.id,
@@ -57,11 +69,42 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
                     )
                     listaUsuarios.add(usuario)
                 }
+
+                // Inicialmente exibe tudo
+                listaFiltrada.addAll(listaUsuarios)
                 adapter.notifyDataSetChanged()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao carregar usuários.", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun configurarBusca() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+
+            override fun onQueryTextChange(texto: String?): Boolean {
+                filtrarUsuarios(texto ?: "")
+                return true
+            }
+        })
+    }
+
+    private fun filtrarUsuarios(query: String) {
+        listaFiltrada.clear()
+
+        val filtro = query.lowercase()
+
+        listaFiltrada.addAll(
+            listaUsuarios.filter { usuario ->
+                usuario.nome.lowercase().contains(filtro) ||
+                        usuario.usuario.lowercase().contains(filtro) ||
+                        usuario.email.lowercase().contains(filtro)
+            }
+        )
+
+        adapter.notifyDataSetChanged()
     }
 
     private fun tornarAdministrador(usuario: Usuario) {
@@ -76,20 +119,21 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
         val usuariosRef = fb.collection("usuario").document(usuario.id)
         val adminsRef = fb.collection("administradores")
 
-        // Adiciona o usuário na coleção de administradores
         adminsRef.add(dadosAdm)
             .addOnSuccessListener {
-                // Depois de adicionar, remove da coleção de usuários
                 usuariosRef.delete()
                     .addOnSuccessListener {
+
                         Toast.makeText(
                             this,
                             "${usuario.nome} agora é Administrador!",
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        // Remove da lista do RecyclerView também
+                        // Remove das listas
                         listaUsuarios.remove(usuario)
+                        listaFiltrada.remove(usuario)
+
                         adapter.notifyDataSetChanged()
                     }
                     .addOnFailureListener {
@@ -100,8 +144,5 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
                         ).show()
                     }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao promover usuário.", Toast.LENGTH_SHORT).show()
-            }
     }
-    }
+}

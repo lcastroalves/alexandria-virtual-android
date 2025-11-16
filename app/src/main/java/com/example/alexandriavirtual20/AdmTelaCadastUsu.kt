@@ -5,6 +5,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.alexandriavirtual20.adapter.TornarAdmAdapter
+import com.example.alexandriavirtual20.adapter.UsuarioAdapter
+import com.example.alexandriavirtual20.model.Usuario
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -16,6 +19,10 @@ class AdmTelaCadastUsu : AppCompatActivity() {
     private lateinit var editEmail: TextInputEditText
     private lateinit var editSenha: TextInputEditText
     private lateinit var editConfSenha: TextInputEditText
+
+
+
+
     private lateinit var btnSalvar: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +38,8 @@ class AdmTelaCadastUsu : AppCompatActivity() {
         editEmail = findViewById(R.id.edEmail)
         editSenha = findViewById(R.id.edSenha)
         editConfSenha = findViewById(R.id.edConfSenha)
+
+
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
