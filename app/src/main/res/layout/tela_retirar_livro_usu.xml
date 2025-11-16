@@ -16,6 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <!-- CABEÇALHO (Não Alterado) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="175dp"
@@ -41,28 +42,33 @@
                 android:src="@drawable/logoalexandriavirtual" />
         </LinearLayout>
 
+        <!-- NOVO: AREA DE EXIBIÇÃO DE LIVROS COM RECYCLERVIEW -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="253dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtTituloAvaliacoes"
+                android:id="@+id/txtTituloRetirada"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:text="Retire o(s) Livro(s)"
+                android:text="Livros Solicitados para Retirada"
                 android:textColor="@android:color/holo_blue_dark"
                 android:textSize="26sp"
                 android:textStyle="bold" />
 
-            <ImageView
-                android:id="@+id/imageView3"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerLivrosSelecionados"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                app:srcCompat="@drawable/livro1" />
+                android:layout_height="200dp"
+                android:layout_marginTop="16dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:itemCount="2"
+                tools:listitem="@layout/item_livro_retirada" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -70,13 +76,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textColor="@android:color/darker_gray"
-                android:text="Solicitação em Andamento" />
+                android:text="Solicitação de Empréstimo em Andamento"
+                android:layout_marginTop="8dp" />
         </LinearLayout>
 
+        <!-- DETALHES DE RETIRADA (Não Alterado, apenas ajustamos a margem de topo) -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="226dp"
-            android:layout_marginTop="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
