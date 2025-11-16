@@ -118,9 +118,14 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             ""
         }
 
+        val formatoData = java.text.SimpleDateFormat("dd/MM/yy")
+        val date = formatoData.parse(data.text.toString())
+        val timestampData = com.google.firebase.Timestamp(date)
+
         val dadosEvento = hashMapOf(
             "nome" to nomeEvento,
             "data" to data.text.toString(),
+            "timestampData" to timestampData,
             "horario" to horario.text.toString(),
             "descricao" to descricao.text.toString(),
             "breveDescricao" to breveDescricao.text.toString(),

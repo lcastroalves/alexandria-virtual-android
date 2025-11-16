@@ -91,30 +91,29 @@ class TelaCadastro : AppCompatActivity() {
                     fireBase.collection("usuario").document(userID).set(usuario).addOnSuccessListener {
                         Toast.makeText(this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show()
 
-                        // ➜ Cria notificação de boas-vindas
                         val primeiraNotificacao = mapOf(
-                            "titulo" to "Bem-vindo!",
-                            "mensagem" to "Sua conta foi criada com sucesso.",
-                            "timestamp" to System.currentTimeMillis(),
-                            "lida" to false
+                            "idObjeto" to "oi"
                         )
 
-                        FirebaseFirestore.getInstance()
-                            .collection("usuario")         // cuidado: seu código usa "usuario", não "usuarios"
+                        val notificacoesRef = fireBase
+                            .collection("usuario")
                             .document(userID)
                             .collection("notificacoes")
+
+                        notificacoesRef
                             .add(primeiraNotificacao)
-                            .addOnSuccessListener {
-                                // Notificação criada com sucesso (opcional fazer algo)
+                            .addOnSuccessListener { docRef ->
+                                // Apaga a notificação recém-criada
+                                notificacoesRef.document(docRef.id).delete()
+
+                                startActivity(Intent(this, TelaLogin::class.java))
+                                finish()
                             }
                             .addOnFailureListener {
-                                // Caso dê erro ao registrar a notificação (opcional também)
+                                // Caso dê erro ao registrar a notificação
                             }
-
-                        // Vai para tela de login
-                        startActivity(Intent(this, TelaLogin::class.java))
-                        finish()
                     }
+
 
 
                 } else {

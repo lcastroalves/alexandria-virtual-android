@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
+import com.example.alexandriavirtual20.model.Notificacao
 
 class NotificacaoAdapter (
     private val notificacoes: MutableList<Notificacao>,
