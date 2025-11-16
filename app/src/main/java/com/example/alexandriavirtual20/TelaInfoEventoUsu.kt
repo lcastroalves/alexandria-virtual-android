@@ -11,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
 import android.graphics.BitmapFactory
+import android.icu.text.SimpleDateFormat
 import android.util.Base64
+import java.util.Locale
 
 class TelaInfoEventoUsu : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
@@ -23,7 +25,9 @@ class TelaInfoEventoUsu : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
 
+
     private var imagemBase64: String = ""
+    private var data : String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,7 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                     nome.setText(doc.getString("nome") ?: "")
                     horario.setText(doc.getString("horario") ?: "")
                     descricao.setText(doc.getString("descricao") ?: "")
+                    data = doc.getString("data") ?: ""
                     imagemBase64 = doc.getString("imagem") ?: ""
 
                     if (imagemBase64.isNotEmpty()) {
@@ -67,37 +72,48 @@ class TelaInfoEventoUsu : AppCompatActivity() {
         }
 
         btnNotificar.setOnClickListener {
-//            val uid = auth.currentUser?.uid
-//
-//            if (uid == null) {
-//                Toast.makeText(this, "Erro: usuário não logado.", Toast.LENGTH_SHORT).show()
-//                return@setOnClickListener
-//            }
-//
-//            val notificacao = hashMapOf(
-//                "tipo" to "evento",
-//                "referenciaId" to eventoId,
-//                "nome" to eventoNome,
-//                "data" to System.currentTimeMillis(),                // data atual
-//                "prazo" to null,                                     // evento não tem prazo
-//                "imagem" to eventoImagem,
-//                "titulo" to "Lembrete de evento!",
-//                "mensagem" to "O evento \"$eventoNome\" acontecerá em breve.",
-//                "timestamp" to System.currentTimeMillis(),
-//                "lida" to false
-//            )
-//
-//            firestore.collection("usuario")
-//                .document(uid)
-//                .collection("notificacoes")
-//                .add(notificacao)
-//                .addOnSuccessListener {
-//                    Toast.makeText(this, "Você será notificado!", Toast.LENGTH_SHORT).show()
-//                }
-//                .addOnFailureListener {
-//                    Toast.makeText(this, "Erro ao criar notificação.", Toast.LENGTH_SHORT).show()
-//                }
-//        }
+            val uid = auth.currentUser?.uid
+
+            if (uid == null) {
+                Toast.makeText(this, "Erro: usuário não logado.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val timestampData = converterDataParaTimestamp(data)
+
+            if (timestampData == null) {
+                Toast.makeText(this, "Data inválida!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val notificacao = hashMapOf(
+                "tipo" to "evento",
+                "nome" to nome.text.toString(),
+                "data" to data,
+                "prazo" to timestampData,
+                "imagem" to imagemBase64
+            )
+
+            firestore.collection("usuario")
+                .document(uid)
+                .collection("notificacoes")
+                .add(notificacao)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Você será notificado!", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Erro ao criar notificação.", Toast.LENGTH_SHORT).show()
+                }
+        }
+        }
+
+    fun converterDataParaTimestamp(data: String): Long? {
+        return try {
+            val formato = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+            val date = formato.parse(data)
+            date?.time
+        } catch (e: Exception) {
+            null
         }
     }
 }

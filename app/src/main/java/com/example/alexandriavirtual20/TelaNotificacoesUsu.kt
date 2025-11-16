@@ -6,8 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alexandriavirtual20.adapter.Notificacao
 import com.example.alexandriavirtual20.adapter.NotificacaoAdapter
+import com.example.alexandriavirtual20.model.Notificacao
 
 
 class TelaNotificacoesUsu : AppCompatActivity() {
@@ -27,9 +27,14 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         }
 
         val notificacoes = mutableListOf(
-            Notificacao("Ciência da computação ", "16 set",R.drawable.livro1,"- Devolução",  "Falta uma semana para fim do prazo de devolução",1),
-            Notificacao("Meu vizinho totoro ", "16 set",R.drawable.totoro,"- Evento",  "Falta uma semana para realização do evento", 1),
-            Notificacao("Java como programar ", "23 set",R.drawable.livro3,"- Devolução",  "Faltam duas semanas para fim do prazo de devolução", 1 ),
+            Notificacao(
+                "Ciência da computação ",
+                "16 set",
+                R.drawable.livro1,
+                "- Devolução",
+                1,
+                "Falta uma semana para fim do prazo de devolução",
+            )
         )
 
 

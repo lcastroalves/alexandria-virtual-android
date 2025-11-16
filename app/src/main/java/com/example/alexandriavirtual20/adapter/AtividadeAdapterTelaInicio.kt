@@ -38,6 +38,7 @@ class AtividadeAdapterTelaInicio(
 
 
         holder.nomeAtividade.text = atividade.nome
+        holder.capaAtividade.setImageResource(atividade.imagem)
 
         holder.constraintLayout.setOnClickListener {
             onAtividadeClick(atividade)

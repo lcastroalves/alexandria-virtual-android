@@ -144,6 +144,7 @@ class TelaInicioUsu : Fragment() {
 
             val adapterEvento = EventoAdapterTelaInicio(eventos){ evento ->
                 val intent = Intent(requireContext(), TelaInfoEventoUsu::class.java)
+                intent.putExtra("nomeEvento", evento.nome)
                 startActivity(intent)
             }
 
@@ -163,7 +164,8 @@ class TelaInicioUsu : Fragment() {
         val atividades = mutableListOf(
             Atividade("Cinema", "9 - 22", "Auditório Principal", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!",R.drawable.cinema),
             Atividade("Sala de Jogos", "9 - 22", "Sala 2", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21", "Palestra sobre cosmos, livro de astronomia de Carl Sagan, acontecerá no auditório, das 20 - 21",R.drawable.jogos),
-            Atividade("Clube do Livro", "9 - 22", "Auditório Principal", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",R.drawable.iconelivro)
+            Atividade("Clube do Livro", "9 - 22", "Auditório Principal", "O filme de animação será reproduzido no auditório das 16 - 18", "O filme de animação será reproduzido no auditório das 16 - 18",R.drawable.iconelivro),
+            Atividade("Narakão", "6:00 - 2:00", "Unifor", "Professor universotário altamente rigoroso no que faz", "Professor otaro da Unifor",R.drawable.narak)
         )
 
             val adapterAtividade = AtividadeAdapterTelaInicio(atividades){ atividade ->

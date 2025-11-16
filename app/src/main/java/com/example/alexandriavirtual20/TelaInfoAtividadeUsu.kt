@@ -35,8 +35,6 @@ class TelaInfoAtividadeUsu : AppCompatActivity() {
         val descricaoAtividade = intent.getStringExtra("descricaoAtividade") ?: return
         val localAtividade = intent.getStringExtra("localAtividade") ?: return
 
-
-
         nome = findViewById(R.id.nomeInfoAtividade)
         horario = findViewById(R.id.horarioInfoAtividade)
         descricao = findViewById(R.id.descricaoInfoAtividade)
@@ -48,7 +46,7 @@ class TelaInfoAtividadeUsu : AppCompatActivity() {
         horario.text = horarioAtividade
         descricao.text = "Descrição: " + descricaoAtividade
         local.text = "Local: " + localAtividade
-        imagem.setImageResource(imagemAtividade)
+        imagem.setImageResource((imagemAtividade).toInt())
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
