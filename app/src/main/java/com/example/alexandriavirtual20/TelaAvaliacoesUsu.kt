@@ -1,62 +1,76 @@
 package com.example.alexandriavirtual20
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ComentarioAdapter
 import com.example.alexandriavirtual20.model.Comentario
+import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaAvaliacoesUsu : AppCompatActivity() {
+
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: ComentarioAdapter
+    private val listaComentarios = mutableListOf<Comentario>()
+
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_avaliacoes_usu)
 
-        val btnvoltar: ImageButton = findViewById(R.id.btnvoltar)
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerAvaliacoes)
+        val livro = intent.getParcelableExtra<Livro>("livro")
 
+        if (livro == null) {
+            finish()
+            return
+        }
 
-        val comentarios = listOf(
-            Comentario(
-                "Felipe Barroso",
-                "Java é uma péssima linguagem pra aprender, não vou nem tentar 😅",
-                1,
-                R.drawable.imagem_do_usuario_com_fundo_preto
-            ),
-            Comentario(
-                "Nicolly Feitosa",
-                "Amei esse livro, fantástico! 😍",
-                5,
-                R.drawable.imagem_do_usuario_com_fundo_preto
-            ),
-            Comentario(
-                "Lara Castro",
-                "Muito bom pra revisar conceitos básicos, eu adorei de verdade e vou recomendar para meus amigos programadores!",
-                4,
-                R.drawable.imagem_do_usuario_com_fundo_preto
-            ),
-            Comentario(
-                "Dillan Medeiros",
-                "Achei legalzinho o livro, interessante para aprender conceitos de back-end, mas prefiro o front e sou do time do HTML/CSS e Javascript hehehe",
-                3,
-                R.drawable.imagem_do_usuario_com_fundo_preto
-            ),
-            Comentario(
-                "Jonh Henrique",
-                "A man, achei bem ok sabe, eu gosto de java mas fiquei muito na dúvida sobre esse livro, mas gostei de alguns assuntos",
-                2,
-                R.drawable.imagem_do_usuario_com_fundo_preto
-            )
-        )
+        // ---------- Componentes da interface ----------
+        val btnVoltar: ImageButton = findViewById(R.id.btnvoltar)
+        val imgLivro: ImageView = findViewById(R.id.imageView16)
+        val txtTitulo: TextView = findViewById(R.id.txtTituloAvaliacoes)
+        val txtAutor: TextView = findViewById(R.id.txtAutorLivro)
 
+        recyclerView = findViewById(R.id.recyclerAvaliacoes)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ComentarioAdapter(comentarios)
+        adapter = ComentarioAdapter(listaComentarios)
+        recyclerView.adapter = adapter
 
-        btnvoltar.setOnClickListener {
+        // ---------- Exibe dados do livro ----------
+        imgLivro.setImageResource(livro.imagem)
+        txtTitulo.text = livro.titulo
+        txtAutor.text = livro.autor
+
+        // ---------- Carrega avaliações do Firebase ----------
+        carregarAvaliacoes(livro.id)
+
+        btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
+    }
+
+    private fun carregarAvaliacoes(idLivro: String) {
+
+        db.collection("livros")
+            .document(idLivro)
+            .collection("comentarios")
+            .get()
+            .addOnSuccessListener { resultado ->
+
+                listaComentarios.clear()
+
+                for (doc in resultado) {
+                    val comentario = doc.toObject(Comentario::class.java)
+                    listaComentarios.add(comentario)
+                }
+
+                adapter.notifyDataSetChanged()
+            }
     }
 }

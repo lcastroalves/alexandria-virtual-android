@@ -4,28 +4,33 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Livro(
-    val titulo: String,
-    val subtitulo: String,
-    val autor: String,
-    val imagem: Int,
-    val avaliacao: String,          // talvez mudar para int depois
+    val id: String = "",               // ID do documento no Firebase
+    val titulo: String = "",
+    val subtitulo: String = "",
+    val autor: String = "",
+    val imagem: Int,             // Se quiser usar URL depois, podemos trocar p/ String
+    val avaliacoes: String = "",          // Agora é INT (correto para contagem)
     var favorito: Boolean = false
-)
-    : Parcelable {
+) : Parcelable {
+
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readString() ?: "",
-        parcel.readInt(),
-        parcel.readString() ?: ""
+        parcel.readString() ?: "",     // id
+        parcel.readString() ?: "",     // titulo
+        parcel.readString() ?: "",     // subtitulo
+        parcel.readString() ?: "",     // autor
+        parcel.readInt(),              // imagem
+        parcel.readString() ?: "",              // avaliacoes
+        parcel.readByte() != 0.toByte() // favorito
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(titulo)
         parcel.writeString(subtitulo)
         parcel.writeString(autor)
         parcel.writeInt(imagem)
-        parcel.writeString(avaliacao)
+        parcel.writeString(avaliacoes)
+        parcel.writeByte(if (favorito) 1 else 0)
     }
 
     override fun describeContents(): Int = 0

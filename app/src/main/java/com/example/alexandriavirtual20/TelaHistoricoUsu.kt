@@ -53,11 +53,11 @@ class TelaHistoricoUsu : AppCompatActivity() {
         })
 
         val livros = mutableListOf(
-            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro," (30 avaliações)",true),
-            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro2," (10 avaliações)",false),
-            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro1," (60 avaliações)",true),
-            Livro("Ciencia da computação","e tecnologias digitais","Ernanne Rosa Martins",R.drawable.livro3," (100 avaliações)",false),
-            Livro("Ciencia da computação","e tecnologias digitais","Lupi Barroso Bvm",R.drawable.livro4," (1000 avaliações)",true)
+            Livro("111111111","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro1,"130"),
+            Livro("222222222","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro1,"130"),
+            Livro("33333333","Java como Programar","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro2,"230"),
+            Livro("44444444","Java Avançado","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro3,"150"),
+            Livro("555555555","Redes de Computadores","Tanenbaum & Wetherall","Tanenbaum & Wetherall",R.drawable.livro4,"170"),
         )
 
         val adapterLivro = LivroAdapterHistorico(

@@ -61,33 +61,47 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
 
         val livros = listOf(
             Livro(
-                "Ciência da Computação e Tecnologias Digitais", "",
-                "Ernane Rosa Martins",
+                "44444444",
+                "Ciência da Computação e Tecnologias Digitais",
+                "Ername Rosa Martins",
+                "Ername Rosa Martins",
                 R.drawable.livro1,
-                "⭐ 130 avaliações"
+                "130",
+                true
             ),
             Livro(
-                "Java Como Programar", "",
-                "Paul J. Deitel",
+                "33333333",
+                "Java como Programar",
+                "Paul J.Deitel",
+                "Paul J.Deitel",
                 R.drawable.livro2,
-                "⭐ 105 avaliações"
+                "130",
+                true
             ),
             Livro(
-                "Java como Programar", "",
-                "Paul J. Deitel",
+                "2222222",
+                "Java como Programar",
+                "Paul J.Deitel",
+                "Paul J.Deitel",
                 R.drawable.livro3,
-                "⭐ 200 avaliações"
+                "130",
+                false
             ),
             Livro(
-                "Redes de Computadores", "",
+                "11111111",
+                "Redes de Computadores",
+                "Tanenbaum & Wetherall",
                 "Tanenbaum & Wetherall",
                 R.drawable.livro4,
-                "⭐ 250 avaliações"
+                "130",
+                false
+
             )
         )
 
         val adapter = LivroAdapter(livros) { livro ->
             val intent = Intent(this, TelaAvaliacoesUsu::class.java)
+            intent.putExtra("livro", livro)  // → envia o livro correto
             startActivity(intent)
         }
 

@@ -27,11 +27,18 @@ class ComentarioAdapter(private val comentarios: List<Comentario>) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val comentario = comentarios[position]
-        holder.imgUsuario.setImageResource(comentario.imagemRes)
+
+        // Caso venha uma imagem de recurso local
+        if (comentario.fotoRes != null) {
+            holder.imgUsuario.setImageResource(comentario.fotoRes!!)
+        }
+
         holder.txtNomeUsuario.text = comentario.nomeUsuario
         holder.txtComentario.text = comentario.comentario
+
+        // Exibe as estrelas (1 a 5)
         holder.txtEstrelas.text = "⭐".repeat(comentario.estrelas)
     }
 
-    override fun getItemCount() = comentarios.size
+    override fun getItemCount(): Int = comentarios.size
 }

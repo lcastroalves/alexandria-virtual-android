@@ -32,10 +32,10 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
 
 
         val listaLivros = listOf(
-            Livro("Ciências da Computação","", "Ername Rosa Martins", R.drawable.livro1, "4.5 ★"),
-            Livro("Java Avançado", "00","Deitel", R.drawable.livro2, "4.8 ★"),
-            Livro("Java como Programar", "","Deitel", R.drawable.livro3, "4.7 ★"),
-            Livro("Redes de Computadores", "","Tanembaum e wetherall", R.drawable.livro4, "4.6 ★")
+            Livro("111111111","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro1,"130"),
+            Livro("222222222","Redes de Computadores","Tanenbaum & Wetherall","Tanenbaum & Wetherall",R.drawable.livro4,"130"),
+            Livro("33333333","Java como Programar","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro2,"230"),
+            Livro("44444444","Java Avançado","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro3,"150"),
         )
 
         val adapter = LivroAdapterMeus(listaLivros) { livro ->
