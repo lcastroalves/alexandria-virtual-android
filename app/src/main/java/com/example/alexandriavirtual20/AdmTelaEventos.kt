@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,24 +19,28 @@ class AdmTelaEventos : AppCompatActivity() {
     private lateinit var btnExcluir: ImageButton
     private lateinit var btnAdEvento: Button
     private lateinit var recyclerView: RecyclerView
+    private lateinit var searchView: SearchView
+
     private lateinit var fb: FirebaseFirestore
     private lateinit var adapter: ListaEventoAdmAdapter
-    private val listaEventos = mutableListOf<Evento>()
+
+    private val cache = mutableListOf<Evento>()
+    private val listaFiltrada = mutableListOf<Evento>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.adm_tela_eventos)
 
-        // Inicializações
         fb = FirebaseFirestore.getInstance()
-        fb.clearPersistence() // limpa o cache local
+
+
         recyclerView = findViewById(R.id.recyListaEventoAdm)
         btnVoltar = findViewById(R.id.botaoVoltar2)
         btnExcluir = findViewById(R.id.botaoExcluirEventos)
         btnAdEvento = findViewById(R.id.botaoAdEvento)
+        searchView = findViewById(R.id.searchViewLivros)
 
-        // Configura o adapter com o clique em um item
-        adapter = ListaEventoAdmAdapter(listaEventos) { evento ->
+        adapter = ListaEventoAdmAdapter(listaFiltrada) { evento ->
             val intent = Intent(this, AdmTelaEditEvent::class.java)
             intent.putExtra("nomeEvento", evento.nome)
             startActivity(intent)
@@ -44,22 +49,17 @@ class AdmTelaEventos : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
-        // Carrega os eventos em tempo real
+        configurarPesquisa()
         observarEventos()
 
-        // Botão voltar
-        btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        btnVoltar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        // Botão adicionar evento
         btnAdEvento.setOnClickListener {
             startActivity(Intent(this, AdmTelaAdicionEvent::class.java))
         }
 
-        // Botão excluir eventos selecionados
         btnExcluir.setOnClickListener {
-            val selecionados = listaEventos.filter { it.isSelected }
+            val selecionados = listaFiltrada.filter { it.isSelected }
             if (selecionados.isEmpty()) {
                 Toast.makeText(this, "Selecione pelo menos um evento.", Toast.LENGTH_SHORT).show()
             } else {
@@ -68,16 +68,49 @@ class AdmTelaEventos : AppCompatActivity() {
         }
     }
 
+    private fun configurarPesquisa() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
+
+            override fun onQueryTextChange(texto: String?): Boolean {
+                filtrarEventos(texto.orEmpty())
+                return true
+            }
+        })
+    }
+
+    private fun filtrarEventos(filtro: String) {
+        val texto = filtro.lowercase()
+
+        listaFiltrada.clear()
+        listaFiltrada.addAll(
+            cache.filter { evento ->
+                evento.nome.lowercase().contains(texto) ||
+                        evento.breveDescricao.lowercase().contains(texto) ||
+                        evento.local.lowercase().contains(texto)
+            }
+        )
+
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun atualizarListaFiltrada() {
+        listaFiltrada.clear()
+        listaFiltrada.addAll(cache)
+        adapter.notifyDataSetChanged()
+    }
+
     private fun observarEventos() {
         fb.collection("evento")
             .addSnapshotListener { snapshots, error ->
-                if (error != null) {
+                if (error != null || snapshots == null) {
                     Toast.makeText(this, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
-                listaEventos.clear()
-                for (document in snapshots!!) {
+                cache.clear()
+
+                for (document in snapshots) {
                     val evento = Evento(
                         imagem = document.getString("imagem") ?: "",
                         nome = document.getString("nome") ?: "",
@@ -88,9 +121,10 @@ class AdmTelaEventos : AppCompatActivity() {
                         local = document.getString("local") ?: "",
                         isSelected = false
                     )
-                    listaEventos.add(evento)
+                    cache.add(evento)
                 }
-                adapter.notifyDataSetChanged()
+
+                atualizarListaFiltrada()
             }
     }
 
