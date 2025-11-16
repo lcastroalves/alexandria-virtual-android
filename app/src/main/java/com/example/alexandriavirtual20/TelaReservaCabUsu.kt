@@ -53,7 +53,9 @@ class TelaReservaCabUsu : Fragment() {
         val horaFim = horaInicio.plusHours(2)
 
         val dataFormatada = dataAtual.format(formatoData)
-        val horaFormatada = "${horaInicio.format(formatoHora)} - ${horaFim.format(formatoHora)}"
+        val inicioStr = horaInicio.format(formatoHora)
+        val fimStr = horaFim.format(formatoHora)
+        val horaFormatada = "$inicioStr - $fimStr"
 
         textData.text = dataFormatada
         textHora.text = horaFormatada
@@ -68,6 +70,8 @@ class TelaReservaCabUsu : Fragment() {
             val intent = Intent(requireContext(), TelaCabDisponUsu::class.java)
             intent.putExtra("dataFormatada", dataFormatada)
             intent.putExtra("periodo", horaFormatada)
+            intent.putExtra("inicio", inicioStr)
+            intent.putExtra("fim", fimStr)
             startActivity(intent)
         }
 
@@ -84,15 +88,6 @@ class TelaReservaCabUsu : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BlankFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             TelaReservaCabUsu().apply {

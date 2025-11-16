@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="100dp" >
+    android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardExemplo"
@@ -32,11 +32,11 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:contentDescription="@+id/ic_cabine"
-                app:srcCompat="@drawable/livro_cab"
-                tools:layout_editor_absoluteX="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:srcCompat="@drawable/livro_cab"
+                tools:layout_editor_absoluteX="10dp" />
 
             <TextView
                 android:id="@+id/tvCabineNome"

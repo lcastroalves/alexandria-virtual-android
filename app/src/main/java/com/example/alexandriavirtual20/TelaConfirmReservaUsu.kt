@@ -22,8 +22,8 @@ class TelaConfirmReservaUsu : AppCompatActivity() {
         val periodo = intent.getStringExtra("periodo")
         val numero = intent.getStringExtra("cabine")
 
-        tvCabine.text = "Cabine ${numero} reservada!"
-        tvDataHora.text = "${data} | ${periodo}"
+        tvCabine.text = "Cabine $numero reservada!"
+        tvDataHora.text = "$data | $periodo"
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()

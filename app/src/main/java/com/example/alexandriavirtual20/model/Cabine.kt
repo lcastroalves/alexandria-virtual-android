@@ -8,6 +8,7 @@ data class Cabine (
     var numero: String = " ",
     var dia: String = " ",
     var aluno: String = " ",
-    var horario: String = " ",
+    var inicio: String = " ",
+    var fim: String = " ",
     var livre: Boolean = true
 )

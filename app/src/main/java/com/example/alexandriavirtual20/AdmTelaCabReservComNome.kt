@@ -46,7 +46,7 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
     }
 
     private fun buscarFotoAlunoPorNome(nome: String, callback: (String?) -> Unit) {
-        fb.collection("usuarios")
+        fb.collection("usuario")
             .whereEqualTo("nome", nome)
             .limit(1)
             .get()
@@ -58,9 +58,8 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
     }
 
     private fun carregarCabinesDoDia(dia: String) {
-        fb.collection("cabines")
+        fb.collection("reservasCabines")
             .whereEqualTo("dia", dia)
-            .whereEqualTo("livre", false)
             .get()
             .addOnSuccessListener { snap ->
                 val lista = snap.documents.mapNotNull { doc ->

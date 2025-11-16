@@ -10,14 +10,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.CabineAdapter
 import com.example.alexandriavirtual20.model.Cabine
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaCabDisponUsu : AppCompatActivity() {
-    private lateinit var fb : FirebaseFirestore
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var fbAuth: FirebaseAuth
     private lateinit var adapter: CabineAdapter
     private lateinit var rv: RecyclerView
     private lateinit var btnVoltar: ImageButton
     private lateinit var etPeriodo: TextView
+
+    private val TODAS_CABINES = (1..25).map { it.toString() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,20 +32,25 @@ class TelaCabDisponUsu : AppCompatActivity() {
         etPeriodo = findViewById(R.id.tvPeriodo)
 
         fb = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
 
         adapter = CabineAdapter { cabine ->
-            abrirTelaConfirmacao(cabine)
+            reservarCabineEIrParaConfirmacao(cabine)
         }
 
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
         val data = intent.getStringExtra("dataFormatada")
+        val inicio = intent.getStringExtra("inicio")
+        val fim = intent.getStringExtra("fim")
         val periodo = intent.getStringExtra("periodo")
 
-        if (data != null && periodo != null) {
-            etPeriodo.text = data + " - " + periodo
-            carregarCabinesDoDiaEHorario(data, periodo)
+        if (data != null && periodo != null && inicio != null && fim != null) {
+            etPeriodo.text = data + " | " + periodo
+            carregarCabinesLivres(data, inicio, fim)
+        } else {
+            Toast.makeText(this, "Erro ao carregar horário selecionado.", Toast.LENGTH_SHORT).show()
         }
 
         btnVoltar.setOnClickListener {
@@ -49,38 +58,96 @@ class TelaCabDisponUsu : AppCompatActivity() {
         }
     }
 
-    private fun carregarCabinesDoDiaEHorario(dia: String, horario: String) {
-        fb.collection("cabines")
+
+    private fun carregarCabinesLivres(dia: String, inicioSel: String, fimSel: String) {
+        fb.collection("reservasCabines")
+            .whereEqualTo("dia", dia)
             .get()
             .addOnSuccessListener { snap ->
-                val todas = snap.documents.mapNotNull { it.toObject(Cabine::class.java) }
+                val reservasDia = snap.toObjects(Cabine::class.java)
 
-                val livres = todas.filter { cabine ->
-                    val ocupadaNesseHorario =
-                        cabine.dia == dia &&
-                                cabine.horario == horario &&
-                                cabine.livre == false
-                    !ocupadaNesseHorario
-                }
+                val cabinesOcupadas = reservasDia
+                    .filter { reserva ->
+                        temConflito(inicioSel, fimSel, reserva.inicio, reserva.fim)
+                    }
+                    .map { it.numero }
+                    .toSet()
 
-                adapter.submitList(livres)
+                val cabinesLivres = TODAS_CABINES
+                    .filter { it !in cabinesOcupadas }
+                    .map { numeroCabine ->
+                        Cabine(
+                            numero = numeroCabine,
+                            dia = dia,
+                            inicio = inicioSel,
+                            fim = fimSel
+                        )
+                    }
 
-                if (livres.isEmpty()) {
+                adapter.submitList(cabinesLivres)
+
+                if (cabinesLivres.isEmpty()) {
                     Toast.makeText(this, "Nenhuma cabine livre!", Toast.LENGTH_SHORT).show()
                 }
             }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao carregar cabines.", Toast.LENGTH_SHORT).show()
+            }
     }
 
-    private fun abrirTelaConfirmacao(cabine: Cabine) {
-        val data = intent.getStringExtra("dataFormatada")
-        val periodo = intent.getStringExtra("periodo")
+    private fun reservarCabineEIrParaConfirmacao(cabine: Cabine) {
+        val data = cabine.dia
+        val inicio = cabine.inicio
+        val fim = cabine.fim
+        val periodo = "$inicio - $fim"
 
-        val intent = Intent(this, TelaConfirmReservaUsu::class.java).apply {
-            putExtra("CABINE_ID", cabine.id)
-            putExtra("cabine", cabine.numero)
-            putExtra("data", data)
-            putExtra("periodo", periodo)
+        val usuarioAtual = fbAuth.currentUser
+        val uid = usuarioAtual?.uid ?: run {
+            Toast.makeText(this, "Usuário não encontrado. Faça login novamente.", Toast.LENGTH_SHORT).show()
+            return
         }
-        startActivity(intent)
+
+        fb.collection("usuario")
+            .document(uid)
+            .get()
+            .addOnSuccessListener { doc ->
+
+                if (!doc.exists()) {
+                    Toast.makeText(this, "Dados do usuário não encontrados.", Toast.LENGTH_SHORT).show()
+                    return@addOnSuccessListener
+                }
+
+                val nomeAluno = doc.getString("nome") ?: ""
+
+        val reserva = hashMapOf(
+            "numero" to cabine.numero,
+            "dia" to data,
+            "inicio" to inicio,
+            "fim" to fim,
+            "aluno" to nomeAluno
+        )
+
+        fb.collection("reservasCabines")
+            .add(reserva)
+            .addOnSuccessListener {
+                val intent = Intent(this, TelaConfirmReservaUsu::class.java).apply {
+                    putExtra("cabine", cabine.numero)
+                    putExtra("data", data)
+                    putExtra("periodo", periodo)
+                }
+                startActivity(intent)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao salvar reserva.", Toast.LENGTH_SHORT).show()
+            }
+                }
+    }
+    private fun temConflito(
+        inicioSel: String,
+        fimSel: String,
+        inicioCab: String,
+        fimCab: String
+    ): Boolean {
+        return (inicioSel < fimCab) && (fimSel > inicioCab)
     }
 }

@@ -1,6 +1,5 @@
 package com.example.alexandriavirtual20.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
-import com.example.alexandriavirtual20.TelaConfirmReservaUsu
 import com.example.alexandriavirtual20.model.Cabine
 
 class CabineAdapter(
@@ -29,9 +27,9 @@ class CabineAdapter(
 
         fun bind(item: Cabine) {
             numero.text = "Cabine ${item.numero}"
+
             reservar.setOnClickListener {
-                val intent = Intent(itemView.context, TelaConfirmReservaUsu::class.java)
-                itemView.context.startActivity(intent)
+                onReservarClick(item)
             }
         }
     }

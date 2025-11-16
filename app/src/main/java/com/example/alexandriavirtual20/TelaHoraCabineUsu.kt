@@ -59,12 +59,17 @@ class TelaHoraCabineUsu : AppCompatActivity() {
             val inicio = java.time.LocalTime.of(hora, minuto)
             val fim = inicio.plusHours(2)
             val fmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-BR"))
-            val periodo = "${inicio.format(fmt)} - ${fim.format(fmt)}"
             val dataFormatada = intent.getStringExtra("dataFormatada")
 
+            val inicioStr = inicio.format(fmt)
+            val fimStr = fim.format(fmt)
+            val periodo = "$inicioStr - $fimStr"
+
             val intent = Intent(this, TelaCabDisponUsu::class.java)
-            intent.putExtra("periodo", periodo)
             intent.putExtra("dataFormatada", dataFormatada)
+            intent.putExtra("periodo", periodo)
+            intent.putExtra("inicio", inicioStr)
+            intent.putExtra("fim", fimStr)
             startActivity(intent)
         }
         btnVoltar.setOnClickListener {

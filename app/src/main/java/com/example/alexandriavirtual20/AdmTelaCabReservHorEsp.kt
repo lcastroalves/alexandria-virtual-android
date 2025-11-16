@@ -48,7 +48,7 @@ class AdmTelaCabReservHorEsp : AppCompatActivity() {
     }
 
     private fun buscarFotoAlunoPorNome(nome: String, callback: (String?) -> Unit) {
-        fb.collection("usuarios")
+        fb.collection("usuario")
             .whereEqualTo("nome", nome)
             .limit(1)
             .get()
@@ -60,10 +60,15 @@ class AdmTelaCabReservHorEsp : AppCompatActivity() {
     }
 
     private fun carregarCabinesDoDiaEHorario(dia: String, horario: String) {
-        fb.collection("cabines")
+        val partes = horario.split(" - ")
+        if (partes.size != 2) return
+        val inicioSel = partes[0]
+        val fimSel = partes[1]
+
+        fb.collection("reservas")
             .whereEqualTo("dia", dia)
-            .whereEqualTo("horario", horario)
-            .whereEqualTo("livre", false)
+            .whereEqualTo("inicio", inicioSel)
+            .whereEqualTo("fim", fimSel)
             .get()
             .addOnSuccessListener { snap ->
                 val lista = snap.documents.mapNotNull { doc ->
