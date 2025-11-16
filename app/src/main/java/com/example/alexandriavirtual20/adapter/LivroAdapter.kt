@@ -33,19 +33,27 @@ class LivroAdapter(
     override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
         val livro = livros[position]
 
+        // Carrega os dados
         holder.imgLivro.setImageResource(livro.imagem)
         holder.txtTitulo.text = livro.titulo
         holder.txtAutor.text = livro.autor
-        holder.txtAvaliacoes.text = livro.avaliacao
+        holder.txtAvaliacoes.text = "⭐ ${livro.avaliacoes} avaliações"
 
+        // Evita bug de reciclagem
         holder.checkSelecionado.setOnCheckedChangeListener(null)
         holder.checkSelecionado.isChecked = selecionados.contains(livro)
 
+        // Controle de seleção
         holder.checkSelecionado.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) selecionados.add(livro) else selecionados.remove(livro)
+            if (isChecked) selecionados.add(livro)
+            else selecionados.remove(livro)
         }
 
-        holder.btnAvaliacoes.setOnClickListener { onClickAvaliacoes(livro) }
+        // Botão Ver Avaliações com ID do livro
+        holder.btnAvaliacoes.setOnClickListener {
+            onClickAvaliacoes(livro)
+        }
+
     }
 
     override fun getItemCount(): Int = livros.size

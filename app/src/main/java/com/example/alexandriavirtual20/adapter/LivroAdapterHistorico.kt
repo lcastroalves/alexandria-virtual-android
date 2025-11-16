@@ -40,7 +40,7 @@ class LivroAdapterHistorico (
         holder.capaLivro.setImageResource(livro.imagem)
         holder.titulo.text = livro.titulo
         holder.subtitulo.text = livro.subtitulo
-        holder.qntAvaliac.text = livro.avaliacao
+        holder.qntAvaliac.text = livro.id
         holder.autor.text = livro.autor
 
         if (livro.favorito) {
