@@ -2,18 +2,23 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.NotificacaoAdapter
 import com.example.alexandriavirtual20.model.Notificacao
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class TelaNotificacoesUsu : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var adapter : NotificacaoAdapter
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fb: FirebaseFirestore
+    private lateinit var adapter: NotificacaoAdapter
+    private lateinit var listaNotificacoes: MutableList<Notificacao>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -21,26 +26,17 @@ class TelaNotificacoesUsu : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         recyclerView = findViewById(R.id.recy)
+        listaNotificacoes = mutableListOf()
+        fb = FirebaseFirestore.getInstance()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        val notificacoes = mutableListOf(
-            Notificacao(
-                "Ciência da computação ",
-                "16 set",
-                R.drawable.livro1,
-                "- Devolução",
-                1,
-                "Falta uma semana para fim do prazo de devolução",
-            )
-        )
+        observarNotificacoes()
 
-
-        // Cria o Adapter e envia a lista produtos para ele
         adapter = NotificacaoAdapter(
-            notificacoes,
+            listaNotificacoes,
             onExcluirClick = { notificacao ->
                 adapter?.removerNotificacao(notificacao)
             }
@@ -48,7 +44,78 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
     }
-}
 
-//A tela de notificações deverá receber informações de tempo, através de atributos de outros objetos, como prazo de devolução de um livro ou data de eventos (eventos).
-//A tela de notificações deverá exibir as notificações por ordem de proximidade de data
+    private fun observarNotificacoes() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (uid == null) {
+            Toast.makeText(this, "Erro: usuário não logado.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        fb.collection("usuario")
+            .document(uid)
+            .collection("notificacoes")
+            .addSnapshotListener { snapshots, error ->
+                if (error != null) {
+                    Toast.makeText(this, "Erro ao carregar notificações.", Toast.LENGTH_SHORT)
+                        .show()
+                    return@addSnapshotListener
+                }
+
+                listaNotificacoes.clear()
+
+                for (document in snapshots!!) {
+
+                    val prazoField = document.get("prazo")
+                    var millisPrazo = 0L
+
+                    when (prazoField) {
+                        is com.google.firebase.Timestamp -> {
+                            millisPrazo = prazoField.toDate().time
+                        }
+                        is Long -> {
+                            // Se você tiver salvado o prazo diretamente em millis
+                            millisPrazo = prazoField
+                        }
+                        is String -> {
+                            // Se você salvou data como string "dd/MM/yy"
+                            val sdf = java.text.SimpleDateFormat("dd/MM/yy")
+                            millisPrazo = sdf.parse(prazoField)?.time ?: 0L
+                        }
+                        else -> {
+                            millisPrazo = 0L
+                        }
+                    }
+
+                    val agora = System.currentTimeMillis()
+
+                    val diferencaDias = ((millisPrazo - agora) / (1000L * 60 * 60 * 24)).toInt()
+
+                    val prazoInt = when {
+                        diferencaDias <= 7 -> 1   // Vermelho
+                        diferencaDias <= 14 -> 2   // Amarelo
+                        else -> 3                 // Verde
+                    }
+
+                    val notificacao = Notificacao(
+                        nome = document.getString("nome") ?: "",
+                        data = document.getString("data") ?: "",
+                        imagem = document.getString("imagem") ?: "",
+                        tipo = document.getString("tipo") ?: "",
+                        prazo = prazoInt,
+                        dias = diferencaDias,
+                        mensagem = document.getString("mensagem") ?: ""
+                    )
+
+                    listaNotificacoes.add(notificacao)
+                }
+
+                listaNotificacoes.sortBy { it.dias }
+
+                adapter.notifyDataSetChanged()
+            }
+    }
+
+
+}
