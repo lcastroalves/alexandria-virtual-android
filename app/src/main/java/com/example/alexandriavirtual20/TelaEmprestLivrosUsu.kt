@@ -11,74 +11,46 @@ import com.example.alexandriavirtual20.model.Livro
 
 class TelaEmprestLivrosUsu : AppCompatActivity() {
 
-    private val listaFiltro = mutableListOf<Livro>()
     private lateinit var adapter: LivroAdapter
     private lateinit var searchView: SearchView
+
+    private val listaOriginal = mutableListOf<Livro>()
+    private val listaFiltrada = mutableListOf<Livro>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_emprest_livros_usu)
 
+
         val recyclerView: RecyclerView = findViewById(R.id.recyclerLivros)
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
         val btnBack: ImageButton = findViewById(R.id.btnback)
-        searchView = findViewById(R.id.searchViewLivros)   // <<< ADICIONADO
+        searchView = findViewById(R.id.searchViewLivros)
 
         val spinnerAutor: Spinner = findViewById(R.id.spinnerAutor)
         val spinnerGenero: Spinner = findViewById(R.id.spinnerGenero)
-        val spinnerMaisPopulares: Spinner = findViewById(R.id.spinnerMaisPopulares)
-        val spinnerLancamento: Spinner = findViewById(R.id.spinnerLancamento)
+        val spinnerPopulares: Spinner = findViewById(R.id.spinnerMaisPopulares)
+        val spinnerAno: Spinner = findViewById(R.id.spinnerLancamento)
 
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.autores_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerAutor.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.generos_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerGenero.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.populares_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerMaisPopulares.adapter = adapter
-        }
-
-        ArrayAdapter.createFromResource(
-            this,
-            R.array.lancamentos_array,
-            android.R.layout.simple_spinner_item
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            spinnerLancamento.adapter = adapter
-        }
-
-        // --------------------------
-        // LISTA ORIGINAL
-        // --------------------------
-        val livros = listOf(
-            Livro("44444444","Ciência da Computação e Tecnologias Digitais","Ername Rosa Martins","Ername Rosa Martins",R.drawable.livro1,"130",true),
-            Livro("33333333","Java como Programar","Paul J.Deitel","Paul J.Deitel",R.drawable.livro2,"130",true),
-            Livro("2222222","Java como Programar","Paul J.Deitel","Paul J.Deitel",R.drawable.livro3,"130",false),
-            Livro("11111111","Redes de Computadores","Tanenbaum & Wetherall","Tanenbaum & Wetherall",R.drawable.livro4,"130",false)
+        // ----------------------------------------------------------
+        // 1. LISTA DE LIVROS (DEPOIS VAMOS SUBSTITUIR PELO FIREBASE)
+        // ----------------------------------------------------------
+        listaOriginal.addAll(
+            listOf(
+                Livro("44444444", "Ciência da Computação e Tecnologias Digitais", "Programação", "Ername Rosa Martins", R.drawable.livro1, 130, true, "2023"),
+                Livro("33333333", "Java como Programar", "Programação", "Paul J.Deitel", R.drawable.livro2, 105, true, "2020"),
+                Livro("2222222", "Java como Programar", "Programação", "Paul J.Deitel", R.drawable.livro3, 200, false, "2023"),
+                Livro("11111111", "Redes de Computadores", "Redes", "Tanenbaum & Wetherall", R.drawable.livro4, 80, false, "2018")
+            )
         )
 
-        // lista filtrada inicia com todos os livros
-        listaFiltro.addAll(livros)
+        // Inicia lista filtrada
+        listaFiltrada.addAll(listaOriginal)
 
-        adapter = LivroAdapter(listaFiltro) { livro ->
+        // ----------------------------------------------------------
+        // 2. CONFIGURA O RECYCLER VIEW
+        // ----------------------------------------------------------
+        adapter = LivroAdapter(listaFiltrada) { livro ->
             val intent = Intent(this, TelaAvaliacoesUsu::class.java)
             intent.putExtra("livro", livro)
             startActivity(intent)
@@ -87,6 +59,42 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // ----------------------------------------------------------
+        // 3. CARREGA SPINNERS BASEADOS NOS LIVROS EXISTENTES
+        // ----------------------------------------------------------
+
+        carregarSpinner(spinnerAutor, listaOriginal.map { it.autor }.distinct(), "Autor")
+        carregarSpinner(spinnerGenero, listaOriginal.map { it.genero }.distinct(), "Gênero")
+        carregarSpinner(spinnerAno, listaOriginal.map { it.anoLancamento }.distinct(), "Ano")
+
+        // Populares é um caso especial
+        val opcoesPopulares = listOf("Normal", "Mais Populares")
+        carregarSpinner(spinnerPopulares, opcoesPopulares, null)
+
+        // ----------------------------------------------------------
+        // 4. AÇÃO DOS FILTROS
+        // ----------------------------------------------------------
+        val listenerFiltro = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, pos: Int, id: Long) {
+                aplicarFiltros(spinnerAutor, spinnerGenero, spinnerPopulares, spinnerAno)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        spinnerAutor.onItemSelectedListener = listenerFiltro
+        spinnerGenero.onItemSelectedListener = listenerFiltro
+        spinnerPopulares.onItemSelectedListener = listenerFiltro
+        spinnerAno.onItemSelectedListener = listenerFiltro
+
+        // ----------------------------------------------------------
+        // 5. PESQUISA POR TEXTO
+        // ----------------------------------------------------------
+        configurarPesquisa()
+
+        // ----------------------------------------------------------
+        // 6. CONFIRMAR SELEÇÃO
+        // ----------------------------------------------------------
         btnConfirmar.setOnClickListener {
             val selecionados = adapter.getSelecionados()
 
@@ -100,35 +108,79 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnBack.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
-
-        // --------------------------
-        // 🔍 CONFIGURAR PESQUISA
-        // --------------------------
-        configurarPesquisa(livros)
+        btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
-    private fun configurarPesquisa(listaOriginal: List<Livro>) {
+    // ----------------------------------------------------------
+    // 🔧 FUNÇÃO PARA CARREGAR SPINNERS AUTOMATICAMENTE
+    // ----------------------------------------------------------
+    private fun carregarSpinner(spinner: Spinner, opcoes: List<String>, extra: String?) {
+        val lista = if (extra != null) listOf(extra) + opcoes else opcoes
+
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+    }
+
+    // ----------------------------------------------------------
+    // 🔍 PESQUISA
+    // ----------------------------------------------------------
+    private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
             override fun onQueryTextSubmit(query: String?): Boolean = false
-
             override fun onQueryTextChange(newText: String?): Boolean {
-                val texto = newText?.lowercase().orEmpty()
-
-                listaFiltro.clear()
-                listaFiltro.addAll(
-                    listaOriginal.filter { livro ->
-                        livro.titulo.lowercase().contains(texto) ||
-                                livro.autor.lowercase().contains(texto)
-                    }
-                )
-
-                adapter.notifyDataSetChanged()
+                aplicarFiltrosAutomaticamente()
                 return true
             }
         })
+    }
+
+    // ----------------------------------------------------------
+    // 🧠 SISTEMA COMPLETO DE FILTRO
+    // ----------------------------------------------------------
+    private fun aplicarFiltros(
+        spinnerAutor: Spinner,
+        spinnerGenero: Spinner,
+        spinnerPopulares: Spinner,
+        spinnerAno: Spinner
+    ) {
+        val filtroAutor = spinnerAutor.selectedItem.toString()
+        val filtroGenero = spinnerGenero.selectedItem.toString()
+        val filtroAno = spinnerAno.selectedItem.toString()
+        val filtroPopular = spinnerPopulares.selectedItem.toString()
+        val pesquisa = searchView.query.toString().lowercase()
+
+        listaFiltrada.clear()
+
+        listaFiltrada.addAll(
+            listaOriginal.filter { livro ->
+
+                val autorOk = (filtroAutor == "Autor" || livro.autor == filtroAutor)
+                val generoOk = (filtroGenero == "Gênero" || livro.genero == filtroGenero)
+                val anoOk = (filtroAno == "Ano" || livro.anoLancamento == filtroAno)
+
+                val pesquisaOk =
+                    livro.titulo.lowercase().contains(pesquisa) ||
+                            livro.autor.lowercase().contains(pesquisa)
+
+                autorOk && generoOk && anoOk && pesquisaOk
+            }
+        )
+
+        // ORDENAR POR POPULARIDADE
+        if (filtroPopular == "Mais Populares") {
+            listaFiltrada.sortByDescending { it.avaliacoes }
+        }
+
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun aplicarFiltrosAutomaticamente() {
+        aplicarFiltros(
+            findViewById(R.id.spinnerAutor),
+            findViewById(R.id.spinnerGenero),
+            findViewById(R.id.spinnerMaisPopulares),
+            findViewById(R.id.spinnerLancamento)
+        )
     }
 }
