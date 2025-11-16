@@ -3,7 +3,6 @@ package com.example.alexandriavirtual20
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -15,17 +14,21 @@ import com.example.alexandriavirtual20.model.Livro
 
 class TelaHistoricoUsu : AppCompatActivity() {
 
-
-    private lateinit var btnVoltar : ImageButton
+    private lateinit var btnVoltar: ImageButton
     private lateinit var searchView: SearchView
     private lateinit var recyclerView: RecyclerView
+
+    private lateinit var adapter: LivroAdapterHistorico
+
+    private val listaOriginal = mutableListOf<Livro>()
+    private val listaFiltro = mutableListOf<Livro>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.tela_historico_usu)
 
-        btnVoltar= findViewById(R.id.botaoVoltar)
+        btnVoltar = findViewById(R.id.botaoVoltar)
         searchView = findViewById(R.id.searchViewLivros)
         recyclerView = findViewById(R.id.recyclerView)
 
@@ -33,54 +36,78 @@ class TelaHistoricoUsu : AppCompatActivity() {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // Quando o usuário pressiona ENTER / Buscar
-                if (!query.isNullOrEmpty()) {
-                    Toast.makeText(this@TelaHistoricoUsu, "Buscando: $query", Toast.LENGTH_SHORT).show()
-                    // Aqui você pode filtrar sua lista de livros
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // Quando o texto muda (digitação em tempo real)
-                if (!newText.isNullOrEmpty()) {
-                    // Filtra enquanto o usuário digita
-                }
-                return true
-            }
-        })
-
-        val livros = mutableListOf(
-            Livro("111111111","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro1,"130"),
-            Livro("222222222","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro1,"130"),
-            Livro("33333333","Java como Programar","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro2,"230"),
-            Livro("44444444","Java Avançado","Ernanne Rosa Martins","Ernanne Rosa Martins",R.drawable.livro3,"150"),
-            Livro("555555555","Redes de Computadores","Tanenbaum & Wetherall","Tanenbaum & Wetherall",R.drawable.livro4,"170"),
+        // ----------------------------
+        // LISTA DE LIVROS (pode vir do Firebase)
+        // ----------------------------
+        listaOriginal.addAll(
+            listOf(
+                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, "130"),
+                Livro("222222222", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro1, "130"),
+                Livro("33333333", "Java como Programar", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro2, "230"),
+                Livro("44444444", "Java Avançado", "Ernanne Rosa Martins", "Ernanne Rosa Martins", R.drawable.livro3, "150"),
+                Livro("555555555", "Redes de Computadores", "Tanenbaum & Wetherall", "Tanenbaum & Wetherall", R.drawable.livro4, "170")
+            )
         )
 
-        val adapterLivro = LivroAdapterHistorico(
-            livros,
+        // Lista filtrada começa igual à original
+        listaFiltro.addAll(listaOriginal)
+
+        // ----------------------------
+        // ADAPTER
+        // ----------------------------
+        adapter = LivroAdapterHistorico(
+            listaFiltro,
             onInfoClick = { livro ->
                 val intent = Intent(this, TelaInfoLivroUsu::class.java)
+                intent.putExtra("livro", livro)
                 startActivity(intent)
             },
             onReviewClick = { livro ->
                 val intent = Intent(this, TelaReviewUsu::class.java)
+                intent.putExtra("livro", livro)
                 startActivity(intent)
             },
             onFavotiroClick = { livro ->
-                Toast.makeText(this,"Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
             }
         )
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapterLivro
+        recyclerView.adapter = adapter
 
-
+        configurarPesquisa()
     }
 
+    // ----------------------------------------
+    // 🔍 FILTRO DA BARRA DE PESQUISA
+    // ----------------------------------------
+    private fun configurarPesquisa() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
+            override fun onQueryTextSubmit(query: String?): Boolean = false
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                val texto = newText?.lowercase()?.trim().orEmpty()
+
+                listaFiltro.clear()
+
+                if (texto.isEmpty()) {
+                    // mostra tudo
+                    listaFiltro.addAll(listaOriginal)
+                } else {
+                    // filtra por título OU autor
+                    listaFiltro.addAll(
+                        listaOriginal.filter { livro ->
+                            livro.titulo.lowercase().contains(texto) ||
+                                    livro.autor.lowercase().contains(texto)
+                        }
+                    )
+                }
+
+                adapter.notifyDataSetChanged()
+                return true
+            }
+        })
+    }
 }
