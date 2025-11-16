@@ -67,6 +67,24 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                 }
             }
 
+        val uid = auth.currentUser?.uid
+
+        if (uid != null) {
+            firestore.collection("usuario")
+                .document(uid)
+                .collection("notificacoes")
+                .whereEqualTo("nome", nomeEvento)
+                .get()
+                .addOnSuccessListener { query ->
+                    if (!query.isEmpty) {
+                        // Já existe notificação desse evento
+                        btnNotificar.visibility = Button.GONE
+                    } else {
+                        btnNotificar.visibility = Button.VISIBLE
+                    }
+                }
+        }
+
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
@@ -100,6 +118,7 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                 .add(notificacao)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Você será notificado!", Toast.LENGTH_SHORT).show()
+                    btnNotificar.visibility = Button.GONE
                 }
                 .addOnFailureListener {
                     Toast.makeText(this, "Erro ao criar notificação.", Toast.LENGTH_SHORT).show()

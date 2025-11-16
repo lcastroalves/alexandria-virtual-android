@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20
 
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
+import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.util.Base64
 import android.widget.Button
@@ -12,8 +13,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
+import java.util.Locale
 
 class AdmTelaAdicionEvent : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
@@ -40,7 +43,6 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         btnAdicionar = findViewById(R.id.salvarEvento)
         btnADicionarImagem = findViewById(R.id.editImagemEvento)
         fb = FirebaseFirestore.getInstance()
-        fb.clearPersistence()
 
         imagemEvento = findViewById(R.id.imagemEventoAdd)
         titulo = findViewById(R.id.addTituloEvento)
@@ -50,8 +52,6 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         breveDescricao = findViewById(R.id.addDescricaoBreveEvento)
         local = findViewById(R.id.addLocalEvento)
         //Informações que serão passadas ao banco de dados
-
-        nomeEvento = titulo.text.toString().trim().uppercase()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -83,12 +83,12 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
     // Função para conferir se todos os campos estão preenchidos
 
     private fun verificarCamposEAdd() {
+        nomeEvento = titulo.text.toString()
+
         if (campoVazio()) {
             Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             return
         }
-
-        nomeEvento = titulo.text.toString().trim()
 
         fb.collection("evento")
             .whereEqualTo("nome", nomeEvento)
@@ -118,9 +118,15 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             ""
         }
 
-        val formatoData = java.text.SimpleDateFormat("dd/MM/yy")
-        val date = formatoData.parse(data.text.toString())
-        val timestampData = com.google.firebase.Timestamp(date)
+        val formatoData = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+
+        val timestampData = try {
+            val date = formatoData.parse(data.text.toString())
+            Timestamp(date!!)
+        } catch (e: Exception) {
+            Toast.makeText(this, "Data inválida. Use o formato dd/mm/aa.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val dadosEvento = hashMapOf(
             "nome" to nomeEvento,
