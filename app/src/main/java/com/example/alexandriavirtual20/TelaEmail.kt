@@ -8,11 +8,13 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 
 class TelaEmail : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var edtEmail: EditText
     private lateinit var btnEnviar: Button
+    private lateinit var fbAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,24 +24,28 @@ class TelaEmail : AppCompatActivity() {
         btnVoltar = findViewById(R.id.botaoVoltar)
         edtEmail = findViewById(R.id.editarEmail)
         btnEnviar = findViewById(R.id.botaoEnviar)
-
+        fbAuth = FirebaseAuth.getInstance()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
         btnEnviar.setOnClickListener {
+
             val email = edtEmail.text.toString()
 
             if (email.isEmpty()) {
                 Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
-            else if (email == "alexandria@gmail.com") {
-                Toast.makeText(this, "E-mail enviado!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(this, "E-mail inválido", Toast.LENGTH_SHORT).show()
-            }
+
+            fbAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(this, "E-mail de redefinição enviado!", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_LONG).show()
+                    }
+                }
 
         }
     }

@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,6 +38,7 @@ class TelaInicioUsu : Fragment() {
     private lateinit var btnSinoNotifi : ImageButton
     private lateinit var btnLevBib : Button
     private lateinit var btnCap : Button
+    private lateinit var searchView: SearchView
     private lateinit var fbAuth: FirebaseAuth
     private lateinit var fireBase: FirebaseFirestore
 
@@ -63,6 +65,7 @@ class TelaInicioUsu : Fragment() {
         btnSinoNotifi = view.findViewById(R.id.btnSinoNotif)
         btnLevBib = view.findViewById(R.id.btnLevBib)
         btnCap = view.findViewById(R.id.btnCap)
+        searchView = view.findViewById(R.id.searchView)
 
         fbAuth = FirebaseAuth.getInstance()
         fireBase = FirebaseFirestore.getInstance()
