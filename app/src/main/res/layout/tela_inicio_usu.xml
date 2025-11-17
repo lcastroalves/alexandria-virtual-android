@@ -61,7 +61,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
                 android:background="@drawable/circulo_vermelho_notifcacao"
-                android:text="3"
+                android:text=""
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:gravity="center"
