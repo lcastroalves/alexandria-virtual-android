@@ -123,7 +123,7 @@
                     ""
                 }
 
-                val produtos = fb.collection("produtos")
+                val produtos = fb.collection("livros")
 
                 //Cria uma consulta (query) filtrando documentos da coleção. Aqui, estamos pedindo todos os documentos em que o campo "titulo" é igual ao valor de tituloStr.
                 produtos.whereEqualTo("titulo", tituloStr).get().addOnSuccessListener { query ->
@@ -158,13 +158,13 @@
                 "titulo" to tituloStr,
                 "subtitulo" to subtituloStr,
                 "autor" to autorStr,
-                "categoria" to categoriaStr,
-                "anoPub" to anoPubStr,
+                "genero" to categoriaStr,
+                "anoLancamento" to anoPubStr,
                 "edicao" to edicaoStr,
                 "unidade" to unidadeStr,
                 "idioma" to idiomaStr,
                 "sinopse" to sinopseStr,
-                "imagem" to imagemBase64
+                "capa" to imagemBase64
             )
 
             produtos.add(produto).addOnSuccessListener {

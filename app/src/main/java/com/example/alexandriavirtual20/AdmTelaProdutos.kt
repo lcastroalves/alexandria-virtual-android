@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.ProdutoAdapter
-import com.example.alexandriavirtual20.model.Produto
+import com.example.alexandriavirtual20.model.Livro
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdmTelaProdutos : AppCompatActivity() {
@@ -24,7 +24,7 @@ class AdmTelaProdutos : AppCompatActivity() {
     private lateinit var searchView: SearchView
     private lateinit var firestore: FirebaseFirestore
     private lateinit var adapter: ProdutoAdapter
-    private var listaProdutos = mutableListOf<Produto>()
+    private var listaProdutos = mutableListOf<Livro>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,14 +59,14 @@ class AdmTelaProdutos : AppCompatActivity() {
         }
         recyclerView.adapter = adapter
 
-        firestore.collection("produtos")
+        firestore.collection("livros")
             .get()
             .addOnSuccessListener { snapshots ->
                 val lista = snapshots.map { doc ->
-                    Produto(
+                    Livro(
                         titulo = doc.getString("titulo") ?: "",
                         autor = doc.getString("autor") ?: "",
-                        imageBase64 = doc.getString("imagem") ?: ""
+                        imageBase64 = doc.getString("capa") ?: ""
                     )
                 }.toMutableList()
                 adapter.atualizarLista(lista)
@@ -89,15 +89,15 @@ class AdmTelaProdutos : AppCompatActivity() {
     }
 
     private fun carregarProdutos() {
-        firestore.collection("produtos")
+        firestore.collection("livros")
             .addSnapshotListener { snapshots, e ->
                 if (e != null || snapshots == null) return@addSnapshotListener
                 listaProdutos.clear()
                 for (doc in snapshots.documents) {
-                    val produto = Produto(
+                    val produto = Livro(
                         titulo = doc.getString("titulo") ?: "",
                         autor = doc.getString("autor") ?: "",
-                        imageBase64 = doc.getString("imagem") ?: ""
+                        imageBase64 = doc.getString("capa") ?: ""
                     )
                     listaProdutos.add(produto)
                 }
@@ -122,7 +122,7 @@ class AdmTelaProdutos : AppCompatActivity() {
         val mensagem = if (selecionados.size == 1) {
             "Tem certeza que deseja excluir o produto \"${selecionados[0].titulo}\"?"
         } else {
-            "Tem certeza que deseja excluir ${selecionados.size} produtos?"
+            "Tem certeza que deseja excluir ${selecionados.size} livros?"
         }
 
         AlertDialog.Builder(this)
@@ -136,8 +136,8 @@ class AdmTelaProdutos : AppCompatActivity() {
             .show()
     }
 
-    private fun excluirDoFirestore(selecionados: List<Produto>) {
-        val colecao = firestore.collection("produtos")
+    private fun excluirDoFirestore(selecionados: List<Livro>) {
+        val colecao = firestore.collection("livros")
         var deletados = 0
         val total = selecionados.size
         for (produto in selecionados) {

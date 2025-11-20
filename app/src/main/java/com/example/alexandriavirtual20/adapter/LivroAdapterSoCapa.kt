@@ -9,11 +9,10 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Livro
-import com.example.alexandriavirtual20.model.Produto
 
 class LivroAdapterSoCapa (
-    private val livros: MutableList<Produto>,
-    private val onLivroClick: (Produto) -> Unit
+    private val livros: MutableList<Livro>,
+    private val onLivroClick: (Livro) -> Unit
 ) : RecyclerView.Adapter<LivroAdapterSoCapa.ViewHolder>() {
 
 

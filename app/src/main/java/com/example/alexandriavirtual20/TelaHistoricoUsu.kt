@@ -1,6 +1,6 @@
 package com.example.alexandriavirtual20
 
-import android.content.Intent
+import     android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.SearchView
@@ -44,11 +44,7 @@ class TelaHistoricoUsu : AppCompatActivity() {
 
         listaOriginal.addAll(
             listOf(
-                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", 130),
-                Livro("222222222", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", 130),
-                Livro("33333333", "Java como Programar", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", 230),
-                Livro("44444444", "Java Avançado", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", 150),
-                Livro("555555555", "Redes de Computadores", "Tanenbaum & Wetherall", "Tanenbaum & Wetherall", "", 170)
+                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", "130")
             )
         )
 

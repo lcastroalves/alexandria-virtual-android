@@ -37,10 +37,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         // ----------------------------------------------------------
         listaOriginal.addAll(
             listOf(
-                Livro("44444444", "Ciência da Computação e Tecnologias Digitais", "Programação", "Ername Rosa Martins", "", 130, true, "2023"),
-                Livro("33333333", "Java como Programar", "Programação", "Paul J.Deitel", "", 105, true, "2020"),
-                Livro("2222222", "Java como Programar", "Programação", "Paul J.Deitel", "", 200, false, "2023"),
-                Livro("11111111", "Redes de Computadores", "Redes", "Tanenbaum & Wetherall", "", 80, false, "2018")
+                Livro("33333333", "Java como Programar", "Programação", "Paul J.Deitel", "", "105", 234, true),
             )
         )
 

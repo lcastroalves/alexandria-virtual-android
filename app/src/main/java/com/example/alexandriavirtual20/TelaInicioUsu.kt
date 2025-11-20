@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.AtividadeAdapter
@@ -22,7 +23,7 @@ import com.example.alexandriavirtual20.adapter.ProdutoAdapter
 import com.example.alexandriavirtual20.model.Atividade
 import com.example.alexandriavirtual20.model.Evento
 import com.example.alexandriavirtual20.model.Livro
-import com.example.alexandriavirtual20.model.Produto
+import com.example.alexandriavirtual20.model.LivroCompartilhadoViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -101,7 +102,7 @@ class TelaInicioUsu : Fragment() {
 
     private fun carregarLivros(){
 
-        val produtos = mutableListOf<Produto>()
+        val produtos = mutableListOf<Livro>()
 
         fireBase.collection("produtos").get().addOnSuccessListener { query ->
 
@@ -110,13 +111,17 @@ class TelaInicioUsu : Fragment() {
                 val autor = doc.getString("autor") ?: ""
                 val imagemBase64 = doc.getString("imagem") ?: ""
 
-                produtos.add(Produto(titulo, autor, imagemBase64, false))
+                produtos.add(Livro(titulo, autor, imagemBase64, false))
             }
 
             val adapterLivro = LivroAdapterSoCapa(produtos){ livro ->
+
+                val viewModel = ViewModelProvider(requireActivity())[LivroCompartilhadoViewModel::class.java]
+                viewModel.selecionarLivro(livro)
+
                 val intent = Intent(requireContext(), TelaInfoLivroUsu::class.java)
                 startActivity(intent)
-                // Somente coisas que dizem respeito ao item individual
+
             }
 
             recyclerViewLivros.layoutManager = LinearLayoutManager(

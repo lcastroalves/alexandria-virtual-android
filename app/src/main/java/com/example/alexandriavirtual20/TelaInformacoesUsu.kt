@@ -2,7 +2,6 @@ package com.example.alexandriavirtual20
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -38,7 +37,7 @@ class TelaInformacoesUsu : AppCompatActivity() {
         btnRedefinirSenha = findViewById(R.id.botaoRedefinirSenha)
         btnSalvar = findViewById(R.id.botaoSalvar)
 
-        imagemUsu = findViewById(R.id.imagemUsu)
+        imagemUsu = findViewById(R.id.imagemLivro)
         nomeUsu = findViewById(R.id.nomeUsu)
         nomeComp = findViewById(R.id.nomeComp)
         inputNomeUsu = findViewById(R.id.inputNomeUsu)

@@ -61,7 +61,7 @@ class AdmTelaEditarProduto : AppCompatActivity() {
         edtUnidade = findViewById(R.id.unidade)
 
         // Buscar dados do produto pelo título
-        firestore.collection("produtos")
+        firestore.collection("livros")
             .whereEqualTo("titulo", produtoTitulo)
             .get()
             .addOnSuccessListener { snapshots ->
@@ -70,13 +70,13 @@ class AdmTelaEditarProduto : AppCompatActivity() {
                     edtTitulo.setText(doc.getString("titulo") ?: "")
                     edtAutor.setText(doc.getString("autor") ?: "")
                     edtSubtitulo.setText(doc.getString("subtitulo") ?: "")
-                    edtAnoPub.setText(doc.getString("anoPub") ?: "")
-                    edtCateg.setText(doc.getString("categoria") ?: "")
+                    edtAnoPub.setText(doc.getString("anoLancamento") ?: "")
+                    edtCateg.setText(doc.getString("genero") ?: "")
                     edtEdicao.setText(doc.getString("edicao") ?: "")
                     edtIdioma.setText(doc.getString("idioma") ?: "")
                     edtSinopse.setText(doc.getString("sinopse") ?: "")
                     edtUnidade.setText(doc.getString("unidade") ?: "")
-                    imagemBase64 = doc.getString("imagem") ?: ""
+                    imagemBase64 = doc.getString("capa") ?: ""
                     if (imagemBase64.isNotEmpty()) {
                         val bytes = Base64.decode(imagemBase64, Base64.DEFAULT)
                         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
@@ -107,23 +107,23 @@ class AdmTelaEditarProduto : AppCompatActivity() {
             val sinopseEdit = edtSinopse.text.toString()
             val unidadeEdit = edtUnidade.text.toString()
 
-            firestore.collection("produtos")
+            firestore.collection("livros")
                 .whereEqualTo("titulo", produtoTitulo)
                 .get()
                 .addOnSuccessListener { snapshots ->
                     for (doc in snapshots.documents) {
-                        firestore.collection("produtos").document(doc.id).update(
+                        firestore.collection("livros").document(doc.id).update(
                                 mapOf(
                                     "titulo" to tituloEdit,
                                     "autor" to autorEdit,
                                     "subtitulo" to subtituloEdit,
-                                    "anoPub" to anoPubEdit,
-                                    "categoria" to categEdit,
+                                    "anoLancamento" to anoPubEdit,
+                                    "genero" to categEdit,
                                     "edicao" to edicaoEdit,
                                     "idioma" to idiomaEdit,
                                     "sinopse" to sinopseEdit,
                                     "unidade" to unidadeEdit,
-                                    "imagem" to imagemBase64
+                                    "capa" to imagemBase64
                                 )
                             )
                     }

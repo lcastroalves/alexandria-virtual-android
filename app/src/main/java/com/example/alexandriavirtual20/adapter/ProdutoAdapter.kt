@@ -12,11 +12,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
-import com.example.alexandriavirtual20.model.Produto
+import com.example.alexandriavirtual20.model.Livro
 
 class ProdutoAdapter (
-    private val produtos: MutableList<Produto>,
-    private val btnEditarClick: (Produto) -> Unit
+    private val produtos: MutableList<Livro>,
+    private val btnEditarClick: (Livro) -> Unit
 ) :
     RecyclerView.Adapter<ProdutoAdapter.ViewHolder>(){
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view){
@@ -72,14 +72,14 @@ class ProdutoAdapter (
         return produtos.size
     }
 
-    fun atualizarLista(novaLista: MutableList<Produto>) {
+    fun atualizarLista(novaLista: MutableList<Livro>) {
         Log.d("ADAPTER", "Atualizando lista com ${novaLista.size} itens")
         produtos.clear()
         produtos.addAll(novaLista)
         notifyDataSetChanged()
     }
 
-    fun getSelecionados(): List<Produto> {
+    fun getSelecionados(): List<Livro> {
         return produtos.filter { it.isSelected }
     }
 

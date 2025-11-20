@@ -46,7 +46,7 @@
 
 
         <ImageView
-            android:id="@+id/imagemUsu"
+            android:id="@+id/imagemLivro"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -68,10 +68,10 @@
             android:text="Dillan Medeiros"
             android:textSize="25sp"
             android:translationY="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemUsu"
+            app:layout_constraintBottom_toBottomOf="@+id/imagemLivro"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemUsu"
-            app:layout_constraintTop_toTopOf="@+id/imagemUsu">
+            app:layout_constraintStart_toEndOf="@+id/imagemLivro"
+            app:layout_constraintTop_toTopOf="@+id/imagemLivro">
 
         </TextView>
     </LinearLayout>
