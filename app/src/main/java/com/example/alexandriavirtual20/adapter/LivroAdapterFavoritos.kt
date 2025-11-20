@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,7 +37,19 @@ class LivroAdapterFavoritos(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val livro = livros[position]
 
-        holder.capaLivro.setImageResource(livro.imagem)
+        // ---------- CARREGAR IMAGEM BASE64 ----------
+        if (!livro.imageBase64.isNullOrEmpty()) {
+            try {
+                val bytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                holder.capaLivro.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                holder.capaLivro.setImageResource(R.drawable.no_image)
+            }
+        } else {
+            holder.capaLivro.setImageResource(R.drawable.no_image)
+        }
+
         holder.titulo.text = livro.titulo
         holder.autor.text = livro.autor
 

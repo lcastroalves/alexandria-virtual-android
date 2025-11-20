@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +29,20 @@ class LivroAdapterMeus(
 
     override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
         val livro = livros[position]
-        holder.imgCapa.setImageResource(livro.imagem)
+
+        // ---------- CARREGAR IMAGEM BASE64 ----------
+        if (!livro.imageBase64.isNullOrEmpty()) {
+            try {
+                val bytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                holder.imgCapa.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                holder.imgCapa.setImageResource(R.drawable.no_image)
+            }
+        } else {
+            holder.imgCapa.setImageResource(R.drawable.no_image)
+        }
+
         holder.txtTitulo.text = livro.titulo
 
         holder.itemView.setOnClickListener { onClickAvaliacoes(livro) }
