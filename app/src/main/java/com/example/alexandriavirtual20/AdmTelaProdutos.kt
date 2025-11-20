@@ -66,7 +66,7 @@ class AdmTelaProdutos : AppCompatActivity() {
                     Livro(
                         titulo = doc.getString("titulo") ?: "",
                         autor = doc.getString("autor") ?: "",
-                        imageBase64 = doc.getString("capa") ?: ""
+                        capa = doc.getString("capa") ?: ""
                     )
                 }.toMutableList()
                 adapter.atualizarLista(lista)
@@ -97,7 +97,7 @@ class AdmTelaProdutos : AppCompatActivity() {
                     val produto = Livro(
                         titulo = doc.getString("titulo") ?: "",
                         autor = doc.getString("autor") ?: "",
-                        imageBase64 = doc.getString("capa") ?: ""
+                        capa = doc.getString("capa") ?: ""
                     )
                     listaProdutos.add(produto)
                 }

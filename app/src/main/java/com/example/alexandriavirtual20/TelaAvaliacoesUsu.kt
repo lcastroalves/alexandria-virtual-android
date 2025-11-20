@@ -43,8 +43,8 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         // ---------- Exibe dados do livro ----------
-        if (!livro.imageBase64.isNullOrEmpty()) {
-            val imageBytes = android.util.Base64.decode(livro.imageBase64, android.util.Base64.DEFAULT)
+        if (!livro.capa.isNullOrEmpty()) {
+            val imageBytes = android.util.Base64.decode(livro.capa, android.util.Base64.DEFAULT)
             val bitmap = android.graphics.BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
             imgLivro.setImageBitmap(bitmap)
         }

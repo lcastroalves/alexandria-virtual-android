@@ -12,7 +12,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.alexandriavirtual20.model.Livro
-import com.example.alexandriavirtual20.model.LivroCompartilhadoViewModel
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.firestore
 
 class TelaInfoLivroUsu : AppCompatActivity  () {
 
@@ -26,7 +27,6 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
     private lateinit var idioma: TextView
     private lateinit var edicao: TextView
     private lateinit var generoLivro: TextView
-    private lateinit var viewModel: LivroCompartilhadoViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,13 +44,15 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
         edicao = findViewById(R.id.edicao)
         generoLivro = findViewById(R.id.generoLivro)
 
-        viewModel = ViewModelProvider(this)[LivroCompartilhadoViewModel::class.java]
+        val livroId = intent.getStringExtra("livroId")
 
-        viewModel.livroSelecionado.observe(this){ livro ->
-            if (livro != null){
+        Firebase.firestore.collection("livros").document(livroId!!).get().addOnSuccessListener { doc ->
 
+            val livro = doc.toObject(Livro::class.java)
+                if (livro != null){
+                    preencherInfos(livro)
+                }
             }
-        }
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -60,8 +62,8 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
     private fun preencherInfos(livro: Livro) {
 
         // Se a capa vier como base64
-        if (!livro.imageBase64.isNullOrEmpty()) {
-            val decodedBytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+        if (!livro.capa.isNullOrEmpty()) {
+            val decodedBytes = Base64.decode(livro.capa, Base64.DEFAULT)
             val bmp = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
             imagemLivro.setImageBitmap(bmp)
         }

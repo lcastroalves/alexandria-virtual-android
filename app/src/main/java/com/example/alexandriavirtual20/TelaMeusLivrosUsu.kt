@@ -37,7 +37,7 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
 
         val adapter = LivroAdapterMeus(listaLivros) { livro ->
             val intent = Intent(this, TelaInfoLivroUsu::class.java)
-            intent.putExtra("livro_nome", livro.titulo)
+            intent.putExtra("livroId", livro.id)
             startActivity(intent)
         }
 

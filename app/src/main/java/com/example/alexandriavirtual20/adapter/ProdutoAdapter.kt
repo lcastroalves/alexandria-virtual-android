@@ -42,8 +42,8 @@ class ProdutoAdapter (
         holder.autor.text = produto.autor
 
         // Decodifica imagem base64
-        if (produto.imageBase64.isNotEmpty()) {
-            val imagemBytes = Base64.decode(produto.imageBase64, Base64.DEFAULT)
+        if (produto.capa.isNotEmpty()) {
+            val imagemBytes = Base64.decode(produto.capa, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
             holder.capaLivro.setImageBitmap(bitmap)
         } else {

@@ -9,7 +9,7 @@ data class Livro(
     val subtitulo: String = "",
     val genero: String = "",
     val autor: String = "",
-    var imageBase64: String = "",
+    var capa: String = "",
     val avaliacoes: Int = 0,
     var favorito: Boolean = false,
     val anoLancamento: String = "",
@@ -32,7 +32,7 @@ data class Livro(
         subtitulo = "",
         genero = "",
         autor = autor,
-        imageBase64 = imageBase64,
+        capa = imageBase64,
         avaliacoes = 0,
         favorito = false,
         anoLancamento = "",
@@ -67,7 +67,7 @@ data class Livro(
         parcel.writeString(subtitulo)
         parcel.writeString(genero)
         parcel.writeString(autor)
-        parcel.writeString(imageBase64)
+        parcel.writeString(capa)
         parcel.writeInt(avaliacoes)
         parcel.writeByte(if (favorito) 1 else 0)
         parcel.writeString(anoLancamento)

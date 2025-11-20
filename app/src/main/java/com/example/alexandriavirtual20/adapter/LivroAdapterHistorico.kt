@@ -40,9 +40,9 @@ class LivroAdapterHistorico (
         val livro = livros[position]
 
         // ---------- CARREGAR IMAGEM BASE64 ----------
-        if (!livro.imageBase64.isNullOrEmpty()) {
+        if (!livro.capa.isNullOrEmpty()) {
             try {
-                val bytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+                val bytes = Base64.decode(livro.capa, Base64.DEFAULT)
                 val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 holder.capaLivro.setImageBitmap(bitmap)
             } catch (e: Exception) {
