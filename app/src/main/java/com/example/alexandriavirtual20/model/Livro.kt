@@ -6,23 +6,23 @@ import android.os.Parcelable
 data class Livro(
     val id: String = "",
     val titulo: String = "",
-    val genero: String = "", // << ADICIONAR
+    val genero: String = "",
     val autor: String = "",
-    val imagem: Int,
-    val avaliacoes: Int = 0, // << MUDAR PARA INT
+    var imageBase64: String = "",
+    val avaliacoes: Int = 0,
     var favorito: Boolean = false,
     val anoLancamento: String = ""
 ) : Parcelable {
 
     constructor(parcel: Parcel) : this(
-        parcel.readString() ?: "",     // id
-        parcel.readString() ?: "",     // titulo
-        parcel.readString() ?: "",     // subtitulo
-        parcel.readString() ?: "",     // autor
-        parcel.readInt(),              // imagem
-        parcel.readInt(),              // avaliacoes
-        parcel.readByte() != 0.toByte(), // favorito
-        parcel.readString() ?: "",
+        parcel.readString() ?: "",      // id
+        parcel.readString() ?: "",      // titulo
+        parcel.readString() ?: "",      // genero
+        parcel.readString() ?: "",      // autor
+        parcel.readString() ?: "",      // imageBase64
+        parcel.readInt(),               // avaliacoes
+        parcel.readByte() != 0.toByte(),// favorito
+        parcel.readString() ?: ""       // anoLancamento
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -30,7 +30,7 @@ data class Livro(
         parcel.writeString(titulo)
         parcel.writeString(genero)
         parcel.writeString(autor)
-        parcel.writeInt(imagem)
+        parcel.writeString(imageBase64)
         parcel.writeInt(avaliacoes)
         parcel.writeByte(if (favorito) 1 else 0)
         parcel.writeString(anoLancamento)
@@ -43,3 +43,4 @@ data class Livro(
         override fun newArray(size: Int): Array<Livro?> = arrayOfNulls(size)
     }
 }
+

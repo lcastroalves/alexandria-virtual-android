@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,27 +35,34 @@ class LivroAdapter(
     override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
         val livro = livros[position]
 
-        // Carrega os dados
-        holder.imgLivro.setImageResource(livro.imagem)
+        // ---------- CARREGAR IMAGEM BASE64 ----------
+        if (!livro.imageBase64.isNullOrEmpty()) {
+            try {
+                val bytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                holder.imgLivro.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                holder.imgLivro.setImageResource(R.drawable.no_image)
+            }
+        } else {
+            holder.imgLivro.setImageResource(R.drawable.no_image)
+        }
+
         holder.txtTitulo.text = livro.titulo
         holder.txtAutor.text = livro.autor
         holder.txtAvaliacoes.text = "⭐ ${livro.avaliacoes} avaliações"
 
-        // Evita bug de reciclagem
         holder.checkSelecionado.setOnCheckedChangeListener(null)
         holder.checkSelecionado.isChecked = selecionados.contains(livro)
 
-        // Controle de seleção
         holder.checkSelecionado.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) selecionados.add(livro)
             else selecionados.remove(livro)
         }
 
-        // Botão Ver Avaliações com ID do livro
         holder.btnAvaliacoes.setOnClickListener {
             onClickAvaliacoes(livro)
         }
-
     }
 
     override fun getItemCount(): Int = livros.size

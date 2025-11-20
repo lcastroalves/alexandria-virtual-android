@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +10,11 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,9 +33,13 @@ class AdmTelaPerfil : Fragment() {
     private lateinit var btnEditarImagem: ImageButton
     private lateinit var btnInfoPessoais: LinearLayout
     private lateinit var fotoPerfil : ImageView
+    private lateinit var nomeUsuario : TextView
     private lateinit var btnAddAdm: LinearLayout
     private lateinit var btnSair: LinearLayout
     private lateinit var abrirGaleria: ActivityResultLauncher<String>
+
+    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var fbAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +47,6 @@ class AdmTelaPerfil : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-
-
     }
 
     override fun onCreateView(
@@ -59,7 +65,21 @@ class AdmTelaPerfil : Fragment() {
         btnAddAdm = view.findViewById(R.id.botaoAddAdm)
         btnSair = view.findViewById(R.id.botaoSair)
         fotoPerfil = view.findViewById(R.id.fotoPerfilAdm)
+        nomeUsuario = view.findViewById(R.id.textView5)
 
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
+        val idUsuario = fbAuth.currentUser?.uid
+
+        if(idUsuario != null){
+            fireBase.collection("usuario").document(idUsuario).get().addOnSuccessListener { doc ->
+                if(doc != null && doc.exists()){
+                    val nomeUsu = doc.getString("usuario")
+                    nomeUsuario.text = nomeUsu
+                }
+            }
+        }
 
         abrirGaleria = registerForActivityResult(
             ActivityResultContracts.GetContent()
@@ -67,6 +87,16 @@ class AdmTelaPerfil : Fragment() {
             if(uri != null){
                 // imagem capturada
                 fotoPerfil.setImageURI(uri)
+
+                // Converter para base64
+                val inputStream = requireContext().contentResolver.openInputStream(uri)
+                val bytes = inputStream?.readBytes()
+                val fotoPerfilBase64 = Base64.encodeToString(bytes, Base64.DEFAULT)
+
+                if (idUsuario != null) {
+                    fireBase.collection("usuario").document(idUsuario).update("fotoPerfil", fotoPerfilBase64)
+
+                }
             }
         }
 
@@ -83,7 +113,11 @@ class AdmTelaPerfil : Fragment() {
             startActivity(intent)
         }
         btnSair.setOnClickListener {
+
+            fbAuth.signOut()
+
             val intent = Intent(requireContext(), TelaLogin::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK   //Para garantir que o usuário não volte para a tela anterior apertando o botão de voltar
             startActivity(intent)
         }
     }
