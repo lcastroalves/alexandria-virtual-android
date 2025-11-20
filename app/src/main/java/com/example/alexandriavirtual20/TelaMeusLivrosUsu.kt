@@ -32,15 +32,12 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
 
 
         val listaLivros = listOf(
-            Livro("111111111","Ciências da Computação","Ernanne Rosa Martins","Ernanne Rosa Martins","R.drawable.livro1",130),
-            Livro("222222222","Redes de Computadores","Tanenbaum & Wetherall","Tanenbaum & Wetherall","R.drawable.livro4",130),
-            Livro("33333333","Java como Programar","Ernanne Rosa Martins","Ernanne Rosa Martins","R.drawable.livro2",230),
-            Livro("44444444","Java Avançado","Ernanne Rosa Martins","Ernanne Rosa Martins","R.drawable.livro3",150),
+            Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", "130")
         )
 
         val adapter = LivroAdapterMeus(listaLivros) { livro ->
             val intent = Intent(this, TelaInfoLivroUsu::class.java)
-            intent.putExtra("livro_nome", livro.titulo)
+            intent.putExtra("livroId", livro.id)
             startActivity(intent)
         }
 

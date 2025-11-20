@@ -33,190 +33,223 @@
         app:layout_constraintStart_toEndOf="@id/botaoVoltar"
         app:layout_constraintTop_toTopOf="@id/botaoVoltar" />
 
-    <ImageView
-        android:contentDescription="@string/descricaoCapaLivro"
-        android:id="@+id/imagemUsu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="30dp"
-        android:src="@drawable/livro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/botaoVoltar" />
-
-    <TextView
-        android:id="@+id/tituloLivro"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/descricaoTituloLivro"
-        android:ellipsize="end"
-        android:fontFamily="@font/montserrat_medium"
-        android:maxLines="3"
-        android:text="Java "
-        android:layout_marginTop="5dp"
-        android:textColor="#247AE8"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imagemUsu"
-        app:layout_constraintTop_toTopOf="@+id/imagemUsu" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:text="como Programar"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="@+id/tituloLivro"
-        app:layout_constraintStart_toStartOf="@+id/tituloLivro"
-        app:layout_constraintTop_toBottomOf="@+id/tituloLivro" />
-
-    <TextView
-        android:id="@+id/autorLivroSuperior"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:contentDescription="@string/descricaoAutorLivro"
-        android:ellipsize="none"
-        android:fontFamily="@font/montserrat_medium"
-        android:maxLines="2"
-        android:text="Paul J. Deitel"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imagemUsu"
-        app:layout_constraintTop_toTopOf="@+id/imagemUsu" />
-
-    <TextView
-        android:id="@+id/sinopseLivro"
-        android:layout_width="340dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:layout_marginStart="20dp"
-        android:contentDescription="@string/sinopseLivro"
-        android:ellipsize="end"
-        android:fontFamily="@font/montserrat_medium"
-        android:maxLines="4"
-        android:text="@string/sinopseLivro"
-        android:textColor="#247AE8"
-        android:textSize="16sp"
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagemUsu" />
+        app:layout_constraintTop_toBottomOf="@+id/SobreOLivro">
 
-    <ImageView
-        android:contentDescription="@null"
-        android:id="@+id/calendario"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="50dp"
-        android:src="@drawable/award"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sinopseLivro" />
-
-    <TextView
-        android:id="@+id/label1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Autor:"
-        android:layout_marginStart="30dp"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/calendario"
-        app:layout_constraintTop_toTopOf="@+id/calendario" />
-
-    <TextView
-        android:id="@+id/autorLivroInferior"
-        android:layout_height="wrap_content"
-        android:layout_width="150dp"
-        android:maxLines="2"
-        android:ellipsize="none"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Paul J. Deitel"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/calendario"
-        app:layout_constraintTop_toTopOf="@+id/calendario" />
-
-    <ImageView
-        android:contentDescription="@null"
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/clipboard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendario" />
-
-    <TextView
-        android:id="@+id/label2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Informação de Publicação:"
-        android:layout_marginStart="30dp"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
-
-    <TextView
-        android:contentDescription="@string/descricaoInfoLivro"
-        android:id="@+id/infoPublica"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:fontFamily="@font/montserrat_medium"
-        android:maxLines="1"
-        android:text="Livro - Português - 10ª edição"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
 
 
-    <ImageView
-        android:contentDescription="@null"
-        android:id="@+id/Relogio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/iconelivro"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+            <ImageView
+                android:id="@+id/imagemLivro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:contentDescription="@string/descricaoCapaLivro"
+                android:src="@drawable/livro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/label3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Gênero/Assunto:"
-        android:layout_marginStart="26dp"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/Relogio"
-        app:layout_constraintTop_toTopOf="@+id/Relogio" />
+            <TextView
+                android:id="@+id/tituloLivro"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/descricaoTituloLivro"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat_medium"
+                android:maxLines="3"
+                android:text="Java "
+                android:layout_marginTop="5dp"
+                android:textColor="#247AE8"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagemLivro"
+                app:layout_constraintTop_toTopOf="@+id/imagemLivro" />
 
-    <TextView
-        android:contentDescription="@string/generoLivro"
-        android:id="@+id/generoLivro"
-        android:layout_width="220dp"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:fontFamily="@font/montserrat_medium"
-        android:text="Computação"
-        android:textColor="#000000"
-        android:textSize="14sp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="32dp"
-        app:layout_constraintStart_toEndOf="@+id/Relogio"
-        app:layout_constraintTop_toTopOf="@+id/Relogio" />
+            <TextView
+                android:id="@+id/subtitulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="como Programar"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="@+id/tituloLivro"
+                app:layout_constraintStart_toStartOf="@+id/tituloLivro"
+                app:layout_constraintTop_toBottomOf="@+id/tituloLivro" />
+
+            <TextView
+                android:id="@+id/autorLivroSuperior"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:contentDescription="@string/descricaoAutorLivro"
+                android:ellipsize="none"
+                android:fontFamily="@font/montserrat_medium"
+                android:maxLines="2"
+                android:text="Paul J. Deitel"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imagemLivro"
+                app:layout_constraintTop_toTopOf="@+id/imagemLivro" />
+
+            <TextView
+                android:id="@+id/sinopseLivro"
+                android:layout_width="340dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/sinopseLivro"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat_medium"
+                android:maxLines="4"
+                android:text="@string/sinopseLivro"
+                android:textColor="#247AE8"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imagemLivro" />
+
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/calendario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="50dp"
+                android:src="@drawable/award"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sinopseLivro" />
+
+            <TextView
+                android:id="@+id/label1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Autor:"
+                android:layout_marginStart="30dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/calendario"
+                app:layout_constraintTop_toTopOf="@+id/calendario" />
+
+            <TextView
+                android:id="@+id/autorLivroInferior"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:maxLines="2"
+                android:ellipsize="none"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Paul J. Deitel"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/calendario"
+                app:layout_constraintTop_toTopOf="@+id/calendario" />
+
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/clipboard"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/calendario" />
+
+            <TextView
+                android:id="@+id/label2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Informação de Publicação:"
+                android:layout_marginStart="30dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+            <TextView
+                android:contentDescription="@string/descricaoInfoLivro"
+                android:id="@+id/idioma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat_medium"
+                android:maxLines="1"
+                android:text="Português"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+            <TextView
+                android:id="@+id/edicao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/montserrat_medium"
+                android:maxLines="1"
+                android:text="2 edição"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/idioma"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/idioma"
+                app:layout_constraintTop_toTopOf="@+id/idioma" />
+
+            <ImageView
+                android:contentDescription="@null"
+                android:id="@+id/Relogio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/iconelivro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+            <TextView
+                android:id="@+id/label3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Gênero/Assunto:"
+                android:layout_marginStart="26dp"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/Relogio"
+                app:layout_constraintTop_toTopOf="@+id/Relogio" />
+
+            <TextView
+                android:contentDescription="@string/generoLivro"
+                android:id="@+id/generoLivro"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:fontFamily="@font/montserrat_medium"
+                android:text="Computação"
+                android:textColor="#000000"
+                android:textSize="14sp"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="32dp"
+                app:layout_constraintStart_toEndOf="@+id/Relogio"
+                app:layout_constraintTop_toTopOf="@+id/Relogio" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,11 +9,10 @@ import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Livro
-import com.example.alexandriavirtual20.model.Produto
 
 class LivroAdapterSoCapa (
-    private val livros: MutableList<Produto>,
-    private val onLivroClick: (Produto) -> Unit
+    private val livros: MutableList<Livro>,
+    private val onLivroClick: (Livro) -> Unit
 ) : RecyclerView.Adapter<LivroAdapterSoCapa.ViewHolder>() {
 
 
@@ -35,8 +34,8 @@ class LivroAdapterSoCapa (
     ) {
         val livro = livros [position]
 
-        if (!livro.imageBase64.isNullOrEmpty()) {
-            val imagemBytes = Base64.decode(livro.imageBase64, Base64.DEFAULT)
+        if (!livro.capa.isNullOrEmpty()) {
+            val imagemBytes = Base64.decode(livro.capa, Base64.DEFAULT)
             val bitmap = BitmapFactory.decodeByteArray(imagemBytes, 0, imagemBytes.size)
             holder.capaLivro.setImageBitmap(bitmap)
         } else {

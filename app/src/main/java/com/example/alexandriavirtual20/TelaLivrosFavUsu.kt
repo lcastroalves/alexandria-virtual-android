@@ -40,11 +40,7 @@ class TelaLivrosFavUsu : AppCompatActivity() {
         // ----------------------------
         listaOriginal.addAll(
             listOf(
-                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "R.drawable.livro1", 130),
-                Livro("222222222", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "R.drawable.livro1", 130),
-                Livro("33333333", "Java como Programar", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "R.drawable.livro2", 230),
-                Livro("44444444", "Java Avançado", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "R.drawable.livro3", 150),
-                Livro("555555555", "Redes de Computadores", "Tanenbaum & Wetherall", "Tanenbaum & Wetherall", "R.drawable.livro4", 170),
+                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", "130")
             )
         )
 
