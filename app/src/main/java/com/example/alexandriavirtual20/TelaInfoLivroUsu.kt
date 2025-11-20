@@ -13,6 +13,8 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.example.alexandriavirtual20.model.Livro
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
 
 class TelaInfoLivroUsu : AppCompatActivity  () {
@@ -27,6 +29,9 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
     private lateinit var idioma: TextView
     private lateinit var edicao: TextView
     private lateinit var generoLivro: TextView
+
+    private lateinit var fireBase: FirebaseFirestore
+    private lateinit var fbAuth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +49,31 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
         edicao = findViewById(R.id.edicao)
         generoLivro = findViewById(R.id.generoLivro)
 
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
         val livroId = intent.getStringExtra("livroId")
 
-        Firebase.firestore.collection("livros").document(livroId!!).get().addOnSuccessListener { doc ->
+        Firebase.firestore.collection("livros")
+            .document(livroId!!)
+            .get()
+            .addOnSuccessListener { doc ->
 
-            val livro = doc.toObject(Livro::class.java)
-                if (livro != null){
+                val livro = doc.toObject(Livro::class.java)
+
+                if (livro != null) {
+                    livro.id = doc.id
                     preencherInfos(livro)
+                    salvarNoHistorico(livro)
                 }
             }
+
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-    }
 
+    }
     private fun preencherInfos(livro: Livro) {
 
         // Se a capa vier como base64
@@ -77,4 +92,28 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
         edicao.text = livro.edicao ?: "Sem edição"
         generoLivro.text = livro.genero ?: "Não informado"
     }
+
+    private fun salvarNoHistorico(livro: Livro) {
+
+        val usuarioId = fbAuth.currentUser?.uid
+
+        if (usuarioId == null) {
+            return
+        }
+
+        val historicoData = hashMapOf(
+            "id" to livro.id,
+            "dataVisualizacao" to System.currentTimeMillis()
+        )
+
+        fireBase.collection("usuario")
+            .document(usuarioId)
+            .collection("historico")
+            .document(livro.id)
+            .set(historicoData)
+            .addOnSuccessListener {
+                // salvo.
+            }
+    }
+
 }

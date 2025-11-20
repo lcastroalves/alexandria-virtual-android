@@ -1,6 +1,6 @@
 package com.example.alexandriavirtual20
 
-import     android.content.Intent
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.SearchView
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.LivroAdapterHistorico
 import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 
 class TelaHistoricoUsu : AppCompatActivity() {
 
@@ -23,6 +26,9 @@ class TelaHistoricoUsu : AppCompatActivity() {
     private val listaOriginal = mutableListOf<Livro>()
     private val listaFiltro = mutableListOf<Livro>()
 
+    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var fbAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -32,34 +38,23 @@ class TelaHistoricoUsu : AppCompatActivity() {
         searchView = findViewById(R.id.searchViewLivros)
         recyclerView = findViewById(R.id.recyclerView)
 
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-
-        // --------------------------------------------------------------------
-        // ⚠️ VERIFIQUE SE SUA CLASSE Livro TEM ESTES CAMPOS:
-        // titulo, autor, imagem, favorito, etc…
-        // E SE IMPLEMENTA Serializable OU Parcelable.
-        // --------------------------------------------------------------------
-
-        listaOriginal.addAll(
-            listOf(
-                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", "130")
-            )
-        )
-
-        listaFiltro.addAll(listaOriginal)
 
         adapter = LivroAdapterHistorico(
             listaFiltro,
             onInfoClick = { livro ->
                 val intent = Intent(this, TelaInfoLivroUsu::class.java)
-                intent.putExtra("livro", livro) // PRECISA SER Serializable/Parcelable
+                intent.putExtra("livroId", livro.id)
                 startActivity(intent)
             },
             onReviewClick = { livro ->
                 val intent = Intent(this, TelaReviewUsu::class.java)
-                intent.putExtra("livro", livro)
+                intent.putExtra("livroId", livro.id)
                 startActivity(intent)
             },
             onFavotiroClick = { livro ->
@@ -70,12 +65,66 @@ class TelaHistoricoUsu : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        carregarHistorico()
         configurarPesquisa()
     }
 
-    // --------------------------------------------------------------------
-    // 🔍 FILTRO DA BARRA DE PESQUISA
-    // --------------------------------------------------------------------
+
+    private fun carregarHistorico(){
+        val usuarioID = fbAuth.currentUser?.uid
+
+        if(usuarioID != null){
+
+            fireBase.collection("usuario")
+                .document(usuarioID)
+                .collection("historico")
+                .orderBy("dataVisualizacao", Query.Direction.DESCENDING)
+                .limit(10).get()
+                .addOnSuccessListener { doc ->
+
+                val listaIds = doc.documents.mapNotNull {
+                    it.getString("id")
+                }
+
+                if (listaIds.isEmpty()) {
+                    listaOriginal.clear()
+                    listaFiltro.clear()
+                    adapter.notifyDataSetChanged()
+                    return@addOnSuccessListener
+                }
+
+                buscarLivrosDoHistorico(listaIds)
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao carregar histórico.", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun buscarLivrosDoHistorico(ids: List<String>) {
+        listaOriginal.clear()
+        listaFiltro.clear()
+        adapter.notifyDataSetChanged()
+
+        for (id in ids) {
+            fireBase.collection("livros").document(id).get()
+                .addOnSuccessListener { doc ->
+                    val livro = doc.toObject(Livro::class.java)
+
+                    if (livro != null) {
+                        listaOriginal.add(livro)
+                        listaFiltro.add(livro)
+                    }
+
+                    // Atualiza SOMENTE quando todos forem carregados
+                    if (listaFiltro.size == ids.size) {
+                        adapter.notifyDataSetChanged()
+                    }
+                }
+        }
+
+    }
+
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 

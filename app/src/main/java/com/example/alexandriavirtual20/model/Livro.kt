@@ -4,7 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 
 data class Livro(
-    val id: String = "",
+    var id: String = "",
     val titulo: String = "",
     val subtitulo: String = "",
     val genero: String = "",

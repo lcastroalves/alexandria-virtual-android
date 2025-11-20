@@ -53,7 +53,8 @@ class LivroAdapterHistorico (
         }
 
         holder.titulo.text = livro.titulo
-        holder.qntAvaliac.text = livro.id
+        holder.subtitulo.text = livro.subtitulo
+        holder.qntAvaliac.text = "( ${livro.avaliacoes} )"
         holder.autor.text = livro.autor
 
         if (livro.favorito) {
