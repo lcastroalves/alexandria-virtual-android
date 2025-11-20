@@ -110,6 +110,7 @@ class TelaHistoricoUsu : AppCompatActivity() {
             fireBase.collection("livros").document(id).get()
                 .addOnSuccessListener { doc ->
                     val livro = doc.toObject(Livro::class.java)
+                    livro?.id = doc.id
 
                     if (livro != null) {
                         listaOriginal.add(livro)
