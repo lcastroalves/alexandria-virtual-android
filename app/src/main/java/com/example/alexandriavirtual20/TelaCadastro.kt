@@ -85,7 +85,7 @@ class TelaCadastro : AppCompatActivity() {
                         email = email,
                         senha = senha,
                         fotoPerfil = null,
-                        isAdmin = false
+                        admin = false
                     )
 
                     fireBase.collection("usuario").document(userID).set(usuario).addOnSuccessListener {

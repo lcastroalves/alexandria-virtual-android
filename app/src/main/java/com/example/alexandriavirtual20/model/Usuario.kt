@@ -7,5 +7,5 @@ data class Usuario(
     val email: String = "",
     val senha: String? = "",
     val fotoPerfil: String? = null,
-    val isAdmin: Boolean = false
+    val admin: Boolean = false
 )
