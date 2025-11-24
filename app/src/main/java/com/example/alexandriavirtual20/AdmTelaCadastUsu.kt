@@ -5,9 +5,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.alexandriavirtual20.adapter.TornarAdmAdapter
-import com.example.alexandriavirtual20.adapter.UsuarioAdapter
-import com.example.alexandriavirtual20.model.Usuario
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -100,7 +97,7 @@ class AdmTelaCadastUsu : AppCompatActivity() {
                         .add(dadosUsuario)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
-                            //limparCampos() -> precisa?
+                            limparCampos()
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Erro ao salvar os dados do usuário.", Toast.LENGTH_SHORT).show()
@@ -112,5 +109,13 @@ class AdmTelaCadastUsu : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao verificar usuário existente.", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun limparCampos(){
+        editNome.text?.clear()
+        editUsuario.text?.clear()
+        editEmail.text?.clear()
+        editSenha.text?.clear()
+        editConfSenha.text?.clear()
     }
 }
