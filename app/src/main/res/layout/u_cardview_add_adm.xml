@@ -34,7 +34,7 @@
             android:background="@drawable/icone_redondo"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/narak"
+            android:src="@drawable/empty_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
