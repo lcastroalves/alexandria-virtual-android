@@ -35,7 +35,7 @@ class TelaHistoricoUsu : AppCompatActivity() {
         setContentView(R.layout.tela_historico_usu)
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        searchView = findViewById(R.id.searchViewLivros)
+        searchView = findViewById(R.id.searchViewEventos)
         recyclerView = findViewById(R.id.recyclerView)
 
         fireBase = FirebaseFirestore.getInstance()
