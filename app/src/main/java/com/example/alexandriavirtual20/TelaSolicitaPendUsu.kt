@@ -26,7 +26,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         recyclerView = findViewById(R.id.recySoliPend)
-        searchView = findViewById(R.id.searchViewLivros)
+        searchView = findViewById(R.id.searchViewEventos)
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()

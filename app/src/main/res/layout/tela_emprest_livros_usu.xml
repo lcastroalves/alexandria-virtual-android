@@ -22,7 +22,7 @@
 
 
     <SearchView
-        android:id="@+id/searchViewLivros"
+        android:id="@+id/searchViewEventos"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:iconifiedByDefault="false"

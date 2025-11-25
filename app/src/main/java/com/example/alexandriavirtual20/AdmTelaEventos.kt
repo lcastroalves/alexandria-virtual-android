@@ -38,7 +38,7 @@ class AdmTelaEventos : AppCompatActivity() {
         btnVoltar = findViewById(R.id.botaoVoltar2)
         btnExcluir = findViewById(R.id.botaoExcluirEventos)
         btnAdEvento = findViewById(R.id.botaoAdEvento)
-        searchView = findViewById(R.id.searchViewLivros)
+        searchView = findViewById(R.id.searchViewEventos)
 
         adapter = ListaEventoAdmAdapter(listaFiltrada) { evento ->
             val intent = Intent(this, AdmTelaEditEvent::class.java)
