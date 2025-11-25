@@ -154,7 +154,12 @@
             sinopseStr: String,
             imagemBase64: String
         ) {
+            // Criar o documento
+            val docRef = produtos.document()
+            val idProduto = docRef.id
+
             val produto = mapOf(
+                "id" to idProduto,
                 "titulo" to tituloStr,
                 "subtitulo" to subtituloStr,
                 "autor" to autorStr,
@@ -167,10 +172,10 @@
                 "capa" to imagemBase64
             )
 
-            produtos.add(produto).addOnSuccessListener {
+            // Salvar usando a referência
+            docRef.set(produto).addOnSuccessListener {
                 Toast.makeText(this, "Produto cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
 
-                // Limpar campos e imagem
                 titulo.text?.clear()
                 subtitulo.text?.clear()
                 autor.text?.clear()
