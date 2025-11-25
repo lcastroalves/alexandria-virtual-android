@@ -45,11 +45,11 @@ class CabineAdmAdapter(
                 return
             }
 
-            foto.setImageResource(R.drawable.narak)
+            foto.setImageResource(R.drawable.empty_user)
 
             buscarFotoAluno(item.aluno) { fotoBase64 ->
                 if (fotoBase64.isNullOrBlank()) {
-                    foto.setImageResource(R.drawable.narak)
+                    foto.setImageResource(R.drawable.empty_user)
                 } else {
                     val bmp = decodeBase64Safe(fotoBase64)
                     if (bmp != null) {
@@ -61,7 +61,7 @@ class CabineAdmAdapter(
                             foto.setImageBitmap(bmp)
                         }
                     } else {
-                        foto.setImageResource(R.drawable.narak)
+                        foto.setImageResource(R.drawable.empty_user)
                     }
                 }
             }

@@ -108,41 +108,29 @@ class AdmTelaAdicionarAdm : AppCompatActivity() {
     }
 
     private fun tornarAdministrador(usuario: Usuario) {
-        val dadosAdm = hashMapOf(
-            "nome" to usuario.nome,
-            "usuario" to usuario.usuario,
-            "email" to usuario.email,
-            "fotoPerfil" to usuario.fotoPerfil,
-            "cargo" to "Administrador"
-        )
 
         val usuariosRef = fb.collection("usuario").document(usuario.id)
-        val adminsRef = fb.collection("administradores")
 
-        adminsRef.add(dadosAdm)
+        usuariosRef.update("admin", true)
             .addOnSuccessListener {
-                usuariosRef.delete()
-                    .addOnSuccessListener {
 
-                        Toast.makeText(
-                            this,
-                            "${usuario.nome} agora é Administrador!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                Toast.makeText(
+                    this,
+                    "${usuario.nome} agora é Administrador!",
+                    Toast.LENGTH_SHORT
+                ).show()
 
-                        // Remove das listas
-                        listaUsuarios.remove(usuario)
-                        listaFiltrada.remove(usuario)
-
-                        adapter.notifyDataSetChanged()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(
-                            this,
-                            "Erro ao remover usuário da lista de usuários.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+                listaUsuarios.remove(usuario)
+                listaFiltrada.remove(usuario)
+                adapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener {
+                Toast.makeText(
+                    this,
+                    "Erro ao tornar administrador!",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
-}
+    }
+

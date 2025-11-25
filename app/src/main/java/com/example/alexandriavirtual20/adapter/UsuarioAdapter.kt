@@ -58,10 +58,10 @@ class UsuarioAdapter(
                         fotoCache.put(cacheKey, bmp)
                         imgFoto.setImageBitmap(bmp)
                     } else {
-                        imgFoto.setImageResource(R.drawable.narak) // fallback
+                        imgFoto.setImageResource(R.drawable.empty_user) // fallback
                     }
                 }
-                else -> imgFoto.setImageResource(R.drawable.narak) // sem foto
+                else -> imgFoto.setImageResource(R.drawable.empty_user) // sem foto
             }
 
             check.setOnCheckedChangeListener(null)

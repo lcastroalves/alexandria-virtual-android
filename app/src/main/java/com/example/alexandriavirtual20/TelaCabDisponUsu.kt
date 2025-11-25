@@ -119,6 +119,7 @@ class TelaCabDisponUsu : AppCompatActivity() {
 
                 val nomeAluno = doc.getString("nome") ?: ""
 
+
         val reserva = hashMapOf(
             "numero" to cabine.numero,
             "dia" to data,

@@ -42,9 +42,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
                 val intent = Intent(this, AdmTelaInfoUsu::class.java)
                 intent.putExtra("documentId", usuario.id)
                 startActivity(intent)
-            },
-            onCheckedChange = { _, _ ->
-                atualizarEstadoLixeira()
             }
         )
 
@@ -59,7 +56,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
             confirmarExclusao()
         }
 
-        atualizarEstadoLixeira()
 
         btnAddUsu.setOnClickListener {
             val intent = Intent(this, AdmTelaCadastUsu::class.java)
@@ -85,7 +81,6 @@ class AdmTelaUsuCadast : AppCompatActivity() {
                     )
                 }
                 adapter.submitList(cache)
-                atualizarEstadoLixeira()
             }
     }
 
@@ -97,6 +92,10 @@ class AdmTelaUsuCadast : AppCompatActivity() {
 
     private fun confirmarExclusao(){
         val selecionados = adapter.getSelecionados()
+
+        if (selecionados.isEmpty()) {
+            Toast.makeText(this, "Selecione pelo menos um usuário.", Toast.LENGTH_SHORT).show()
+        }
 
         val mensagem = if (selecionados.size == 1) {
             "Tem certeza que deseja excluir o usuário \"${selecionados.first().nome}\"?"
@@ -123,16 +122,10 @@ class AdmTelaUsuCadast : AppCompatActivity() {
         batch.commit()
             .addOnSuccessListener {
                 adapter.clearSelecao()
-                atualizarEstadoLixeira()
                 Toast.makeText(this, "Excluídos com sucesso.", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Falha ao excluir.", Toast.LENGTH_SHORT).show()
             }
-    }
-    private fun atualizarEstadoLixeira() {
-        val ativo = adapter.getSelecionados().isNotEmpty()
-        btnLixeira.isEnabled = ativo
-        btnLixeira.alpha = if (ativo) 1f else 0.4f
     }
 }
