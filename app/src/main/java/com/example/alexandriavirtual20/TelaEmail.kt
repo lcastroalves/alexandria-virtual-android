@@ -45,7 +45,7 @@ class TelaEmail : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_LONG).show()
                     }
-                }
+            }
 
         }
     }
