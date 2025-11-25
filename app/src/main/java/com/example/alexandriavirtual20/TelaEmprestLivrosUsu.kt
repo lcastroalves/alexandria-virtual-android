@@ -8,6 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.LivroAdapter
 import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaEmprestLivrosUsu : AppCompatActivity() {
 
@@ -17,81 +19,38 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
     private val listaOriginal = mutableListOf<Livro>()
     private val listaFiltrada = mutableListOf<Livro>()
 
+    // Spinners
+    private lateinit var spinnerAutor: Spinner
+    private lateinit var spinnerGenero: Spinner
+    private lateinit var spinnerPopulares: Spinner
+    private lateinit var spinnerAno: Spinner
+
+    private lateinit var recyclerView : RecyclerView
+    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var fbAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_emprest_livros_usu)
 
-
-        val recyclerView: RecyclerView = findViewById(R.id.recyclerLivros)
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
         val btnBack: ImageButton = findViewById(R.id.btnback)
+
         searchView = findViewById(R.id.searchViewLivros)
+        recyclerView = findViewById(R.id.recyclerLivros)
 
-        val spinnerAutor: Spinner = findViewById(R.id.spinnerAutor)
-        val spinnerGenero: Spinner = findViewById(R.id.spinnerGenero)
-        val spinnerPopulares: Spinner = findViewById(R.id.spinnerMaisPopulares)
-        val spinnerAno: Spinner = findViewById(R.id.spinnerLancamento)
+        spinnerAutor = findViewById(R.id.spinnerAutor)
+        spinnerGenero = findViewById(R.id.spinnerGenero)
+        spinnerPopulares = findViewById(R.id.spinnerMaisPopulares)
+        spinnerAno = findViewById(R.id.spinnerLancamento)
 
-        // ----------------------------------------------------------
-        // 1. LISTA DE LIVROS (DEPOIS VAMOS SUBSTITUIR PELO FIREBASE)
-        // ----------------------------------------------------------
-        listaOriginal.addAll(
-            listOf(
-                Livro("33333333", "Java como Programar", "Programação", "Paul J.Deitel", "", "105", 234, true),
-            )
-        )
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
 
-        // Inicia lista filtrada
-        listaFiltrada.addAll(listaOriginal)
 
-        // ----------------------------------------------------------
-        // 2. CONFIGURA O RECYCLER VIEW
-        // ----------------------------------------------------------
-        adapter = LivroAdapter(listaFiltrada) { livro ->
-            val intent = Intent(this, TelaAvaliacoesUsu::class.java)
-            intent.putExtra("livro", livro)
-            startActivity(intent)
-        }
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
-        // ----------------------------------------------------------
-        // 3. CARREGA SPINNERS BASEADOS NOS LIVROS EXISTENTES
-        // ----------------------------------------------------------
-
-        carregarSpinner(spinnerAutor, listaOriginal.map { it.autor }.distinct(), "Autor")
-        carregarSpinner(spinnerGenero, listaOriginal.map { it.genero }.distinct(), "Gênero")
-        carregarSpinner(spinnerAno, listaOriginal.map { it.anoLancamento }.distinct(), "Ano")
-
-        // Populares é um caso especial
-        val opcoesPopulares = listOf("Normal", "Mais Populares")
-        carregarSpinner(spinnerPopulares, opcoesPopulares, null)
-
-        // ----------------------------------------------------------
-        // 4. AÇÃO DOS FILTROS
-        // ----------------------------------------------------------
-        val listenerFiltro = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, pos: Int, id: Long) {
-                aplicarFiltros(spinnerAutor, spinnerGenero, spinnerPopulares, spinnerAno)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {}
-        }
-
-        spinnerAutor.onItemSelectedListener = listenerFiltro
-        spinnerGenero.onItemSelectedListener = listenerFiltro
-        spinnerPopulares.onItemSelectedListener = listenerFiltro
-        spinnerAno.onItemSelectedListener = listenerFiltro
-
-        // ----------------------------------------------------------
-        // 5. PESQUISA POR TEXTO
-        // ----------------------------------------------------------
+        carregarLivros()
         configurarPesquisa()
 
-        // ----------------------------------------------------------
-        // 6. CONFIRMAR SELEÇÃO
-        // ----------------------------------------------------------
         btnConfirmar.setOnClickListener {
             val selecionados = adapter.getSelecionados()
 
@@ -105,46 +64,33 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnBack.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
+        btnBack.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
-    // ----------------------------------------------------------
-    // 🔧 FUNÇÃO PARA CARREGAR SPINNERS AUTOMATICAMENTE
-    // ----------------------------------------------------------
-    private fun carregarSpinner(spinner: Spinner, opcoes: List<String>, extra: String?) {
-        val lista = if (extra != null) listOf(extra) + opcoes else opcoes
-
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner.adapter = adapter
-    }
-
-    // ----------------------------------------------------------
-    // 🔍 PESQUISA
-    // ----------------------------------------------------------
+    // PESQUISA
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
             override fun onQueryTextChange(newText: String?): Boolean {
-                aplicarFiltrosAutomaticamente()
+                aplicarFiltros()
                 return true
             }
         })
     }
 
-    // ----------------------------------------------------------
-    // 🧠 SISTEMA COMPLETO DE FILTRO
-    // ----------------------------------------------------------
-    private fun aplicarFiltros(
-        spinnerAutor: Spinner,
-        spinnerGenero: Spinner,
-        spinnerPopulares: Spinner,
-        spinnerAno: Spinner
-    ) {
+    // SISTEMA COMPLETO DE FILTRO
+    private fun aplicarFiltros() {
+
+        // Evita crash caso o adapter ainda não exista
+        if (!::adapter.isInitialized) return
+
         val filtroAutor = spinnerAutor.selectedItem.toString()
         val filtroGenero = spinnerGenero.selectedItem.toString()
         val filtroAno = spinnerAno.selectedItem.toString()
         val filtroPopular = spinnerPopulares.selectedItem.toString()
+
         val pesquisa = searchView.query.toString().lowercase()
 
         listaFiltrada.clear()
@@ -172,12 +118,115 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    private fun aplicarFiltrosAutomaticamente() {
-        aplicarFiltros(
-            findViewById(R.id.spinnerAutor),
-            findViewById(R.id.spinnerGenero),
-            findViewById(R.id.spinnerMaisPopulares),
-            findViewById(R.id.spinnerLancamento)
+    private fun registrarFiltros() {
+
+        val listenerFiltro = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: android.view.View?,
+                pos: Int,
+                id: Long
+            ) {
+                aplicarFiltros()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        spinnerAutor.onItemSelectedListener = listenerFiltro
+        spinnerGenero.onItemSelectedListener = listenerFiltro
+        spinnerPopulares.onItemSelectedListener = listenerFiltro
+        spinnerAno.onItemSelectedListener = listenerFiltro
+    }
+
+    private fun carregarLivros(){
+
+        fireBase.collection("livros").get()
+            .addOnSuccessListener { query ->
+
+                listaOriginal.clear()
+
+                for (doc in query.documents){
+
+                    val id = doc.id
+                    val titulo = doc.getString("titulo") ?: ""
+                    val autor = doc.getString("autor") ?: ""
+                    val genero = doc.getString("genero") ?: ""
+                    val ano = doc.getString("anoLancamento") ?: ""
+                    val imagemBase64 = doc.getString("capa") ?: ""
+                    val avaliacoes = doc.getLong("avaliacoes") ?: 0
+
+                    listaOriginal.add(
+                        Livro(
+                            id = id,
+                            titulo = titulo,
+                            autor = autor,
+                            genero = genero,
+                            anoLancamento = ano,
+                            capa = imagemBase64,
+                            avaliacoes = avaliacoes.toInt()
+                        )
+                    )
+                }
+
+                // Copia inicial
+                listaFiltrada.clear()
+                listaFiltrada.addAll(listaOriginal)
+
+                // AGORA pode criar adapter
+                adapter = LivroAdapter(listaFiltrada) { livro ->
+                    val intent = Intent(this, TelaAvaliacoesUsu::class.java)
+                    intent.putExtra("livro", livro)
+                    startActivity(intent)
+                }
+
+                recyclerView.layoutManager = LinearLayoutManager(
+                    this,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                recyclerView.adapter = adapter
+
+                // Agora que o adapter existe, registrar filtros!
+                carregarSpinners()
+                registrarFiltros()
+            }
+    }
+
+    // CARREGA SPINNERS ESPECIFICOS (só depois que Firebase carregar)
+    private fun carregarSpinners() {
+
+        carregarSpinner(
+            spinnerAutor,
+            listaOriginal.map { it.autor }.distinct(),
+            "Autor"
         )
+
+        carregarSpinner(
+            spinnerGenero,
+            listaOriginal.map { it.genero }.distinct(),
+            "Gênero"
+        )
+
+        carregarSpinner(
+            spinnerAno,
+            listaOriginal.map { it.anoLancamento }.distinct(),
+            "Ano"
+        )
+
+        carregarSpinner(
+            spinnerPopulares,
+            listOf("Normal", "Mais Populares"),
+            null
+        )
+    }
+
+
+    // FUNÇÃO GENÉRICA P/ SPINNERS
+    private fun carregarSpinner(spinner: Spinner, opcoes: List<String>, extra: String?) {
+        val lista = if (extra != null) listOf(extra) + opcoes else opcoes
+        val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adaptador
     }
 }
