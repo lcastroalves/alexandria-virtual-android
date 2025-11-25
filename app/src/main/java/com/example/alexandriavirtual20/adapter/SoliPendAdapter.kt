@@ -9,7 +9,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
-import com.example.alexandriavirtual20.model.SoliPend
+
+data class SoliPend(
+    val titulo: String,
+    val autor: String,
+    val usuario: String,
+    val email: String,
+    val data: String,
+    val prazo: String,
+    val local: String,
+    val imagem: Int,
+    var pendente : Boolean
+)
 
 class SoliPendAdapter (
     private val soliPends: MutableList<SoliPend>,
@@ -41,10 +52,10 @@ class SoliPendAdapter (
         val soliPend = soliPends[position]
 
         holder.imagem.setImageResource(soliPend.imagem)
-        holder.nome.text = soliPend.nome
+        holder.nome.text = soliPend.titulo
         holder.autor.text = soliPend.autor
-        holder.avaliacao.text = soliPend.avaliacao
-        holder.subtitulo.text = soliPend.subtitulo
+//        holder.avaliacao.text = soliPend.avaliacao
+//        holder.subtitulo.text = soliPend.subtitulo
 
 
         if (soliPend.pendente) {
