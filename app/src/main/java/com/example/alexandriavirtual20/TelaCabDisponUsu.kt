@@ -6,6 +6,8 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.CabineAdapter
@@ -38,6 +40,11 @@ class TelaCabDisponUsu : AppCompatActivity() {
             reservarCabineEIrParaConfirmacao(cabine)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         rv.layoutManager = LinearLayoutManager(this)
         rv.adapter = adapter
 
@@ -54,10 +61,11 @@ class TelaCabDisponUsu : AppCompatActivity() {
         }
 
         btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            val intent = Intent(this, AMain::class.java)
+            intent.putExtra("fragment_destino", "reserva")
+            startActivity(intent)
         }
     }
-
 
     private fun carregarCabinesLivres(dia: String, inicioSel: String, fimSel: String) {
         fb.collection("reservasCabines")
@@ -103,7 +111,11 @@ class TelaCabDisponUsu : AppCompatActivity() {
 
         val usuarioAtual = fbAuth.currentUser
         val uid = usuarioAtual?.uid ?: run {
-            Toast.makeText(this, "Usuário não encontrado. Faça login novamente.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Usuário não encontrado. Faça login novamente.",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -113,35 +125,60 @@ class TelaCabDisponUsu : AppCompatActivity() {
             .addOnSuccessListener { doc ->
 
                 if (!doc.exists()) {
-                    Toast.makeText(this, "Dados do usuário não encontrados.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Dados do usuário não encontrados.", Toast.LENGTH_SHORT)
+                        .show()
                     return@addOnSuccessListener
                 }
 
                 val nomeAluno = doc.getString("nome") ?: ""
 
+                fb.collection("reservasCabines")
+                    .whereEqualTo("dia", data)
+                    .whereEqualTo(
+                        "aluno",
+                        nomeAluno
+                    )
+                    .get()
+                    .addOnSuccessListener { snap ->
+                        val jaTemReservaMesmoHorario = snap.documents.any { resDoc ->
+                            val inicioCab = resDoc.getString("inicio") ?: ""
+                            val fimCab = resDoc.getString("fim") ?: ""
+                            temConflito(inicio, fim, inicioCab, fimCab)
+                        }
 
-        val reserva = hashMapOf(
-            "numero" to cabine.numero,
-            "dia" to data,
-            "inicio" to inicio,
-            "fim" to fim,
-            "aluno" to nomeAluno
-        )
+                        if (jaTemReservaMesmoHorario) {
+                            Toast.makeText(
+                                this,
+                                "Você já possui uma cabine reservada nesse horário.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@addOnSuccessListener
+                        }
 
-        fb.collection("reservasCabines")
-            .add(reserva)
-            .addOnSuccessListener {
-                val intent = Intent(this, TelaConfirmReservaUsu::class.java).apply {
-                    putExtra("cabine", cabine.numero)
-                    putExtra("data", data)
-                    putExtra("periodo", periodo)
-                }
-                startActivity(intent)
+
+                        val reserva = hashMapOf(
+                            "numero" to cabine.numero,
+                            "dia" to data,
+                            "inicio" to inicio,
+                            "fim" to fim,
+                            "aluno" to nomeAluno
+                        )
+
+                        fb.collection("reservasCabines")
+                            .add(reserva)
+                            .addOnSuccessListener {
+                                val intent = Intent(this, TelaConfirmReservaUsu::class.java).apply {
+                                    putExtra("cabine", cabine.numero)
+                                    putExtra("data", data)
+                                    putExtra("periodo", periodo)
+                                }
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Erro ao salvar reserva.", Toast.LENGTH_SHORT).show()
+                            }
+                    }
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao salvar reserva.", Toast.LENGTH_SHORT).show()
-            }
-                }
     }
     private fun temConflito(
         inicioSel: String,

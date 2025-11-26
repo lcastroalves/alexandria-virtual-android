@@ -20,9 +20,23 @@ class AMain : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.a_main)
-        replaceFragment(TelaInicioUsu())
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView)
+
+        val destino = intent.getStringExtra("fragment_destino")
+
+        if (savedInstanceState == null) {
+            when (destino) {
+                "reserva" -> {
+                    bottomNavigationView.selectedItemId = R.id.reserva
+                    replaceFragment(TelaReservaCabUsu())
+                }
+                else -> {
+                    bottomNavigationView.selectedItemId = R.id.inicio
+                    replaceFragment(TelaInicioUsu())
+                }
+            }
+        }
 
         bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

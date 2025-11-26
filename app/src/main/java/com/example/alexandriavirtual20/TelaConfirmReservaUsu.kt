@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -26,7 +27,9 @@ class TelaConfirmReservaUsu : AppCompatActivity() {
         tvDataHora.text = "$data | $periodo"
 
         btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            val intent = Intent(this, AMain::class.java)
+            intent.putExtra("fragment_destino", "reserva")
+            startActivity(intent)
         }
     }
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/Usuario"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -15,17 +14,19 @@
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageButton
             android:id="@+id/btnEdit"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="76dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="68dp"
             android:background="@color/white"
             android:contentDescription="Editar evento"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,25 +40,24 @@
             android:background="@drawable/icone_redondo"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/narak"
+            android:src="@drawable/empty_user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/nomeUsu"
-            android:layout_width="wrap_content"
+            android:layout_width="170dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="Narak Carvalho"
             android:textColor="#000000"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imagemPerfil"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.486" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.cardview.widget.CardView>
