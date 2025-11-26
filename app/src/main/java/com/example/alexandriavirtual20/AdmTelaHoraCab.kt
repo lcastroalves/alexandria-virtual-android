@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.color.MaterialColors
 import java.util.Locale
@@ -55,15 +56,24 @@ class AdmTelaHoraCab : AppCompatActivity() {
 
     private fun setupButton() {
         btnConfirmar.setOnClickListener {
+            val dataFormatada = intent.getStringExtra("dataFormatada")
+
             val hora = npHora.value
             val minutoSelecionado = stepsMinutos[npMinuto.value]
             val minuto = minutoSelecionado.toIntOrNull() ?: 0
 
             val inicio = java.time.LocalTime.of(hora, minuto)
             val fim = inicio.plusHours(2)
+
             val fmt = java.time.format.DateTimeFormatter.ofPattern("HH:mm", Locale.forLanguageTag("pt-BR"))
             val periodo = "${inicio.format(fmt)} - ${fim.format(fmt)}"
-            val dataFormatada = intent.getStringExtra("dataFormatada")
+
+
+            val agora = java.time.LocalTime.now()
+            if (inicio.isBefore(agora)) {
+                Toast.makeText(this, "Escolha um horário a partir do horário atual.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             val intent = Intent(this, AdmTelaCabReservHorEsp::class.java)
             intent.putExtra("horaFormatada", periodo)

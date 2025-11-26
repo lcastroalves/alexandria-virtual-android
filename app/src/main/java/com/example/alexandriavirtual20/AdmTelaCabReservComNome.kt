@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.TextView
@@ -41,7 +42,9 @@ class AdmTelaCabReservComNome : AppCompatActivity() {
         }
 
         btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+            val intent = Intent(this, AdmAMain::class.java)
+            intent.putExtra("fragment_destino", "reserva")
+            startActivity(intent)
         }
     }
 
