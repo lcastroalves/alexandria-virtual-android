@@ -47,12 +47,12 @@ class TelaLivrosFavUsu : AppCompatActivity() {
             listaFiltrada,
             onInfoClick = { livro ->
                 val intent = Intent(this, TelaInfoLivroUsu::class.java)
-                intent.putExtra("livro", livro)
+                intent.putExtra("livroId", livro.id)
                 startActivity(intent)
             },
             onReviewClick = { livro ->
                 val intent = Intent(this, TelaReviewUsu::class.java)
-                intent.putExtra("livro", livro)
+                intent.putExtra("livroId", livro.id)
                 startActivity(intent)
             },
             onFavoritoClick = { livro ->
