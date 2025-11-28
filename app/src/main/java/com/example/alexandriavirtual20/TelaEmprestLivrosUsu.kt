@@ -36,7 +36,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         val btnConfirmar: Button = findViewById(R.id.btnConfirmar)
         val btnBack: ImageButton = findViewById(R.id.btnback)
 
-        searchView = findViewById(R.id.searchViewLivros)
+        searchView = findViewById(R.id.searchView)
         recyclerView = findViewById(R.id.recyclerLivros)
 
         spinnerAutor = findViewById(R.id.spinnerAutor)
@@ -70,15 +70,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
     }
 
     // PESQUISA
-    private fun configurarPesquisa() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
-            override fun onQueryTextChange(newText: String?): Boolean {
-                aplicarFiltros()
-                return true
-            }
-        })
-    }
+
 
     // SISTEMA COMPLETO DE FILTRO
     private fun aplicarFiltros() {
@@ -138,6 +130,15 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         spinnerPopulares.onItemSelectedListener = listenerFiltro
         spinnerAno.onItemSelectedListener = listenerFiltro
     }
+    private fun configurarPesquisa() {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextChange(newText: String?): Boolean {
+                aplicarFiltros()
+                return true
+            }
+        })
+    }
 
     private fun carregarLivros(){
 
@@ -155,6 +156,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                     val ano = doc.getString("anoLancamento") ?: ""
                     val imagemBase64 = doc.getString("capa") ?: ""
                     val avaliacoes = doc.getLong("avaliacoes") ?: 0
+
 
                     listaOriginal.add(
                         Livro(
@@ -182,7 +184,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
 
                 recyclerView.layoutManager = LinearLayoutManager(
                     this,
-                    LinearLayoutManager.HORIZONTAL,
+                    LinearLayoutManager.VERTICAL,
                     false
                 )
                 recyclerView.adapter = adapter
@@ -191,6 +193,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                 carregarSpinners()
                 registrarFiltros()
             }
+
     }
 
     // CARREGA SPINNERS ESPECIFICOS (só depois que Firebase carregar)

@@ -1,6 +1,8 @@
 package com.example.alexandriavirtual20
 
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,6 +19,14 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ComentarioAdapter
     private val listaComentarios = mutableListOf<Comentario>()
+
+    private lateinit var imagemLivro: ImageView
+    private lateinit var tituloLivro: TextView
+    private lateinit var subtitulo: TextView
+    private lateinit var autorLivroSuperior: TextView
+
+    private lateinit var avaliacoes: TextView
+
 
     private val db = FirebaseFirestore.getInstance()
 
@@ -36,6 +46,7 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         val imgLivro: ImageView = findViewById(R.id.imageView16)
         val txtTitulo: TextView = findViewById(R.id.txtTituloAvaliacoes)
         val txtAutor: TextView = findViewById(R.id.txtAutorLivro)
+        val avaliacoes: TextView = findViewById(R.id.txtInfoAvaliacoes)
 
         recyclerView = findViewById(R.id.recyclerAvaliacoes)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -76,5 +87,19 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
 
                 adapter.notifyDataSetChanged()
             }
+    }
+    private fun preencherInfos(livro: Livro) {
+
+        // Se a capa vier como base64
+        if (!livro.capa.isNullOrEmpty()) {
+            val decodedBytes = Base64.decode(livro.capa, Base64.DEFAULT)
+            val bmp = BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+            imagemLivro.setImageBitmap(bmp)
+        }
+
+        tituloLivro.text = livro.titulo ?: "Sem título"
+        subtitulo.text = livro.subtitulo ?: ""
+        autorLivroSuperior.text = livro.autor ?: "Autor desconhecido"
+
     }
 }

@@ -2,6 +2,7 @@ package com.example.alexandriavirtual20.adapter
 
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -48,5 +49,9 @@ class LivroAdapterMeus(
         holder.itemView.setOnClickListener { onClickAvaliacoes(livro) }
     }
 
+
+
     override fun getItemCount(): Int = livros.size
+
+
 }
