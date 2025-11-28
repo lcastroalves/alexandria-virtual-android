@@ -142,8 +142,9 @@ class TelaHistoricoUsu : AppCompatActivity() {
                 } else {
                     listaFiltro.addAll(
                         listaOriginal.filter { livro ->
-                            livro.titulo.lowercase().contains(texto) ||
-                                    livro.autor.lowercase().contains(texto)
+
+                            (livro.titulo ?: "").lowercase().contains(texto) || (livro.autor ?: "").lowercase().contains(texto)
+
                         }
                     )
                 }
