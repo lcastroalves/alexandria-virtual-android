@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.LivroAdapterFavoritos
 import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaLivrosFavUsu : AppCompatActivity() {
 
@@ -22,6 +24,9 @@ class TelaLivrosFavUsu : AppCompatActivity() {
     private val listaOriginal = mutableListOf<Livro>()
     private val listaFiltrada = mutableListOf<Livro>()
 
+    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var fbAuth : FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,25 +36,13 @@ class TelaLivrosFavUsu : AppCompatActivity() {
         searchView = findViewById(R.id.searchViewEventos)
         recyclerView = findViewById(R.id.recyclerView)
 
+        fireBase = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // ----------------------------
-        // LISTA INICIAL DE LIVROS
-        // ----------------------------
-        listaOriginal.addAll(
-            listOf(
-                Livro("111111111", "Ciências da Computação", "Ernanne Rosa Martins", "Ernanne Rosa Martins", "", "130")
-            )
-        )
-
-        // lista filtrada começa igual
-        listaFiltrada.addAll(listaOriginal)
-
-        // ----------------------------
-        // ADAPTER
-        // ----------------------------
         adapterLivro = LivroAdapterFavoritos(
             listaFiltrada,
             onInfoClick = { livro ->
@@ -63,19 +56,83 @@ class TelaLivrosFavUsu : AppCompatActivity() {
                 startActivity(intent)
             },
             onFavoritoClick = { livro ->
-                Toast.makeText(this, "Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
+
+                if (!livro.favorito) {
+                    removerFavorito(livro)
+                }
+
+
             }
         )
 
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapterLivro
 
+        carregarFavoritos()
         configurarPesquisa()
     }
 
-    // --------------------------------------------------
-    // 🔍 FILTRO DA BARRA DE PESQUISA
-    // --------------------------------------------------
+    private fun carregarFavoritos() {
+
+        val userId = fbAuth.currentUser?.uid ?: return
+
+        fireBase.collection("usuario").document(userId).collection("favoritos").get().addOnSuccessListener { docs ->
+
+                val LivrosFavIds = docs.documents.mapNotNull { it.getString("id") }
+
+                if (LivrosFavIds.isEmpty()) {
+                    listaOriginal.clear()
+                    listaFiltrada.clear()
+                    adapterLivro.notifyDataSetChanged()
+                    return@addOnSuccessListener
+                }
+
+                buscarLivrosFavoritos(LivrosFavIds)
+            }
+            .addOnFailureListener {
+                print("Erro ao carregar favoritos.")
+            }
+    }
+
+    private fun buscarLivrosFavoritos(LivrosFavIds: List<String>) {
+
+        listaOriginal.clear()
+        listaFiltrada.clear()
+        adapterLivro.notifyDataSetChanged()
+
+        for (id in LivrosFavIds) {
+            fireBase.collection("livros").document(id).get().addOnSuccessListener { doc ->
+
+                val livro = doc.toObject(Livro::class.java)
+                    livro?.id = doc.id
+                    livro?.favorito = true   // marca como favorito
+
+                    if (livro != null) {
+                        listaOriginal.add(livro)
+                        listaFiltrada.add(livro)
+                    }
+
+                    if (listaFiltrada.size == LivrosFavIds.size) {
+                        adapterLivro.notifyDataSetChanged()
+                    }
+                }
+        }
+    }
+
+    private fun removerFavorito(livro: Livro) {
+        val usuarioID = fbAuth.currentUser?.uid ?: return
+
+        // Remove do Firestore
+        fireBase.collection("usuario").document(usuarioID).collection("favoritos").document(livro.id).delete().addOnSuccessListener {
+
+                // Remove da lista
+                listaOriginal.remove(livro)
+                listaFiltrada.remove(livro)
+
+                adapterLivro.notifyDataSetChanged()
+            }
+    }
+
     private fun configurarPesquisa() {
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
