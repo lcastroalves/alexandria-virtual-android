@@ -1,15 +1,18 @@
-package com.example.alexandriavirtual20
+package com.example.alexandriavirtual20.adapter
+// Note: Ajustei o pacote se você o moveu para 'adapter'
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.R
+import com.example.alexandriavirtual20.model.Livro // Importa seu modelo Livro
 
-data class LivroReview(val titulo: String, val autor: String, val imagemRes: Int)
-
-class LivroReviewAdapter(private val listaLivros: List<LivroReview>) :
+class LivroReviewAdapter(private val listaLivros: List<Livro>) :
     RecyclerView.Adapter<LivroReviewAdapter.LivroViewHolder>() {
 
     class LivroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -26,9 +29,24 @@ class LivroReviewAdapter(private val listaLivros: List<LivroReview>) :
 
     override fun onBindViewHolder(holder: LivroViewHolder, position: Int) {
         val livro = listaLivros[position]
+
         holder.txtTitulo.text = livro.titulo
         holder.txtAutor.text = livro.autor
-        holder.imgLivro.setImageResource(livro.imagemRes)
+
+        // Implementação da capa Base64
+        if (!livro.capa.isNullOrEmpty()) {
+            try {
+                val imageBytes = Base64.decode(livro.capa, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                holder.imgLivro.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                // Use uma imagem padrão se o Base64 estiver corrompido
+                holder.imgLivro.setImageResource(R.drawable.no_image)
+            }
+        } else {
+            // Use uma imagem padrão se a capa for nula/vazia
+            holder.imgLivro.setImageResource(R.drawable.no_image)
+        }
     }
 
     override fun getItemCount(): Int = listaLivros.size
