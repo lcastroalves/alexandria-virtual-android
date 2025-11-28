@@ -6,7 +6,7 @@ import android.util.Base64
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast // Importe o Toast para feedback de erro
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,21 +14,23 @@ import com.example.alexandriavirtual20.adapter.ComentarioAdapter
 import com.example.alexandriavirtual20.model.Comentario
 import com.example.alexandriavirtual20.model.Livro
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import java.text.DecimalFormat
 
 class TelaAvaliacoesUsu : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: ComentarioAdapter
     private val listaComentarios = mutableListOf<Comentario>()
-
-    // Variáveis de classe não mais necessárias foram removidas (subtitulo, autorLivroSuperior, etc.)
     private val db = FirebaseFirestore.getInstance()
+
+    // Variável para gerenciar a conexão em tempo real
+    private var comentariosListener: ListenerRegistration? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.tela_avaliacoes_usu)
 
-        // Recebe o objeto Livro via Intent
         val livro = intent.getParcelableExtra<Livro>("livro")
 
         if (livro == null || livro.id.isNullOrEmpty()) {
@@ -40,8 +42,9 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         // ---------- Componentes da interface (Inicialização Local) ----------
         val btnVoltar: ImageButton = findViewById(R.id.btnvoltar)
         val imgLivro: ImageView = findViewById(R.id.imageView16)
-        val txtTitulo: TextView = findViewById(R.id.txtTituloAvaliacoes)
+        val txtTituloLivro: TextView = findViewById(R.id.txtNomeLivro) // Nome mais claro!
         val txtAutor: TextView = findViewById(R.id.txtAutorLivro)
+        val txtNotaGeral: TextView = findViewById(R.id.txtInfoAvaliacoes)
 
 
         // ---------- Configuração do RecyclerView de Comentários ----------
@@ -50,10 +53,10 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         adapter = ComentarioAdapter(listaComentarios)
         recyclerView.adapter = adapter
 
-        // ---------- Exibe dados do livro ----------
-        preencherInfos(livro, imgLivro, txtTitulo, txtAutor)
+        // ---------- Exibe dados do livro e média geral ----------
+        preencherInfos(livro, imgLivro, txtTituloLivro, txtAutor, txtNotaGeral)
 
-        // ---------- Carrega avaliações do Firebase ----------
+        // ---------- Carrega avaliações do Firebase com Listener ----------
         carregarAvaliacoes(livro.id)
 
         btnVoltar.setOnClickListener {
@@ -61,12 +64,18 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         }
     }
 
-    // Novo método para organizar o preenchimento da UI
+    override fun onDestroy() {
+        super.onDestroy()
+        // Importante: Remove o listener para evitar vazamento de memória e chamadas desnecessárias
+        comentariosListener?.remove()
+    }
+
     private fun preencherInfos(
         livro: Livro,
         imgView: ImageView,
-        txtTitle: TextView,
-        txtAuthor: TextView
+        txtTitle: TextView, // Este parâmetro agora é R.id.txtNomeLivro
+        txtAuthor: TextView,
+        txtNotaGeral: TextView
     ) {
         // Carrega a capa usando Base64
         if (!livro.capa.isNullOrEmpty()) {
@@ -75,39 +84,50 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
                 val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
                 imgView.setImageBitmap(bitmap)
             } catch (e: Exception) {
-                // Opcional: Definir uma imagem padrão aqui em caso de falha na decodificação
                 // imgView.setImageResource(R.drawable.no_image_placeholder)
             }
         }
 
-        txtTitle.text = livro.titulo ?: "Título Não Informado"
+        txtTitle.text = livro.titulo ?: "Título Não Informado" // O titulo do livro será exibido aqui
         txtAuthor.text = livro.autor ?: "Autor Desconhecido"
 
-        // Se precisar usar a variável 'avaliacoes' para algo:
-        // avaliacoes.text = "Média de Avaliações: X.X"
+        // 🌟 EXIBE A NOTA GERAL DO LIVRO RECEBIDA VIA INTENT (campos mediaAvaliacao e totalAvaliacoes)
+        if (livro.totalAvaliacoes > 0) {
+            val decimalFormat = DecimalFormat("#.#")
+            val mediaFormatada = decimalFormat.format(livro.mediaAvaliacao)
+            txtNotaGeral.text = "$mediaFormatada ★ (${livro.totalAvaliacoes} avaliações)"
+        } else {
+            txtNotaGeral.text = "Sem avaliações"
+        }
     }
 
     private fun carregarAvaliacoes(idLivro: String) {
 
-        db.collection("livros")
+        // 🌟 MUDA DE GET() PARA ADDSNAPSHOTLISTENER()
+        comentariosListener = db.collection("livros")
             .document(idLivro)
             .collection("comentarios")
-            .get()
-            .addOnSuccessListener { resultado ->
+            .addSnapshotListener { resultado, e ->
 
-                listaComentarios.clear()
-
-                for (doc in resultado) {
-                    val comentario = doc.toObject(Comentario::class.java)
-                    // Garante que Comentario é uma data class válida e tem construtor vazio se usando toObject
-                    listaComentarios.add(comentario)
+                if (e != null) {
+                    // Trata erro do Listener
+                    Toast.makeText(this, "Erro ao carregar avaliações em tempo real.", Toast.LENGTH_SHORT).show()
+                    return@addSnapshotListener
                 }
 
-                adapter.notifyDataSetChanged()
-            }
-            .addOnFailureListener { e ->
-                // Tratar falha no carregamento dos comentários
-                Toast.makeText(this, "Erro ao carregar avaliações.", Toast.LENGTH_SHORT).show()
+                if (resultado != null) {
+                    listaComentarios.clear()
+
+                    for (doc in resultado.documents) {
+                        // Certifique-se que o modelo Comentario tem um construtor vazio para toObject
+                        val comentario = doc.toObject(Comentario::class.java)
+                        if (comentario != null) {
+                            listaComentarios.add(comentario)
+                        }
+                    }
+
+                    adapter.notifyDataSetChanged()
+                }
             }
     }
 }
