@@ -58,7 +58,7 @@ class TelaHistoricoUsu : AppCompatActivity() {
                 startActivity(intent)
             },
             onFavotiroClick = { livro ->
-                Toast.makeText(this, "Favorito = ${livro.favorito}", Toast.LENGTH_SHORT).show()
+                salvarOuRemoverFavorito(livro)
             }
         )
 
@@ -102,29 +102,43 @@ class TelaHistoricoUsu : AppCompatActivity() {
     }
 
     private fun buscarLivrosDoHistorico(ids: List<String>) {
+        val usuarioID = fbAuth.currentUser?.uid ?: return
+
         listaOriginal.clear()
         listaFiltro.clear()
         adapter.notifyDataSetChanged()
 
-        for (id in ids) {
-            fireBase.collection("livros").document(id).get()
-                .addOnSuccessListener { doc ->
-                    val livro = doc.toObject(Livro::class.java)
-                    livro?.id = doc.id
+        // Primeiro: pega a lista de favoritos do usuário
+        fireBase.collection("usuario").document(usuarioID).collection("favoritos").get().addOnSuccessListener { favDocs ->
 
-                    if (livro != null) {
-                        listaOriginal.add(livro)
-                        listaFiltro.add(livro)
+            // Cria um conjunto com os IDs favoritos
+            val favoritosIds = favDocs.documents.map { it.id }.toSet()
+
+            // Agora pega cada livro do histórico
+            for (id in ids) {
+                fireBase.collection("livros").document(id).get()
+                    .addOnSuccessListener { doc ->
+
+                        val livro = doc.toObject(Livro::class.java)
+                        livro?.id = doc.id
+
+                        if (livro != null) {
+                            // ⭐️ Marca favorito automaticamente se estiver na coleção favoritos
+                            livro.favorito = favoritosIds.contains(livro.id)
+
+                            listaOriginal.add(livro)
+                            listaFiltro.add(livro)
+                        }
+
+                        if (listaFiltro.size == ids.size) {
+                            adapter.notifyDataSetChanged()
+                        }
                     }
 
-                    // Atualiza SOMENTE quando todos forem carregados
-                    if (listaFiltro.size == ids.size) {
-                        adapter.notifyDataSetChanged()
-                    }
-                }
+            }
         }
-
     }
+
 
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -153,5 +167,22 @@ class TelaHistoricoUsu : AppCompatActivity() {
                 return true
             }
         })
+    }
+
+    private fun salvarOuRemoverFavorito(livro: Livro) {
+
+        val usuarioID = fbAuth.currentUser?.uid ?: return
+
+        val favRef = fireBase.collection("usuario").document(usuarioID).collection("favoritos").document(livro.id)
+
+        if (livro.favorito) {
+            val dados = hashMapOf(
+                "id" to livro.id,
+                "data" to System.currentTimeMillis()
+            )
+            favRef.set(dados)
+        } else {
+            favRef.delete()
+        }
     }
 }
