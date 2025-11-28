@@ -28,19 +28,17 @@ class TelaReviewUsu : AppCompatActivity() {
     private val avaliacoesTexto = mutableMapOf<String, String>()
 
     private var livroVisivelId: String? = null // ID do livro no centro
-
-    // Lista para receber os dados do Firebase
     private var listaLivros: List<Livro> = emptyList()
 
     // --- Componentes da UI ---
     private lateinit var estrelas: List<ImageView>
     private lateinit var editAvaliacao: EditText
     private lateinit var btnEnviar: Button
-    private lateinit var txtNotaGeral: TextView
+    // REMOVIDO: private lateinit var txtNotaGeral: TextView <--- Removido
     private lateinit var recyclerLivros: RecyclerView
 
     private val db = FirebaseFirestore.getInstance()
-    private val notasGeraisLivros = mutableMapOf<String, Double>() // Simulação da nota média
+    private val notasGeraisLivros = mutableMapOf<String, Double>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +50,7 @@ class TelaReviewUsu : AppCompatActivity() {
         val btnBack: ImageButton = findViewById(R.id.btnback)
         editAvaliacao = findViewById(R.id.editAvaliacao)
         btnEnviar = findViewById(R.id.btnEnviar)
-        txtNotaGeral = findViewById(R.id.txtNotaGeral)
+        // REMOVIDO: txtNotaGeral = findViewById(R.id.txtNotaGeral) <--- Removido
 
         // Estrelas
         estrelas = listOf(
@@ -61,7 +59,6 @@ class TelaReviewUsu : AppCompatActivity() {
             findViewById(R.id.estrela5)
         )
 
-        // --- CHAMADA PRINCIPAL ---
         carregarLivros()
 
         btnBack.setOnClickListener {
@@ -70,20 +67,17 @@ class TelaReviewUsu : AppCompatActivity() {
         btnEnviar.setOnClickListener { enviarAvaliacao() }
     }
 
-    // 📚 FUNÇÃO DE CARREGAMENTO DO FIREBASE
     private fun carregarLivros() {
         db.collection("livros")
             .get()
             .addOnSuccessListener { query ->
 
-                // Mapeia os documentos para o modelo Livro
                 val novaLista = query.documents.map { doc ->
                     Livro(
                         id = doc.id,
                         titulo = doc.getString("titulo") ?: "Título Desconhecido",
                         autor = doc.getString("autor") ?: "Autor Desconhecido",
                         capa = doc.getString("capa") ?: "",
-                        // Mapeie outros campos necessários (genero, anoLancamento, etc.)
                         genero = doc.getString("genero") ?: "",
                         anoLancamento = doc.getString("anoLancamento") ?: ""
                     )
@@ -91,7 +85,7 @@ class TelaReviewUsu : AppCompatActivity() {
 
                 if (novaLista.isNotEmpty()) {
                     listaLivros = novaLista
-                    configurarRecyclerView() // Configura a lista APÓS o carregamento
+                    configurarRecyclerView()
                 } else {
                     Toast.makeText(this, "Nenhum livro encontrado para avaliar.", Toast.LENGTH_SHORT).show()
                 }
@@ -102,31 +96,23 @@ class TelaReviewUsu : AppCompatActivity() {
             }
     }
 
-    // ⚙️ FUNÇÃO DE CONFIGURAÇÃO DA LISTA E LISTENERS
     private fun configurarRecyclerView() {
 
         recyclerLivros.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
-        // Usa a lista carregada do Firebase
         recyclerLivros.adapter = LivroReviewAdapter(listaLivros)
 
         PagerSnapHelper().attachToRecyclerView(recyclerLivros)
 
-        // Configurações que dependem da lista estar populada
         configurarScrollListener()
         configurarEstrelasListener()
 
-        // Inicializa a UI com o primeiro livro (se houver)
         livroVisivelId = listaLivros.firstOrNull()?.id
         if (livroVisivelId != null) {
             atualizarUI(0)
         }
     }
-
-    // ---------------------------------------------------------------------------------------
-    // *** FUNÇÕES DE GERENCIAMENTO DE ESTADO E UI (SEM ALTERAÇÕES NAS ÚLTIMAS CORREÇÕES) ***
-    // ---------------------------------------------------------------------------------------
 
     private fun configurarScrollListener() {
         recyclerLivros.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -148,7 +134,6 @@ class TelaReviewUsu : AppCompatActivity() {
 
     private fun salvarEstadoAntigo() {
         livroVisivelId?.let { id ->
-            // Assume que 'estrelas' tem uma tag para identificar o estado, ou conta as cheias
             avaliacoesEstrelas[id] = estrelas.indexOfFirst { it.tag == "full" } + 1
             avaliacoesTexto[id] = editAvaliacao.text.toString()
         }
@@ -164,9 +149,7 @@ class TelaReviewUsu : AppCompatActivity() {
         atualizarEstrelas(nota)
         editAvaliacao.setText(texto)
 
-        // Simulação: se tiver uma média para este livro, exibe.
-        val mediaGeral = notasGeraisLivros[livroVisivelId] ?: 0.0
-        atualizarNotaGeral(mediaGeral)
+
     }
 
     private fun configurarEstrelasListener() {
@@ -190,10 +173,9 @@ class TelaReviewUsu : AppCompatActivity() {
         }
     }
 
-    private fun atualizarNotaGeral(media: Double) {
-        val mediaArredondada = round(media * 10) / 10
-        txtNotaGeral.text = "$mediaArredondada ★★★★★"
-    }
+
+
+    // ... (código anterior da TelaReviewUsu.kt)
 
     private fun enviarAvaliacao() {
         salvarEstadoAntigo()
@@ -206,32 +188,72 @@ class TelaReviewUsu : AppCompatActivity() {
             return
         }
 
-        // Lógica de envio ao Firebase:
-        val avaliacaoData = hashMapOf(
-            "userId" to "ID_DO_USUARIO_LOGADO",
-            "rating" to nota,
-            "reviewText" to texto,
-            "timestamp" to System.currentTimeMillis()
-        )
+        // 1. Enviar para o Firebase usando TRANSAÇÃO/BATCH
 
-        db.collection("livros")
-            .document(idLivro)
-            .collection("comentarios")
-            .add(avaliacaoData)
-            .addOnSuccessListener {
-                Toast.makeText(this, "Avaliação enviada para ${idLivro}!", Toast.LENGTH_LONG).show()
+        // Desabilitar o botão para evitar cliques duplicados
+        btnEnviar.isEnabled = false
 
-                // Limpar o estado APENAS deste livro
-                avaliacoesEstrelas.remove(idLivro)
-                avaliacoesTexto.remove(idLivro)
+        db.runTransaction { transaction ->
 
-                // Resetar a UI
-                editAvaliacao.text.clear()
-                atualizarEstrelas(0)
-            }
-            .addOnFailureListener {
-                Log.e(TAG, "Erro ao enviar avaliação: ${it.message}")
-                Toast.makeText(this, "Erro ao enviar avaliação. Tente novamente.", Toast.LENGTH_SHORT).show()
-            }
+            val livroRef = db.collection("livros").document(idLivro)
+            val snapshot = transaction.get(livroRef)
+
+            // 1.1. Obter dados atuais do Firebase
+            // Lembre-se, usamos Double e Long no nosso Livro.kt
+            val mediaAntiga = snapshot.getDouble("mediaAvaliacao") ?: 0.0
+            val totalAntigo = snapshot.getLong("totalAvaliacoes") ?: 0L
+
+            // 1.2. Calcular novos valores
+            val novoTotal = totalAntigo + 1
+            // A nova soma total é a soma antiga (média * total) + a nova nota
+            val novaSoma = (mediaAntiga * totalAntigo) + nota
+            val novaMedia = novaSoma / novoTotal
+
+            // 1.3. Atualizar o documento principal do livro (Coleção 'livros')
+            transaction.update(livroRef,
+                mapOf(
+                    "mediaAvaliacao" to novaMedia,
+                    "totalAvaliacoes" to novoTotal
+                )
+            )
+
+            // 1.4. Adicionar o comentário detalhado (Subcoleção 'comentarios')
+            val comentarioData = hashMapOf(
+                "userId" to "ID_DO_USUARIO_LOGADO", // Substitua pelo Firebase Auth UID
+                "rating" to nota,
+                "reviewText" to texto,
+                "timestamp" to System.currentTimeMillis()
+            )
+            // Note: Não usamos transaction.set aqui. Usamos o batch para subcoleções.
+            // Para subcoleções, uma Transação não é estritamente necessária, mas é crucial para o documento pai.
+
+            // Retornamos um objeto para indicar sucesso ou lançamos exceção para falha
+            return@runTransaction comentarioData
+        }.addOnSuccessListener { comentarioData ->
+            // Se a transação for bem-sucedida, adicione o comentário na subcoleção APÓS a transação.
+            db.collection("livros").document(idLivro)
+                .collection("comentarios").add(comentarioData)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Avaliação enviada e média atualizada!", Toast.LENGTH_LONG).show()
+
+                    // Limpar o estado APENAS deste livro
+                    avaliacoesEstrelas.remove(idLivro)
+                    avaliacoesTexto.remove(idLivro)
+
+                    // Resetar a UI
+                    editAvaliacao.text.clear()
+                    atualizarEstrelas(0)
+                }
+                .addOnFailureListener { e ->
+                    Log.e(TAG, "Erro ao adicionar comentário: ${e.message}")
+                    Toast.makeText(this, "Erro ao salvar comentário. Média atualizada.", Toast.LENGTH_SHORT).show()
+                }
+
+        }.addOnFailureListener { e ->
+            Log.e(TAG, "Erro na transação de avaliação: ${e.message}")
+            Toast.makeText(this, "Erro ao enviar avaliação. Tente novamente.", Toast.LENGTH_SHORT).show()
+        }.addOnCompleteListener {
+            btnEnviar.isEnabled = true // Reabilitar o botão
+        }
     }
 }

@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Livro
+import java.text.DecimalFormat
 
 class LivroAdapter(
     private val livros: List<Livro>,
@@ -16,6 +17,9 @@ class LivroAdapter(
 ) : RecyclerView.Adapter<LivroAdapter.LivroViewHolder>() {
 
     private val selecionados = mutableSetOf<Livro>()
+
+    // Criando um formatador para garantir que a média tenha apenas uma casa decimal
+    private val decimalFormat = DecimalFormat("#.#")
 
     inner class LivroViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgLivro: ImageView = view.findViewById(R.id.imgLivro)
@@ -50,7 +54,19 @@ class LivroAdapter(
 
         holder.txtTitulo.text = livro.titulo
         holder.txtAutor.text = livro.autor
-        holder.txtAvaliacoes.text = "⭐ ${livro.avaliacoes} avaliações"
+
+        // ---------- EXIBIÇÃO DA NOVA AVALIAÇÃO (MÉDIA E TOTAL) ----------
+        val mediaFormatada = decimalFormat.format(livro.mediaAvaliacao)
+
+        // Se o total de avaliações for 0, exibimos "Sem avaliações"
+        if (livro.totalAvaliacoes == 0L) {
+            holder.txtAvaliacoes.text = "Sem avaliações"
+        } else {
+            // Exibe a média de estrelas e a contagem total
+            holder.txtAvaliacoes.text =
+                "⭐ $mediaFormatada (${livro.totalAvaliacoes} avaliações)"
+        }
+        // -------------------------------------------------------------------
 
         holder.checkSelecionado.setOnCheckedChangeListener(null)
         holder.checkSelecionado.isChecked = selecionados.contains(livro)

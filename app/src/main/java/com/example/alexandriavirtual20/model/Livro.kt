@@ -17,8 +17,13 @@ data class Livro(
     val idioma: String = "",
     val edicao: String = "",
     val unidade: String = "",
-    var isSelected: Boolean = false
-) : Parcelable {
+    var isSelected: Boolean = false,
+
+
+    val mediaAvaliacao: Double = 0.0,
+    val totalAvaliacoes: Long = 0,
+
+    ) : Parcelable {
 
     // construtor secundario para usar na tela de inicio
     constructor(
@@ -40,10 +45,13 @@ data class Livro(
         idioma = "",
         edicao = "",
         unidade = "",
-        isSelected = isSelected
+        isSelected = isSelected,
+
+        mediaAvaliacao = 0.0,
+        totalAvaliacoes = 0L // Use L para Long
     )
 
-    // construtor padrao
+    // construtor padrao (Parcelable)
     constructor(parcel: Parcel) : this(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
@@ -58,7 +66,10 @@ data class Livro(
         parcel.readString() ?: "",
         parcel.readString() ?: "",
         parcel.readString() ?: "",
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+
+        parcel.readDouble(),
+        parcel.readLong()
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
@@ -76,6 +87,9 @@ data class Livro(
         parcel.writeString(edicao)
         parcel.writeString(unidade)
         parcel.writeByte(if (isSelected) 1 else 0)
+
+        parcel.writeDouble(mediaAvaliacao)
+        parcel.writeLong(totalAvaliacoes)
     }
 
     override fun describeContents(): Int = 0

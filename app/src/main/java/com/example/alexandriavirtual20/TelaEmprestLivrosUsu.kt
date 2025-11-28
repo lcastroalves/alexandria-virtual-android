@@ -140,6 +140,8 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         })
     }
 
+    // ... (código anterior da TelaEmprestLivrosUsu.kt)
+
     private fun carregarLivros(){
 
         fireBase.collection("livros").get()
@@ -155,7 +157,10 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                     val genero = doc.getString("genero") ?: ""
                     val ano = doc.getString("anoLancamento") ?: ""
                     val imagemBase64 = doc.getString("capa") ?: ""
-                    val avaliacoes = doc.getLong("avaliacoes") ?: 0
+                    val avaliacoesAntiga = doc.getLong("avaliacoes") ?: 0
+
+                    val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
+                    val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0L
 
 
                     listaOriginal.add(
@@ -166,34 +171,43 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                             genero = genero,
                             anoLancamento = ano,
                             capa = imagemBase64,
-                            avaliacoes = avaliacoes.toInt()
+                            avaliacoes = avaliacoesAntiga.toInt(),
+                            mediaAvaliacao = mediaAvaliacao,
+                            totalAvaliacoes = totalAvaliacoes
                         )
                     )
                 }
 
-                // Copia inicial
-                listaFiltrada.clear()
-                listaFiltrada.addAll(listaOriginal)
+                // =======================================================
+                // 🌟 CORREÇÃO: INICIALIZAÇÃO DE UI APÓS DADOS DO FIREBASE
+                // =======================================================
 
-                // AGORA pode criar adapter
+                // 1. Inicializa o RecyclerView com a lista original (ou filtrada)
+                listaFiltrada.addAll(listaOriginal)
+                recyclerView.layoutManager = LinearLayoutManager(this)
+
+                // Inicializa o adapter e aplica os filtros iniciais
                 adapter = LivroAdapter(listaFiltrada) { livro ->
+                    // Ação ao clicar em "Avaliações"
                     val intent = Intent(this, TelaAvaliacoesUsu::class.java)
                     intent.putExtra("livro", livro)
                     startActivity(intent)
                 }
-
-                recyclerView.layoutManager = LinearLayoutManager(
-                    this,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
                 recyclerView.adapter = adapter
 
-                // Agora que o adapter existe, registrar filtros!
+                // 2. Carrega os Spinners com as opções (que dependem de listaOriginal)
                 carregarSpinners()
-                registrarFiltros()
-            }
 
+                // 3. Registra os Listeners (que dependem dos Spinners estarem carregados)
+                registrarFiltros()
+
+                // 4. Garante que a lista inicial seja exibida
+                aplicarFiltros()
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao carregar lista de livros.", Toast.LENGTH_SHORT).show()
+            }
     }
 
     // CARREGA SPINNERS ESPECIFICOS (só depois que Firebase carregar)
