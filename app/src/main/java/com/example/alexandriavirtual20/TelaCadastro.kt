@@ -33,8 +33,8 @@ class TelaCadastro : AppCompatActivity() {
 
         botaoCadastrar = findViewById(R.id.botaoCadastrar)
         botaoTenhoCadastro = findViewById(R.id.botaoTenhoCadastro)
-        inputNomeComp = findViewById(R.id.inputNomeUsu)
-        inputNomeUsu = findViewById(R.id.nomeComp)
+        inputNomeComp = findViewById(R.id.inputNomeComp)
+        inputNomeUsu = findViewById(R.id.nomeUsu)
         inputEmail = findViewById(R.id.email)
         inputSenha1 = findViewById(R.id.senha)
         inputSenha2 = findViewById(R.id.segundaSenha)
@@ -83,7 +83,6 @@ class TelaCadastro : AppCompatActivity() {
                         nome = nomeCompleto,
                         usuario = nomeUsuario,
                         email = email,
-                        senha = senha,
                         fotoPerfil = null,
                         admin = false
                     )
@@ -100,18 +99,13 @@ class TelaCadastro : AppCompatActivity() {
                             .document(userID)
                             .collection("notificacoes")
 
-                        notificacoesRef
-                            .add(primeiraNotificacao)
-                            .addOnSuccessListener { docRef ->
+                        notificacoesRef.add(primeiraNotificacao).addOnSuccessListener { docRef ->
                                 // Apaga a notificação recém-criada
                                 notificacoesRef.document(docRef.id).delete()
 
                                 startActivity(Intent(this, TelaLogin::class.java))
                                 finish()
-                            }
-                            .addOnFailureListener {
-                                // Caso dê erro ao registrar a notificação
-                            }
+                        }
                     }
 
 
