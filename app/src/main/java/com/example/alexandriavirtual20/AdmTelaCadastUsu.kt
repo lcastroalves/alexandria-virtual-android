@@ -51,7 +51,7 @@ class AdmTelaCadastUsu : AppCompatActivity() {
         val nome = editNome.text?.toString()?.trim().orEmpty()
         val usuario = editUsuario
             .text?.toString()?.trim()?.lowercase()?.replace("[^a-z0-9._-]".toRegex(), "").orEmpty()
-            //Lara castro = laracastro e etc
+        //Lara castro = laracastro e etc
         val email = editEmail.text?.toString()?.trim().orEmpty()
         val senha = editSenha.text?.toString()?.trim().orEmpty()
         val confSenha = editConfSenha.text?.toString()?.trim().orEmpty()
@@ -79,33 +79,44 @@ class AdmTelaCadastUsu : AppCompatActivity() {
         }
 
         //usuario existente?
-        fb.collection("usuario")
-            .whereEqualTo("usuario", usuario)
-            .get()
-            .addOnSuccessListener { querySnapshot ->
+        fb.collection("usuario").whereEqualTo("usuario", usuario).get().addOnSuccessListener { querySnapshot ->
                 if (querySnapshot.isEmpty) {
+
                     // hashMap
                     val dadosUsuario = hashMapOf(
+
                         "nome" to nome,
                         "usuario" to usuario,
                         "email" to email,
-                        "senha" to senha
+                        "fotoPerfil" to null,
+                        "admin" to false
                     )
 
-                    //envia para o Firebase
+                    // envia para o Firebase
                     fb.collection("usuario")
                         .add(dadosUsuario)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
-                            limparCampos()
+                        .addOnSuccessListener { documentReference ->
+                            // Pega o ID gerado pelo Firestore
+                            val idGerado = documentReference.id
+
+                            // Atualiza o campo "id" do próprio documento
+                            documentReference.update("id", idGerado)
+                                .addOnSuccessListener {
+                                    Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
+                                    limparCampos()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(this, "Erro ao atualizar ID do usuário.", Toast.LENGTH_SHORT).show()
+                                }
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Erro ao salvar os dados do usuário.", Toast.LENGTH_SHORT).show()
                         }
+
                 } else {
-                    Toast.makeText(this, "Nome de usuário já cadastrado!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "E-mail já está cadastrado", Toast.LENGTH_SHORT).show()
                 }
-            }
+        }
             .addOnFailureListener {
                 Toast.makeText(this, "Erro ao verificar usuário existente.", Toast.LENGTH_SHORT).show()
             }
