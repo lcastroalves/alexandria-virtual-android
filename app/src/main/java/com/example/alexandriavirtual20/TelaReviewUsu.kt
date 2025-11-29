@@ -203,7 +203,7 @@ class TelaReviewUsu : AppCompatActivity() {
         btnEnviar.isEnabled = false // Desabilitar o botão
 
         // 🌟 PASSO 1: Buscar o Nome do Usuário
-        db.collection("usuarios").document(userId).get()
+        db.collection("usuario").document(userId).get()
             .addOnSuccessListener { userDoc ->
 
                 val nomeUsuario = userDoc.getString("nome") ?: "Usuário Desconhecido"
