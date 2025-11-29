@@ -157,10 +157,10 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                     val genero = doc.getString("genero") ?: ""
                     val ano = doc.getString("anoLancamento") ?: ""
                     val imagemBase64 = doc.getString("capa") ?: ""
-                    val avaliacoesAntiga = doc.getLong("avaliacoes") ?: 0
+
 
                     val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
-                    val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0L
+                    val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0L // O CAMPO CORRETO!
 
 
                     listaOriginal.add(
@@ -171,7 +171,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                             genero = genero,
                             anoLancamento = ano,
                             capa = imagemBase64,
-                            avaliacoes = avaliacoesAntiga.toInt(),
+                            avaliacoes = totalAvaliacoes.toInt(),
                             mediaAvaliacao = mediaAvaliacao,
                             totalAvaliacoes = totalAvaliacoes
                         )
