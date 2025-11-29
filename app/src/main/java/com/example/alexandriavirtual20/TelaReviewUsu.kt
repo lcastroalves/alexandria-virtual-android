@@ -18,6 +18,7 @@ import com.example.alexandriavirtual20.adapter.LivroReviewAdapter
 import com.example.alexandriavirtual20.model.Livro
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.round
+import com.google.firebase.auth.FirebaseAuth
 
 class TelaReviewUsu : AppCompatActivity() {
 
@@ -29,6 +30,8 @@ class TelaReviewUsu : AppCompatActivity() {
 
     private var livroVisivelId: String? = null // ID do livro no centro
     private var listaLivros: List<Livro> = emptyList()
+
+    private val fbAuth = FirebaseAuth.getInstance()
 
     // --- Componentes da UI ---
     private lateinit var estrelas: List<ImageView>
@@ -96,6 +99,7 @@ class TelaReviewUsu : AppCompatActivity() {
             }
     }
 
+
     private fun configurarRecyclerView() {
 
         recyclerLivros.layoutManager =
@@ -134,7 +138,11 @@ class TelaReviewUsu : AppCompatActivity() {
 
     private fun salvarEstadoAntigo() {
         livroVisivelId?.let { id ->
-            avaliacoesEstrelas[id] = estrelas.indexOfFirst { it.tag == "full" } + 1
+
+            // 🌟 CORREÇÃO: Conta quantas estrelas estão com a tag "full"
+            val notaAtual = estrelas.count { it.tag == "full" }
+
+            avaliacoesEstrelas[id] = notaAtual
             avaliacoesTexto[id] = editAvaliacao.text.toString()
         }
     }
@@ -177,39 +185,61 @@ class TelaReviewUsu : AppCompatActivity() {
 
     // ... (código anterior da TelaReviewUsu.kt)
 
+    // ... (código anterior)
+
     private fun enviarAvaliacao() {
         salvarEstadoAntigo()
         val idLivro = livroVisivelId
         val texto = avaliacoesTexto[idLivro]
         val nota = avaliacoesEstrelas[idLivro]
 
-        if (idLivro == null || nota == null || nota == 0 || texto.isNullOrBlank()) {
-            Toast.makeText(this, "Selecione a nota e escreva sua avaliação!", Toast.LENGTH_SHORT).show()
+        val userId = fbAuth.currentUser?.uid // Obtém o UID do usuário logado
+
+        if (idLivro == null || nota == null || nota == 0 || texto.isNullOrBlank() || userId.isNullOrBlank()) {
+            Toast.makeText(this, "Selecione a nota, escreva sua avaliação e faça login.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        // 1. Enviar para o Firebase usando TRANSAÇÃO/BATCH
+        btnEnviar.isEnabled = false // Desabilitar o botão
 
-        // Desabilitar o botão para evitar cliques duplicados
-        btnEnviar.isEnabled = false
+        // 🌟 PASSO 1: Buscar o Nome do Usuário
+        db.collection("usuarios").document(userId).get()
+            .addOnSuccessListener { userDoc ->
 
+                val nomeUsuario = userDoc.getString("nome") ?: "Usuário Desconhecido"
+
+
+                realizarTransacao(idLivro, nota, texto, userId, nomeUsuario)
+
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Erro ao buscar nome do usuário: ${e.message}")
+
+                realizarTransacao(idLivro, nota, texto, userId, "Usuário (Falha ao buscar)")
+            }
+    }
+
+    // 🌟 NOVA FUNÇÃO PARA EXECUTAR A TRANSAÇÃO APÓS OBTER O NOME
+    private fun realizarTransacao(
+        idLivro: String,
+        nota: Int,
+        texto: String,
+        userId: String,
+        nomeUsuario: String
+    ) {
         db.runTransaction { transaction ->
 
             val livroRef = db.collection("livros").document(idLivro)
             val snapshot = transaction.get(livroRef)
 
-            // 1.1. Obter dados atuais do Firebase
-            // Lembre-se, usamos Double e Long no nosso Livro.kt
+            // Cálculo da Média (Logica correta, mantida)
             val mediaAntiga = snapshot.getDouble("mediaAvaliacao") ?: 0.0
             val totalAntigo = snapshot.getLong("totalAvaliacoes") ?: 0L
-
-            // 1.2. Calcular novos valores
             val novoTotal = totalAntigo + 1
-            // A nova soma total é a soma antiga (média * total) + a nova nota
             val novaSoma = (mediaAntiga * totalAntigo) + nota
             val novaMedia = novaSoma / novoTotal
 
-            // 1.3. Atualizar o documento principal do livro (Coleção 'livros')
+            // 1. Atualizar o documento principal do livro
             transaction.update(livroRef,
                 mapOf(
                     "mediaAvaliacao" to novaMedia,
@@ -217,30 +247,28 @@ class TelaReviewUsu : AppCompatActivity() {
                 )
             )
 
-            // 1.4. Adicionar o comentário detalhado (Subcoleção 'comentarios')
+            // 2. Criar os dados do comentário
             val comentarioData = hashMapOf(
-                "userId" to "ID_DO_USUARIO_LOGADO", // Substitua pelo Firebase Auth UID
-                "rating" to nota,
-                "reviewText" to texto,
+                "idUsu" to userId,
+                "nomeUsuario" to nomeUsuario,
+                "estrelas" to nota, // 🌟 Campo precisa ser "estrelas" (não "rating")
+                "comentario" to texto, // 🌟 Campo precisa ser "comentario" (não "reviewText")
                 "timestamp" to System.currentTimeMillis()
             )
-            // Note: Não usamos transaction.set aqui. Usamos o batch para subcoleções.
-            // Para subcoleções, uma Transação não é estritamente necessária, mas é crucial para o documento pai.
 
-            // Retornamos um objeto para indicar sucesso ou lançamos exceção para falha
+            // Retorna os dados para serem usados no onSuccess
             return@runTransaction comentarioData
         }.addOnSuccessListener { comentarioData ->
-            // Se a transação for bem-sucedida, adicione o comentário na subcoleção APÓS a transação.
+
+            // Adicione o comentário na subcoleção APÓS a transação ser bem-sucedida.
             db.collection("livros").document(idLivro)
                 .collection("comentarios").add(comentarioData)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Avaliação enviada e média atualizada!", Toast.LENGTH_LONG).show()
 
-                    // Limpar o estado APENAS deste livro
+                    // Limpar e atualizar UI
                     avaliacoesEstrelas.remove(idLivro)
                     avaliacoesTexto.remove(idLivro)
-
-                    // Resetar a UI
                     editAvaliacao.text.clear()
                     atualizarEstrelas(0)
                 }
