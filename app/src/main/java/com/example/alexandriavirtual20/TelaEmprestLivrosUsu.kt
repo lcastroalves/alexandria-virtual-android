@@ -25,8 +25,8 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
     private lateinit var spinnerPopulares: Spinner
     private lateinit var spinnerAno: Spinner
 
-    private lateinit var recyclerView : RecyclerView
-    private lateinit var fireBase : FirebaseFirestore
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fireBase: FirebaseFirestore
     private lateinit var fbAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +46,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
 
         fireBase = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
-
 
         carregarLivros()
         configurarPesquisa()
@@ -69,13 +68,9 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         }
     }
 
-    // PESQUISA
-
-
-    // SISTEMA COMPLETO DE FILTRO
+    // SISTEMA COMPLETO DE FILTRO DA LISTA
     private fun aplicarFiltros() {
 
-        // Evita crash caso o adapter ainda não exista
         if (!::adapter.isInitialized) return
 
         val filtroAutor = spinnerAutor.selectedItem.toString()
@@ -102,7 +97,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
             }
         )
 
-        // ORDENAR POR POPULARIDADE
         if (filtroPopular == "Mais Populares") {
             listaFiltrada.sortByDescending { it.avaliacoes }
         }
@@ -130,9 +124,10 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         spinnerPopulares.onItemSelectedListener = listenerFiltro
         spinnerAno.onItemSelectedListener = listenerFiltro
     }
+
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean = false
+            override fun onQueryTextSubmit(query: String?) = false
             override fun onQueryTextChange(newText: String?): Boolean {
                 aplicarFiltros()
                 return true
@@ -140,77 +135,85 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         })
     }
 
-    // ... (código anterior da TelaEmprestLivrosUsu.kt)
+    // =============================================
+    //     CARREGAR LIVROS + FILTRAR EMPRÉSTIMOS
+    // =============================================
+    private fun carregarLivros() {
 
-    private fun carregarLivros(){
+        val userId = fbAuth.currentUser?.uid ?: return
 
-        fireBase.collection("livros").get()
-            .addOnSuccessListener { query ->
+        val emprestimosRef = fireBase.collection("emprestimo")
+            .whereEqualTo("idUsuario", userId)
+            .whereIn("situacao", listOf("pendente", "aceito"))
 
-                listaOriginal.clear()
+        emprestimosRef.get()
+            .addOnSuccessListener { emprestimos ->
 
-                for (doc in query.documents){
-
-                    val id = doc.id
-                    val titulo = doc.getString("titulo") ?: ""
-                    val autor = doc.getString("autor") ?: ""
-                    val genero = doc.getString("genero") ?: ""
-                    val ano = doc.getString("anoLancamento") ?: ""
-                    val imagemBase64 = doc.getString("capa") ?: ""
-
-
-                    val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
-                    val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0L // O CAMPO CORRETO!
-
-
-                    listaOriginal.add(
-                        Livro(
-                            id = id,
-                            titulo = titulo,
-                            autor = autor,
-                            genero = genero,
-                            anoLancamento = ano,
-                            capa = imagemBase64,
-                            avaliacoes = totalAvaliacoes.toInt(),
-                            mediaAvaliacao = mediaAvaliacao,
-                            totalAvaliacoes = totalAvaliacoes
-                        )
-                    )
+                // IDs de livros que NÃO PODEM aparecer
+                val livrosBloqueadosIds = emprestimos.documents.map {
+                    it.getString("idLivro")
                 }
 
-                // =======================================================
-                // 🌟 CORREÇÃO: INICIALIZAÇÃO DE UI APÓS DADOS DO FIREBASE
-                // =======================================================
+                // AGORA BUSCA OS LIVROS E REMOVE OS BLOQUEADOS
+                fireBase.collection("livros").get()
+                    .addOnSuccessListener { query ->
 
-                // 1. Inicializa o RecyclerView com a lista original (ou filtrada)
-                listaFiltrada.addAll(listaOriginal)
-                recyclerView.layoutManager = LinearLayoutManager(this)
+                        listaOriginal.clear()
 
-                // Inicializa o adapter e aplica os filtros iniciais
-                adapter = LivroAdapter(listaFiltrada) { livro ->
-                    // Ação ao clicar em "Avaliações"
-                    val intent = Intent(this, TelaAvaliacoesUsu::class.java)
-                    intent.putExtra("livro", livro)
-                    startActivity(intent)
-                }
-                recyclerView.adapter = adapter
+                        for (doc in query.documents) {
 
-                // 2. Carrega os Spinners com as opções (que dependem de listaOriginal)
-                carregarSpinners()
+                            val id = doc.id
 
-                // 3. Registra os Listeners (que dependem dos Spinners estarem carregados)
-                registrarFiltros()
+                            // SE O LIVRO ESTIVER BLOQUEADO → NÃO ENTRA NA LISTA
+                            if (livrosBloqueadosIds.contains(id)) continue
 
-                // 4. Garante que a lista inicial seja exibida
-                aplicarFiltros()
+                            val titulo = doc.getString("titulo") ?: ""
+                            val autor = doc.getString("autor") ?: ""
+                            val genero = doc.getString("genero") ?: ""
+                            val ano = doc.getString("anoLancamento") ?: ""
+                            val imagemBase64 = doc.getString("capa") ?: ""
 
+                            val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
+                            val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0L
+
+                            listaOriginal.add(
+                                Livro(
+                                    id = id,
+                                    titulo = titulo,
+                                    autor = autor,
+                                    genero = genero,
+                                    anoLancamento = ano,
+                                    capa = imagemBase64,
+                                    avaliacoes = totalAvaliacoes.toInt(),
+                                    mediaAvaliacao = mediaAvaliacao,
+                                    totalAvaliacoes = totalAvaliacoes
+                                )
+                            )
+                        }
+
+                        listaFiltrada.clear()
+                        listaFiltrada.addAll(listaOriginal)
+
+                        recyclerView.layoutManager = LinearLayoutManager(this)
+
+                        adapter = LivroAdapter(listaFiltrada) { livro ->
+                            val intent = Intent(this, TelaAvaliacoesUsu::class.java)
+                            intent.putExtra("livro", livro)
+                            startActivity(intent)
+                            finish()
+                        }
+                        recyclerView.adapter = adapter
+
+                        carregarSpinners()
+                        registrarFiltros()
+                        aplicarFiltros()
+                    }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Erro ao carregar lista de livros.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Erro ao carregar livros.", Toast.LENGTH_SHORT).show()
             }
     }
 
-    // CARREGA SPINNERS ESPECIFICOS (só depois que Firebase carregar)
     private fun carregarSpinners() {
 
         carregarSpinner(
@@ -238,8 +241,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         )
     }
 
-
-    // FUNÇÃO GENÉRICA P/ SPINNERS
     private fun carregarSpinner(spinner: Spinner, opcoes: List<String>, extra: String?) {
         val lista = if (extra != null) listOf(extra) + opcoes else opcoes
         val adaptador = ArrayAdapter(this, android.R.layout.simple_spinner_item, lista)

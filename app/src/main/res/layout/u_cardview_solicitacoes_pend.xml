@@ -2,6 +2,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/constraintLayout3"
         android:layout_width="413dp"
         android:layout_height="wrap_content"
@@ -35,16 +36,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imagemSoliPend" />
 
-        <TextView
-            android:id="@+id/avaliacaoSoliPend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
-            android:text="⭐ 105 avaliações"
-            android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/subtituloSoliPend" />
+    <TextView
+        android:id="@+id/avaliacaoSoliPend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="⭐ 105 avaliações"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/autorSoliPend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeSoliPend" />
 
         <TextView
             android:id="@+id/autorSoliPend"
@@ -80,13 +81,4 @@
             app:layout_constraintTop_toTopOf="@+id/nomeSoliPend"
             app:srcCompat="@drawable/negado" />
 
-        <TextView
-            android:id="@+id/subtituloSoliPend"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="10dp"
-            android:text="Subtitulo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nomeSoliPend" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,7 +7,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.SoliPend
 import com.example.alexandriavirtual20.adapter.SoliPendAdapter
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaSolicitaPendUsu : AppCompatActivity() {
 
@@ -16,8 +19,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SoliPendAdapter
 
-//    private val listaOriginal = mutableListOf<SoliPend>()
-//    private val listaFiltrada = mutableListOf<SoliPend>()
+    private val listaEmprestimos = mutableListOf<SoliPend>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,73 +27,88 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
         setContentView(R.layout.tela_solicita_pend_usu)
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        recyclerView = findViewById(R.id.recySoliPend)
         searchView = findViewById(R.id.searchViewEventos)
+        recyclerView = findViewById(R.id.recySoliPend)
+
+        adapter = SoliPendAdapter(listaEmprestimos)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        // --------------------------------------
-        // LISTA INICIAL DOS PEDIDOS (ORIGINAL)
-        // --------------------------------------
-//        listaOriginal.addAll(
-//            listOf(
-//                SoliPend("Ciência da computação", "e tecnologias digitais", "5 estrelas", "Ernane Rosa Martins", R.drawable.livro1, true),
-//                SoliPend("Java como programar", "", "2 estrelas", "Paul J. Deitel", R.drawable.livro2, false),
-//                SoliPend("Redes de computadores", "", "2 estrelas", "Tanenbaum e Wetherall", R.drawable.livro4, true)
-//            )
-//        )
-
-//        // A filtrada começa igual à original
-//        listaFiltrada.addAll(listaOriginal)
-//
-//        // --------------------------------------
-//        // CONFIGURAÇÃO DO ADAPTER
-//        // --------------------------------------
-//        adapter = SoliPendAdapter(
-//            listaFiltrada,
-//            onExcluirClick = { soliPend ->
-//                adapter.removerSoliPend(soliPend)
-//                listaOriginal.remove(soliPend)
-//            }
-//        )
-
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
-
+        carregarEmprestimos()
         configurarPesquisa()
     }
 
-    // --------------------------------------
-    // 🔍 BARRA DE PESQUISA FUNCIONANDO
-    // --------------------------------------
+    private fun carregarEmprestimos() {
+        val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("emprestimo")                      // certifique-se do nome aqui
+            .whereEqualTo("idUsuario", uid)
+            .get()
+            .addOnSuccessListener { documentos ->
+                listaEmprestimos.clear()
+
+                // filtra apenas os documentos com situacao pendente ou negado
+                val emprestimosValidos = documentos.documents.filter { doc ->
+                    val situacao = doc.getString("situacao") ?: ""
+                    situacao == "pendente" || situacao == "negado"
+                }
+
+                if (emprestimosValidos.isEmpty()) {
+                    adapter.updateList(listaEmprestimos)
+                    return@addOnSuccessListener
+                }
+
+                // Para cada empréstimo válido, pega o idLivro (String) e busca o documento do livro
+                for (doc in emprestimosValidos) {
+                    val situacao = doc.getString("situacao") ?: ""
+                    val idLivro = doc.getString("idLivro") ?: continue
+
+                    // busca o livro pela id
+                    db.collection("livros").document(idLivro).get()
+                        .addOnSuccessListener { livroDoc ->
+                            if (!livroDoc.exists()) return@addOnSuccessListener
+
+                            val titulo = livroDoc.getString("titulo") ?: "Sem título"
+                            val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
+                            val imagem = livroDoc.getString("capa") ?: ""
+
+                            val emprestimo = SoliPend(
+                                titulo = titulo,
+                                autor = autor,
+                                data = "Hoje",                // ajusta conforme sua lógica de datas
+                                prazo = "3 dias",             // ou pegue do doc do empréstimo
+                                local = "Biblioteca Central", // idem
+                                imagem = imagem,
+                                pendente = situacao == "pendente"
+                            )
+
+                            listaEmprestimos.add(emprestimo)
+
+                            // atualiza adapter à medida que chegam os livros
+                            adapter.updateList(listaEmprestimos)
+                        }
+                        .addOnFailureListener {
+                            // opcional: log/Toast se falhar ao buscar o livro
+                        }
+                }
+            }
+            .addOnFailureListener {
+                // opcional: tratar erro
+            }
+    }
+
+
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?) = false
 
-            override fun onQueryTextSubmit(query: String?): Boolean = false
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-
-                val texto = newText?.trim()?.lowercase().orEmpty()
-
-//                listaFiltrada.clear()
-//
-//                if (texto.isEmpty()) {
-//                    listaFiltrada.addAll(listaOriginal)
-//                } else {
-//                    listaFiltrada.addAll(
-//                        listaOriginal.filter { soli ->
-//
-//                            soli.nome.lowercase().contains(texto) ||
-//                                    soli.autor.lowercase().contains(texto) ||
-//                                    soli.avaliacao.lowercase().contains(texto)
-//
-//                        }
-//                    )
-//                }
-
-                adapter.notifyDataSetChanged()
+            override fun onQueryTextChange(text: String?): Boolean {
+                adapter.filtrar(text ?: "")
                 return true
             }
         })
