@@ -56,7 +56,8 @@ class TelaLogin : AppCompatActivity() {
                             return@addOnSuccessListener
                         }
 
-                        val isAdmin = document.getBoolean("admin") ?: false
+                        val isAdmin = document.getBoolean("admin")  ?: false
+
 
                         if(isAdmin){
                             val intent = Intent(this, AdmAMain::class.java)
@@ -65,8 +66,6 @@ class TelaLogin : AppCompatActivity() {
                             val intent = Intent(this, AMain::class.java)
                             startActivity(intent)
                         }
-
-                        finish()
 
                     }
                 } else {

@@ -46,7 +46,7 @@
 
 
         <ImageView
-            android:id="@+id/imagemLivro"
+            android:id="@+id/iconUsu"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
@@ -69,10 +69,10 @@
             android:text="Narak Carvalho"
             android:textSize="25sp"
             android:translationY="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemLivro"
+            app:layout_constraintBottom_toBottomOf="@+id/iconAdm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemLivro"
-            app:layout_constraintTop_toTopOf="@+id/imagemLivro">
+            app:layout_constraintStart_toEndOf="@+id/iconAdm"
+            app:layout_constraintTop_toTopOf="@+id/iconAdm">
 
         </TextView>
     </LinearLayout>

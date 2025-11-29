@@ -37,7 +37,7 @@ class TelaInformacoesUsu : AppCompatActivity() {
         btnRedefinirSenha = findViewById(R.id.botaoRedefinirSenha)
         btnSalvar = findViewById(R.id.botaoSalvar)
 
-        imagemUsu = findViewById(R.id.imagemLivro)
+        imagemUsu = findViewById(R.id.iconUsu)
         nomeUsu = findViewById(R.id.nomeUsu)
         nomeComp = findViewById(R.id.nomeComp)
         inputNomeUsu = findViewById(R.id.inputNomeUsu)

@@ -46,20 +46,21 @@
 
 
         <ImageView
-            android:id="@+id/imagemLivro"
+            android:id="@+id/iconAdm"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="40dp"
             android:background="@drawable/icone_redondo"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/dillan"
+            android:src="@drawable/empty_user"
             android:translationY="6dp"
             app:layout_constraintBottom_toBottomOf="@+id/botaoVoltar"
             app:layout_constraintStart_toEndOf="@+id/botaoVoltar"
             app:layout_constraintTop_toTopOf="@+id/botaoVoltar" />
 
         <TextView
+            android:id="@+id/nomeAdmSuperior"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -68,10 +69,10 @@
             android:text="Dillan Medeiros"
             android:textSize="25sp"
             android:translationY="14dp"
-            app:layout_constraintBottom_toBottomOf="@+id/imagemLivro"
+            app:layout_constraintBottom_toBottomOf="@+id/iconAdm"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imagemLivro"
-            app:layout_constraintTop_toTopOf="@+id/imagemLivro">
+            app:layout_constraintStart_toEndOf="@+id/iconAdm"
+            app:layout_constraintTop_toTopOf="@+id/iconAdm">
 
         </TextView>
     </LinearLayout>
@@ -185,6 +186,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
+            android:text="************"
+            android:cursorVisible="false"
+            android:enabled="false"
+            android:focusable="false"
             android:minHeight="40dp"
             android:outlineAmbientShadowColor="#FFF7F7"
             android:paddingHorizontal="12dp"

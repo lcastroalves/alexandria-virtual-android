@@ -48,7 +48,7 @@
 
 
             <ImageView
-                android:id="@+id/imagemLivro"
+                android:id="@+id/iconAdm"
                 android:layout_width="120dp"
                 android:layout_height="160dp"
                 android:layout_marginStart="30dp"
@@ -72,8 +72,8 @@
                 android:textColor="#247AE8"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imagemLivro"
-                app:layout_constraintTop_toTopOf="@+id/imagemLivro" />
+                app:layout_constraintStart_toEndOf="@+id/iconAdm"
+                app:layout_constraintTop_toTopOf="@+id/iconAdm" />
 
             <TextView
                 android:id="@+id/subtitulo"
@@ -99,8 +99,8 @@
                 android:textColor="#000000"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imagemLivro"
-                app:layout_constraintTop_toTopOf="@+id/imagemLivro" />
+                app:layout_constraintStart_toEndOf="@+id/iconAdm"
+                app:layout_constraintTop_toTopOf="@+id/iconAdm" />
 
             <TextView
                 android:id="@+id/sinopseLivro"
@@ -117,7 +117,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagemLivro" />
+                app:layout_constraintTop_toBottomOf="@+id/iconAdm" />
 
             <ImageView
                 android:contentDescription="@null"

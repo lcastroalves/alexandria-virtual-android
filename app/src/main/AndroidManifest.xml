@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlexandriaVirtual20">
         <activity
-            android:name=".item_livro_retirada"
-            android:exported="false" />
-        <activity
             android:name=".AdmAMain"
             android:exported="true" />
         <activity
