@@ -71,15 +71,22 @@ class AdmTelaUsuCadast : AppCompatActivity() {
             .addSnapshotListener { snaps, e ->
                 if (e != null || snaps == null) return@addSnapshotListener
 
-                cache = snaps.documents.map { d ->
-                    Usuario(
-                        id = d.id,
-                        nome = d.getString("nome").orEmpty(),
-                        usuario = d.getString("usuario").orEmpty(),
-                        email = d.getString("email").orEmpty(),
-                        fotoPerfil = d.getString("imgPerfil").orEmpty()
-                    )
-                }
+                cache = snaps.documents
+                    // 🔥 aqui filtramos: só entra quem NÃO é admin
+                    .filter { d ->
+                        val isAdmin = d.getBoolean("admin") ?: false
+                        !isAdmin          // ou: isAdmin != true
+                    }
+                    .map { d ->
+                        Usuario(
+                            id = d.id,
+                            nome = d.getString("nome").orEmpty(),
+                            usuario = d.getString("usuario").orEmpty(),
+                            email = d.getString("email").orEmpty(),
+                            fotoPerfil = d.getString("imgPerfil").orEmpty()
+                        )
+                    }
+
                 adapter.submitList(cache)
             }
     }
