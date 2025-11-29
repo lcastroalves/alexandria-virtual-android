@@ -55,9 +55,6 @@ class NotificacaoAdapter (
         val semanas = dias / 7
 
         if (notificacao.prazo <= 0) {
-            notificacoes.removeAt(position)
-            notifyItemRemoved(position)
-            notifyItemRangeChanged(position, itemCount)
 
             if (notificacao.tipo == "evento") {
                 holder.mensagem.text = "Evento finalizado!"
@@ -65,6 +62,12 @@ class NotificacaoAdapter (
             } else {
                 holder.mensagem.text = "Devolução atrasada!"
             }
+
+            notificacoes.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+
+            return
         }
 
         else if (notificacao.prazo <= 1 && notificacao.prazo > 0) {

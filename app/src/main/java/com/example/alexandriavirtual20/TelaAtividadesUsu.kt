@@ -29,8 +29,7 @@ class TelaAtividadesUsu : AppCompatActivity() {
         val atividades = mutableListOf(
             Atividade("Cinema", "9:00 - 22:00", "Auditório Principal", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!", "A nossa biblioteca oferece um espaço para reprodução de filmes, diversão garantida para toda família!",R.drawable.cinema),
             Atividade("Sala de Jogos", "9:00 - 22:00", "Sala 7", "A sala de jogos é um espaço dedicado ao entretenimento para família e amigos, contando com mais de 50 jogos variados, atendemos a todos os públicos, venha se divertir bastante!", "Nossa biblioteca dispõe de uma sala de jogos cheia de variedade, venha conhecer!",R.drawable.jogos),
-            Atividade("Clube do Livro", "12:00 - 19:00", "Sala 1", "O clube do livro é um grupo dos nossos clientes que se reunem para discutir diversas obras, divulgando histórias, conhecimento e experiências, além de ser uma ótima oportunidade para conversar e socializar com outros amantes dos livros, venha participar!", "Nossa biblioteca possui um clube do livro, consulte no balcão como participar!",R.drawable.iconelivro),
-            Atividade("Narakão", "6:00 - 2:00", "Unifor", "Professor universotário altamente rigoroso no que faz", "Professor otaro da Unifor",R.drawable.narak)
+            Atividade("Clube do Livro", "12:00 - 19:00", "Sala 1", "O clube do livro é um grupo dos nossos clientes que se reunem para discutir diversas obras, divulgando histórias, conhecimento e experiências, além de ser uma ótima oportunidade para conversar e socializar com outros amantes dos livros, venha participar!", "Nossa biblioteca possui um clube do livro, consulte no balcão como participar!",R.drawable.iconelivro)
         )
 
         var adapter: AtividadeAdapter? = null

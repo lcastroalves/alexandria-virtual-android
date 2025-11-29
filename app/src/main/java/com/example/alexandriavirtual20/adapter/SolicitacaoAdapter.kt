@@ -1,5 +1,7 @@
 package com.example.alexandriavirtual20.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +19,7 @@ data class Solicitacao(
     val data: String,
     val prazo: String,
     val local: String,
-    val imagem: Int
+    val capa: String   // Base64
 )
 
 class SolicitacaoAdapter(
@@ -46,7 +48,20 @@ class SolicitacaoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = lista[position]
-        holder.imgLivro.setImageResource(item.imagem)
+
+        // ------------ IMAGEM BASE64 ---------------
+        if (item.capa.isNotEmpty()) {
+            try {
+                val imageBytes = Base64.decode(item.capa, Base64.DEFAULT)
+                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+                holder.imgLivro.setImageBitmap(bitmap)
+            } catch (e: Exception) {
+                holder.imgLivro.setImageResource(R.drawable.no_image)
+            }
+        } else {
+            holder.imgLivro.setImageResource(R.drawable.no_image)
+        }
+
         holder.txtTitulo.text = item.titulo
         holder.txtAutor.text = "Autor: ${item.autor}"
         holder.txtUsuario.text = "Usuário: ${item.usuario}"

@@ -107,7 +107,7 @@
     <Button
         android:id="@+id/btnConfirmar"
         android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:text="CONFIRMAR"
         android:textColor="@android:color/white"

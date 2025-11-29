@@ -68,9 +68,9 @@ class AdmTelaHistoricoEmpres : Fragment() {
                 "09 de Set",
                 "12 de Set",
                 "Balcão da Biblioteca",
-                R.drawable.livro1
+                "(R.drawable.livro1)"
             ),
-            Solicitacao( "Java como Programar", "Deitel", "Felipe Barroso", "felipebvm@gmail.com", "03 de Out", "08 de Out", "Balcão da Biblioteca", R.drawable.livro2 )
+            Solicitacao( "Java como Programar", "Deitel", "Felipe Barroso", "felipebvm@gmail.com", "03 de Out", "08 de Out", "Balcão da Biblioteca", "R.drawable.livro2" )
         )
         recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recycler.adapter = SolicitacaoAdapter(

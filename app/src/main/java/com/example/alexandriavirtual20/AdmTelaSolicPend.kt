@@ -1,121 +1,129 @@
-    package com.example.alexandriavirtual20
+package com.example.alexandriavirtual20
 
-    import android.content.Intent
-    import android.os.Bundle
-    import androidx.fragment.app.Fragment
-    import android.view.LayoutInflater
-    import android.view.View
-    import android.view.ViewGroup
-    import android.widget.ImageButton
-    import android.widget.TextView
-    import android.widget.Toast
-    import androidx.activity.OnBackPressedDispatcher
-    import androidx.activity.enableEdgeToEdge
-    import androidx.appcompat.app.AppCompatActivity
-    import androidx.recyclerview.widget.LinearLayoutManager
-    import androidx.recyclerview.widget.PagerSnapHelper
-    import androidx.recyclerview.widget.RecyclerView
-    import com.example.alexandriavirtual20.adapter.Solicitacao
-    import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
-    import org.w3c.dom.Text
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
+import com.example.alexandriavirtual20.adapter.Solicitacao
+import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
+import com.google.firebase.firestore.FirebaseFirestore
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private const val ARG_PARAM1 = "param1"
-    private const val ARG_PARAM2 = "param2"
+class AdmTelaSolicPend : Fragment() {
 
-    /**
-     * A simple [Fragment] subclass.
-     * Use the [AdmTelaSolicPend.newInstance] factory method to
-     * create an instance of this fragment.
-     */
-    class AdmTelaSolicPend : Fragment() {
-        // TODO: Rename and change types of parameters
+    private lateinit var recycler: RecyclerView
+    private lateinit var btnPendentes: TextView
+    private lateinit var btnUsuarios: TextView
 
-        private lateinit var recycler : RecyclerView
-        private lateinit var btnPendentes: TextView
-        private lateinit var btnUsuarios : TextView
-        private var param1: String? = null
-        private var param2: String? = null
+    private val listaSolicitacoes = mutableListOf<Solicitacao>()
+    private val db = FirebaseFirestore.getInstance()
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.adm_tela_solic_pend, container, false)
+    }
 
-            arguments?.let {
-                param1 = it.getString(ARG_PARAM1)
-                param2 = it.getString(ARG_PARAM2)
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        recycler = view.findViewById(R.id.recyclerSolicitacoes)
+        btnPendentes = view.findViewById(R.id.tabPendentes)
+        btnUsuarios = view.findViewById(R.id.tabUsuarios)
+
+        btnPendentes.setOnClickListener {
+            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
         }
 
-        override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View? {
-            // Inflate the layout for this fragment
-            return inflater.inflate(R.layout.adm_tela_solic_pend, container, false)
+        btnUsuarios.setOnClickListener {
+            (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
         }
 
-        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-            super.onViewCreated(view, savedInstanceState)
+        recycler.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
-            recycler = view.findViewById(R.id.recyclerSolicitacoes)
-            btnPendentes = view.findViewById(R.id.tabPendentes)
-            btnUsuarios = view.findViewById(R.id.tabUsuarios)
+        PagerSnapHelper().attachToRecyclerView(recycler)
 
-            btnPendentes.setOnClickListener {
-                (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
+        carregarSolicitacoesPendentes()
+    }
+
+    private fun carregarSolicitacoesPendentes() {
+        db.collection("emprestimo")
+            .whereEqualTo("situacao", "pendente")
+            .get()
+            .addOnSuccessListener { docs ->
+                listaSolicitacoes.clear()
+
+                if (docs.isEmpty) {
+                    recycler.adapter = SolicitacaoAdapter(emptyList(), {}, {})
+                    return@addOnSuccessListener
+                }
+
+                for (doc in docs) {
+                    val idLivro = doc.getString("idLivro") ?: continue
+                    val idUsuario = doc.getString("idUsuario") ?: continue
+
+                    // buscar livro + usuário
+                    carregarLivroEUsuario(doc.id, idLivro, idUsuario)
+                }
             }
+    }
 
-            btnUsuarios.setOnClickListener {
-                (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
-            }
-            val solicitacoes = listOf(
-                Solicitacao(
-                    "Ciências da Computação", "Ername Rosa Martins",
-                    "Felipe Barroso", "felipebvm@gmail.com",
-                    "09 de Set", "12 de Set", "Balcão da Biblioteca",
-                    R.drawable.livro1
-                ),
-                Solicitacao(
-                    "Java Avançado", "Paul J. Deitel",
-                    "Lucas Silva", "lucas@gmail.com",
-                    "15 de Set", "18 de Set", "Balcão da Biblioteca",
-                    R.drawable.livro2
+    private fun carregarLivroEUsuario(
+        idEmprestimo: String,
+        idLivro: String,
+        idUsuario: String
+    ) {
+        val refLivros = db.collection("livros").document(idLivro)
+        val refUsers = db.collection("usuarios").document(idUsuario)
+
+        refLivros.get().addOnSuccessListener { livroDoc ->
+            val titulo = livroDoc.getString("titulo") ?: "Sem título"
+            val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
+            val imagem = livroDoc.getString("capa") ?: ""
+
+            refUsers.get().addOnSuccessListener { userDoc ->
+                val nomeUser = userDoc.getString("nome") ?: "Usuário"
+                val email = userDoc.getString("email") ?: "Email não encontrado"
+
+                val solicitacao = Solicitacao(
+                    titulo = titulo,
+                    autor = autor,
+                    usuario = nomeUser,
+                    email = email,
+                    data = "Hoje",
+                    prazo = "3 dias",
+                    local = "Biblioteca Central",
+                    capa = imagem,
                 )
-            )
 
-            recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            recycler.adapter = SolicitacaoAdapter(
-                solicitacoes,
-                onAutorizar = { solicitacao ->
-                    Toast.makeText(requireContext(), "Retirada autorizada para ${solicitacao.usuario}", Toast.LENGTH_SHORT).show()
-                },
-                onRecusar = { solicitacao ->
-                    Toast.makeText(requireContext(), "Solicitação recusada de ${solicitacao.usuario}", Toast.LENGTH_SHORT).show()
-                }
-            )
+                listaSolicitacoes.add(solicitacao)
 
-            // Faz parar um item por vez (scroll estilo “página”)
-            PagerSnapHelper().attachToRecyclerView(recycler)
-        }
-
-        companion object {
-            /**
-             * Use this factory method to create a new instance of
-             * this fragment using the provided parameters.
-             *
-             * @param param1 Parameter 1.
-             * @param param2 Parameter 2.
-             * @return A new instance of fragment BlankFragment.
-             */
-            // TODO: Rename and change types and number of parameters
-            @JvmStatic
-            fun newInstance(param1: String, param2: String) =
-                AdmTelaSolicPend().apply {
-                    arguments = Bundle().apply {
-                        putString(ARG_PARAM1, param1)
-                        putString(ARG_PARAM2, param2)
+                recycler.adapter = SolicitacaoAdapter(
+                    listaSolicitacoes,
+                    onAutorizar = {
+                        atualizarSituacaoEmprestimo(idEmprestimo, "aprovado")
+                    },
+                    onRecusar = {
+                        atualizarSituacaoEmprestimo(idEmprestimo, "negado")
                     }
-                }
+                )
+            }
         }
     }
+
+    private fun atualizarSituacaoEmprestimo(id: String, novaSituacao: String) {
+        db.collection("emprestimo").document(id)
+            .update("situacao", novaSituacao)
+            .addOnSuccessListener {
+                carregarSolicitacoesPendentes()
+            }
+    }
+
+}
