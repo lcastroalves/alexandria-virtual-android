@@ -4,13 +4,10 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
-import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Base64
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import com.example.alexandriavirtual20.model.Livro
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -39,7 +36,7 @@ class TelaInfoLivroUsu : AppCompatActivity  () {
         setContentView(R.layout.tela_info_livro_usu)
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        imagemLivro = findViewById(R.id.imagemLivro)
+        imagemLivro = findViewById(R.id.iconAdm)
         tituloLivro = findViewById(R.id.tituloLivro)
         subtitulo = findViewById(R.id.subtitulo)
         autorLivroSuperior = findViewById(R.id.autorLivroSuperior)

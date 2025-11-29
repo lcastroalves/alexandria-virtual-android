@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:id="@+id/imagemLivro"
+                android:id="@+id/iconAdm"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="30dp"
@@ -48,10 +48,10 @@
                 android:textColor="#247AE8"
                 android:textSize="14sp"
                 android:translationY="14dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imagemLivro"
+                app:layout_constraintBottom_toBottomOf="@+id/iconAdm"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imagemLivro"
-                app:layout_constraintTop_toTopOf="@+id/imagemLivro">
+                app:layout_constraintStart_toEndOf="@+id/iconAdm"
+                app:layout_constraintTop_toTopOf="@+id/iconAdm">
 
             </TextView>
 

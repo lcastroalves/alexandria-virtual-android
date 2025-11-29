@@ -10,7 +10,7 @@
 
 
         <ImageView
-            android:id="@+id/imagemLivro"
+            android:id="@+id/iconAdm"
             android:layout_width="141dp"
             android:layout_height="111dp"
             android:layout_marginStart="134dp"
@@ -34,7 +34,7 @@
             android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imagemLivro" />
+            app:layout_constraintTop_toBottomOf="@+id/iconAdm" />
 
 
     <com.google.android.material.card.MaterialCardView
