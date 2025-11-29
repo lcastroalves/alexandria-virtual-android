@@ -1,5 +1,6 @@
 package com.example.alexandriavirtual20
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageButton
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.LivroRetiradaAdapter
 import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaRetirarLivroUsu : AppCompatActivity() {
 
@@ -54,16 +57,46 @@ class TelaRetirarLivroUsu : AppCompatActivity() {
 
         btnConfirmar.setOnClickListener {
 
-            if (livroParaExibir == null) {
-                Toast.makeText(this, "Erro: Nenhum livro válido.", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(
-                    this,
-                    "Livro(s) solicitado(s) com sucesso!",
-                    Toast.LENGTH_SHORT
-                ).show()
-                finish()
+            val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+            if (userId == null) {
+                Toast.makeText(this, "Erro: usuário não autenticado.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
+
+            val livrosSelecionados = intent.getParcelableArrayListExtra<Livro>("livrosSelecionados")
+
+            if (livrosSelecionados.isNullOrEmpty()) {
+                Toast.makeText(this, "Nenhum livro para registrar.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            val db = FirebaseFirestore.getInstance()
+
+            livrosSelecionados.forEach { livro ->
+
+                val emprestimo = hashMapOf(
+                    "idLivro" to livro.id,
+                    "idUsuario" to userId,
+                    "prazo" to 0,
+                    "situacao" to "pendente"
+                )
+
+                db.collection("emprestimo")
+                    .add(emprestimo)
+                    .addOnSuccessListener {
+                        // Se quiser dar feedback, mas não é obrigatório
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Erro ao salvar: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+            }
+
+            Toast.makeText(this, "Solicitação enviada com sucesso!", Toast.LENGTH_LONG).show()
+            val intent = Intent(this, TelaSolicitaPendUsu::class.java)
+            startActivity(intent)
+            finish()
         }
+
     }
 }

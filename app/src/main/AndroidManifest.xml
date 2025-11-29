@@ -20,13 +20,13 @@
             android:exported="true" />
         <activity
             android:name=".AdmTelaHistoricoEmpres"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdmTelaAdicionarAdm"
             android:exported="true" />
         <activity
             android:name=".AdmInfoPessoais"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".AdmTelaCabReservHorEsp"
             android:exported="false" />
@@ -68,19 +68,19 @@
             android:exported="true" />
         <activity
             android:name=".TelaRedefinirSenha"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaConfirmReservaUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaCabDisponUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaHoraCabineUsu"
             android:exported="false" />
         <activity
             android:name=".TelaInformacoesUsu"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".TelaSolicitaPendUsu"
             android:exported="true" />
