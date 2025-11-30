@@ -61,31 +61,43 @@ class AdmTelaHistoricoEmpres : Fragment() {
 
         val livros = listOf(
             Solicitacao(
-                "Ciência da Computação",
-                "Ednaldo Rosa",
-                "Felipe Barroso",
-                "felipebvm@gmail.com",
-                "09 de Set",
-                "12 de Set",
-                "Balcão da Biblioteca",
-                "(R.drawable.livro1)"
+                idEmprestimo = "1",
+                titulo = "Ciência da Computação",
+                autor = "Ednaldo Rosa",
+                usuario = "Felipe Barroso",
+                email = "felipebvm@gmail.com",
+                data = "09 de Set",
+                prazo = "12 de Set",
+                local = "Balcão da Biblioteca",
+                capa = "" // coloque Base64 aqui caso queira exibir a imagem
             ),
-            Solicitacao( "Java como Programar", "Deitel", "Felipe Barroso", "felipebvm@gmail.com", "03 de Out", "08 de Out", "Balcão da Biblioteca", "R.drawable.livro2" )
+            Solicitacao(
+                idEmprestimo = "1",
+                titulo = "Java como Programar",
+                autor = "Deitel",
+                usuario = "Felipe Barroso",
+                email = "felipebvm@gmail.com",
+                data = "03 de Out",
+                prazo = "08 de Out",
+                local = "Balcão da Biblioteca",
+                capa = "" // coloque Base64 aqui também
+            )
         )
+
         recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         recycler.adapter = SolicitacaoAdapter(
             livros,
             onAutorizar = { livro ->
                 Toast.makeText(
                     requireContext(),
-                    "Livro devolvido: ${livro.titulo}",
+                    "Livro devolvido: Será corrigido",
                     Toast.LENGTH_SHORT
                 ).show()
             },
             onRecusar = { livro ->
                 Toast.makeText(
                     requireContext(),
-                    "Livro atrasado: ${livro.titulo}",
+                    "Livro atrasado: Será corrigido",
                     Toast.LENGTH_SHORT
                 ).show()
             })

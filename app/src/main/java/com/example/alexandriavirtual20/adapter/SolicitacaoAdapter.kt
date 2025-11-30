@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
 data class Solicitacao(
+    val idEmprestimo: String,
     val titulo: String,
     val autor: String,
     val usuario: String,
@@ -24,8 +25,8 @@ data class Solicitacao(
 
 class SolicitacaoAdapter(
     private val lista: List<Solicitacao>,
-    private val onAutorizar: (Solicitacao) -> Unit,
-    private val onRecusar: (Solicitacao) -> Unit
+    private val onAutorizar: (position: Int) -> Unit,
+    private val onRecusar: (position: Int) -> Unit
 ) : RecyclerView.Adapter<SolicitacaoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -69,8 +70,8 @@ class SolicitacaoAdapter(
         holder.txtPrazo.text = "Data limite: ${item.prazo}"
         holder.txtLocal.text = "Local: ${item.local}"
 
-        holder.btnAutorizar.setOnClickListener { onAutorizar(item) }
-        holder.btnRecusar.setOnClickListener { onRecusar(item) }
+        holder.btnAutorizar.setOnClickListener { onAutorizar(holder.adapterPosition) }
+        holder.btnRecusar.setOnClickListener { onRecusar(holder.adapterPosition) }
     }
 
     override fun getItemCount() = lista.size

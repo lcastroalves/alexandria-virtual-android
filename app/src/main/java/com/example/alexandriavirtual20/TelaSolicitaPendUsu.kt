@@ -3,7 +3,9 @@ package com.example.alexandriavirtual20
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 class TelaSolicitaPendUsu : AppCompatActivity() {
 
     private lateinit var btnVoltar: ImageButton
-    private lateinit var searchView: SearchView
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: SoliPendAdapter
 
@@ -27,10 +28,12 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
         setContentView(R.layout.tela_solicita_pend_usu)
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        searchView = findViewById(R.id.searchViewEventos)
         recyclerView = findViewById(R.id.recySoliPend)
 
-        adapter = SoliPendAdapter(listaEmprestimos)
+        adapter = SoliPendAdapter(listaEmprestimos) { item ->
+            confirmarDelecao(item)
+        }
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -39,23 +42,21 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
         }
 
         carregarEmprestimos()
-        configurarPesquisa()
     }
 
     private fun carregarEmprestimos() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
 
-        db.collection("emprestimo")                      // certifique-se do nome aqui
+        db.collection("emprestimo")
             .whereEqualTo("idUsuario", uid)
             .get()
             .addOnSuccessListener { documentos ->
                 listaEmprestimos.clear()
 
-                // filtra apenas os documentos com situacao pendente ou negado
                 val emprestimosValidos = documentos.documents.filter { doc ->
-                    val situacao = doc.getString("situacao") ?: ""
-                    situacao == "pendente" || situacao == "negado"
+                    val sit = doc.getString("situacao") ?: ""
+                    sit == "pendente" || sit == "negado"
                 }
 
                 if (emprestimosValidos.isEmpty()) {
@@ -63,12 +64,11 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                     return@addOnSuccessListener
                 }
 
-                // Para cada empréstimo válido, pega o idLivro (String) e busca o documento do livro
                 for (doc in emprestimosValidos) {
                     val situacao = doc.getString("situacao") ?: ""
                     val idLivro = doc.getString("idLivro") ?: continue
+                    val idEmprestimo = doc.id
 
-                    // busca o livro pela id
                     db.collection("livros").document(idLivro).get()
                         .addOnSuccessListener { livroDoc ->
                             if (!livroDoc.exists()) return@addOnSuccessListener
@@ -77,40 +77,49 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                             val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
                             val imagem = livroDoc.getString("capa") ?: ""
 
-                            val emprestimo = SoliPend(
-                                titulo = titulo,
-                                autor = autor,
-                                data = "Hoje",                // ajusta conforme sua lógica de datas
-                                prazo = "3 dias",             // ou pegue do doc do empréstimo
-                                local = "Biblioteca Central", // idem
-                                imagem = imagem,
-                                pendente = situacao == "pendente"
+                            listaEmprestimos.add(
+                                SoliPend(
+                                    idEmprestimo = idEmprestimo,
+                                    titulo = titulo,
+                                    autor = autor,
+                                    data = "Hoje",
+                                    prazo = "3 dias",
+                                    local = "Biblioteca Central",
+                                    imagem = imagem,
+                                    pendente = situacao == "pendente"
+                                )
                             )
 
-                            listaEmprestimos.add(emprestimo)
-
-                            // atualiza adapter à medida que chegam os livros
                             adapter.updateList(listaEmprestimos)
-                        }
-                        .addOnFailureListener {
-                            // opcional: log/Toast se falhar ao buscar o livro
                         }
                 }
             }
+    }
+
+    private fun confirmarDelecao(item: SoliPend) {
+        AlertDialog.Builder(this)
+            .setTitle("Excluir solicitação")
+            .setMessage("Deseja realmente excluir a solicitação de \"${item.titulo}\"?")
+            .setPositiveButton("Sim") { _, _ ->
+                deletarEmprestimo(item)
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
+
+    private fun deletarEmprestimo(item: SoliPend) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("emprestimo")
+            .document(item.idEmprestimo)
+            .delete()
+            .addOnSuccessListener {
+                adapter.removerSoliPend(item)
+                Toast.makeText(this, "Solicitação removida.", Toast.LENGTH_SHORT).show()
+            }
             .addOnFailureListener {
-                // opcional: tratar erro
+                Toast.makeText(this, "Erro ao remover.", Toast.LENGTH_SHORT).show()
             }
     }
 
-
-    private fun configurarPesquisa() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?) = false
-
-            override fun onQueryTextChange(text: String?): Boolean {
-                adapter.filtrar(text ?: "")
-                return true
-            }
-        })
-    }
 }

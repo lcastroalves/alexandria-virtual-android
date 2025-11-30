@@ -13,17 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
 data class SoliPend(
+    val idEmprestimo: String,     // <-- ADICIONADO
     val titulo: String,
     val autor: String,
     val data: String,
     val prazo: String,
     val local: String,
-    val imagem: String,  // agora é Base64
+    val imagem: String,
     var pendente: Boolean
 )
 
 class SoliPendAdapter(
-    private var soliPends: MutableList<SoliPend>
+    private var soliPends: MutableList<SoliPend>,
+    private val onDeleteClick: (SoliPend) -> Unit    // <-- callback
 ) : RecyclerView.Adapter<SoliPendAdapter.ViewHolder>() {
 
     private var listaFiltrada = soliPends.toMutableList()
@@ -45,26 +47,22 @@ class SoliPendAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val soli = listaFiltrada[position]
 
-        // ------------------------------
-        // IMAGEM BASE64 → BITMAP
-        // ------------------------------
+        // imagem Base64
         if (soli.imagem.isNotEmpty()) {
             try {
                 val bytes = Base64.decode(soli.imagem, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                holder.imagem.setImageBitmap(bitmap)
+                val bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                holder.imagem.setImageBitmap(bmp)
             } catch (e: Exception) {
                 holder.imagem.setImageResource(R.drawable.no_image)
             }
-        } else {
-            holder.imagem.setImageResource(R.drawable.no_image)
-        }
+        } else holder.imagem.setImageResource(R.drawable.no_image)
 
-        // Texto
+        // textos
         holder.nome.text = soli.titulo
         holder.autor.text = soli.autor
 
-        // Situação do empréstimo
+        // situação
         if (soli.pendente) {
             holder.pendenteImagem.setImageResource(R.drawable.relogio)
             holder.btnOk.visibility = INVISIBLE
@@ -73,7 +71,7 @@ class SoliPendAdapter(
             holder.btnOk.visibility = View.VISIBLE
 
             holder.btnOk.setOnClickListener {
-                removerSoliPend(soli)
+                onDeleteClick(soli)   // <-- chama o callback
             }
         }
     }
@@ -81,8 +79,8 @@ class SoliPendAdapter(
     override fun getItemCount(): Int = listaFiltrada.size
 
     fun updateList(list: MutableList<SoliPend>) {
-        this.soliPends = list
-        this.listaFiltrada = list.toMutableList()
+        soliPends = list
+        listaFiltrada = list.toMutableList()
         notifyDataSetChanged()
     }
 
