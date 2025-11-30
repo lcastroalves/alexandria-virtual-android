@@ -144,7 +144,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
 
         val emprestimosRef = fireBase.collection("emprestimo")
             .whereEqualTo("idUsuario", userId)
-            .whereIn("situacao", listOf("pendente", "aceito"))
+            .whereIn("situacao", listOf("pendente", "aprovado"))
 
         emprestimosRef.get()
             .addOnSuccessListener { emprestimos ->

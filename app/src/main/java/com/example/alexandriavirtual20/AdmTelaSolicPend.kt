@@ -93,6 +93,7 @@ class AdmTelaSolicPend : Fragment() {
                 val email = userDoc.getString("email") ?: "Email não encontrado"
 
                 val solicitacao = Solicitacao(
+                    idEmprestimo = idEmprestimo,
                     titulo = titulo,
                     autor = autor,
                     usuario = nomeUser,
@@ -107,23 +108,63 @@ class AdmTelaSolicPend : Fragment() {
 
                 recycler.adapter = SolicitacaoAdapter(
                     listaSolicitacoes,
-                    onAutorizar = {
+                    onAutorizar = { position ->
+                        val item = listaSolicitacoes[position]
                         atualizarSituacaoEmprestimo(idEmprestimo, "aprovado")
+                        removerItemDaLista(position)
                     },
-                    onRecusar = {
+                    onRecusar = { position ->
+                        val item = listaSolicitacoes[position]
                         atualizarSituacaoEmprestimo(idEmprestimo, "negado")
+                        removerItemDaLista(position)
                     }
                 )
+
             }
         }
     }
 
     private fun atualizarSituacaoEmprestimo(id: String, novaSituacao: String) {
-        db.collection("emprestimo").document(id)
-            .update("situacao", novaSituacao)
-            .addOnSuccessListener {
+
+        val ref = db.collection("emprestimo").document(id)
+
+        // Se o admin aprovar → adicionar prazo de 30 dias
+        if (novaSituacao == "aprovado") {
+
+            val agora = com.google.firebase.Timestamp.now()
+
+            val dataPrazo = java.util.Calendar.getInstance().apply {
+                time = agora.toDate()
+                add(java.util.Calendar.DAY_OF_YEAR, 30)
+            }.time
+
+            ref.update(
+                mapOf(
+                    "situacao" to novaSituacao,
+                    "prazo" to com.google.firebase.Timestamp(dataPrazo)
+                )
+            ).addOnSuccessListener {
                 carregarSolicitacoesPendentes()
+            }.addOnFailureListener {
+                it.printStackTrace()
             }
+
+        } else {
+            // Se negado → apenas atualiza situação
+            ref.update("situacao", novaSituacao)
+                .addOnSuccessListener {
+                    carregarSolicitacoesPendentes()
+                }
+                .addOnFailureListener {
+                    it.printStackTrace()
+                }
+        }
     }
+
+    private fun removerItemDaLista(position: Int) {
+        listaSolicitacoes.removeAt(position)
+        recycler.adapter?.notifyItemRemoved(position)
+    }
+
 
 }
