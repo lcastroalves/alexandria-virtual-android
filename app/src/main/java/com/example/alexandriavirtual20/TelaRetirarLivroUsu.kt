@@ -79,7 +79,8 @@ class TelaRetirarLivroUsu : AppCompatActivity() {
                     "idLivro" to livro.id,
                     "idUsuario" to userId,
                     "prazo" to 0,
-                    "situacao" to "pendente"
+                    "situacao" to "pendente",
+                    "dataSolicitacao" to com.google.firebase.Timestamp.now()
                 )
 
                 db.collection("emprestimo")

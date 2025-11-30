@@ -21,9 +21,8 @@ data class SoliPend(
     val local: String,
     val imagem: String,
     var pendente: Boolean,
-
-    val avaliacao: Double = 0.0,        // ⭐ média
-    val qtdAvaliacoes: Int = 0          // número de avaliações
+    val avaliacao: Double = 0.0,
+    val qtdAvaliacoes: Int = 0
 )
 
 

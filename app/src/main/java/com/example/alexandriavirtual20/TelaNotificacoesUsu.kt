@@ -96,7 +96,7 @@ class TelaNotificacoesUsu : AppCompatActivity() {
 
                 val notificacao = Notificacao(
                     nome = document.getString("nome") ?: "",
-                    data = document.getString("data") ?: "",
+                    data = java.text.SimpleDateFormat("dd/MM/yyyy").format(millisPrazo),
                     imagem = document.getString("imagem") ?: "",
                     tipo = document.getString("tipo") ?: "",
                     prazo = prazoInt,
