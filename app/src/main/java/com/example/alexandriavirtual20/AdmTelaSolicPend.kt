@@ -11,15 +11,12 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.Solicitacao
 import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
-import com.google.firebase.firestore.FieldValue
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Date
 
 class AdmTelaSolicPend : Fragment() {
 
     private lateinit var recycler: RecyclerView
-    private lateinit var btnPendentes: TextView
-    private lateinit var btnUsuarios: TextView
     private lateinit var adapter: SolicitacaoAdapter
     private val listaSolicitacoes = mutableListOf<Solicitacao>()
     private val db = FirebaseFirestore.getInstance()
@@ -27,7 +24,7 @@ class AdmTelaSolicPend : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         return inflater.inflate(R.layout.adm_tela_solic_pend, container, false)
     }
 
@@ -35,44 +32,29 @@ class AdmTelaSolicPend : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         recycler = view.findViewById(R.id.recyclerSolicitacoes)
-        btnPendentes = view.findViewById(R.id.tabPendentes)
-        btnUsuarios = view.findViewById(R.id.tabUsuarios)
-
-        btnPendentes.setOnClickListener {
-            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
-        }
-
-        btnUsuarios.setOnClickListener {
-            (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
-        }
-
         recycler.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         PagerSnapHelper().attachToRecyclerView(recycler)
 
-        // cria adaptor uma vez
+        // ★ Navegação corrigida
+        view.findViewById<TextView>(R.id.tabPendentes).setOnClickListener { }
+        view.findViewById<TextView>(R.id.tabUsuarios).setOnClickListener {
+            (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
+        }
+
         adapter = SolicitacaoAdapter(
             listaSolicitacoes,
             onAutorizar = { item ->
-                atualizarSituacaoEmprestimo(
-                    idEmprestimo = item.idEmprestimo,
-                    idUsuario = item.idUsuario,
-                    idLivro = item.idLivro,
-                    aprovado = true
-                )
+                atualizarSituacaoEmprestimo(item, true)
                 adapter.removerItem(item)
             },
             onRecusar = { item ->
-                atualizarSituacaoEmprestimo(
-                    idEmprestimo = item.idEmprestimo,
-                    idUsuario = item.idUsuario,
-                    idLivro = item.idLivro,
-                    aprovado = false
-                )
+                atualizarSituacaoEmprestimo(item, false)
                 adapter.removerItem(item)
             }
         )
+
         recycler.adapter = adapter
 
         carregarSolicitacoesPendentes()
@@ -86,37 +68,41 @@ class AdmTelaSolicPend : Fragment() {
                 listaSolicitacoes.clear()
                 adapter.notifyDataSetChanged()
 
-                if (docs.isEmpty) return@addOnSuccessListener
-
                 for (doc in docs) {
+
                     val idLivro = doc.getString("idLivro") ?: continue
                     val idUsuario = doc.getString("idUsuario") ?: continue
+
+                    val dataSolicitacao =
+                        doc.getTimestamp("dataSolicitacao")?.toDate()?.time ?: 0L
 
                     carregarLivroEUsuario(
                         idEmprestimo = doc.id,
                         idLivro = idLivro,
-                        idUsuario = idUsuario
+                        idUsuario = idUsuario,
+                        dataSolicitacao = dataSolicitacao
                     )
                 }
             }
-            .addOnFailureListener { it.printStackTrace() }
     }
 
     private fun carregarLivroEUsuario(
         idEmprestimo: String,
         idLivro: String,
-        idUsuario: String
+        idUsuario: String,
+        dataSolicitacao: Long
     ) {
         val refLivros = db.collection("livros").document(idLivro)
-        val refUsers = db.collection("usuarios").document(idUsuario)
+        val refUsers = db.collection("usuario").document(idUsuario)
 
-        refLivros.get().addOnSuccessListener { livroDoc ->
-            val titulo = livroDoc.getString("titulo") ?: "Sem título"
-            val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
-            val imagem = livroDoc.getString("capa") ?: ""
+        refLivros.get().addOnSuccessListener { livro ->
+            val titulo = livro.getString("titulo") ?: "Sem título"
+            val autor = livro.getString("autor") ?: "Autor desconhecido"
+            val capa = livro.getString("capa") ?: ""
 
             refUsers.get().addOnSuccessListener { userDoc ->
-                val nomeUser = userDoc.getString("nome") ?: "Usuário"
+
+                val usuarioNome = userDoc.getString("nome") ?: "Usuário"
                 val email = userDoc.getString("email") ?: "E-mail"
 
                 val solicitacao = Solicitacao(
@@ -125,12 +111,12 @@ class AdmTelaSolicPend : Fragment() {
                     idUsuario = idUsuario,
                     titulo = titulo,
                     autor = autor,
-                    usuario = nomeUser,
+                    usuario = usuarioNome,
                     email = email,
-                    data = "Hoje",
+                    dataSolicitacao = dataSolicitacao,
                     prazo = "3 dias",
                     local = "Biblioteca Central",
-                    capa = imagem
+                    capa = capa
                 )
 
                 listaSolicitacoes.add(solicitacao)
@@ -139,17 +125,15 @@ class AdmTelaSolicPend : Fragment() {
         }
     }
 
+    // ★★★★★ AQUI SAI A NOTIFICAÇÃO QUANDO O ADMIN APROVA ★★★★★
     private fun atualizarSituacaoEmprestimo(
-        idEmprestimo: String,
-        idUsuario: String,
-        idLivro: String,
+        item: Solicitacao,
         aprovado: Boolean
     ) {
-        val ref = db.collection("emprestimo").document(idEmprestimo)
+        val ref = db.collection("emprestimo").document(item.idEmprestimo)
 
         if (aprovado) {
-
-            val agora = com.google.firebase.Timestamp.now()
+            val agora = Timestamp.now()
 
             val dataPrazo = java.util.Calendar.getInstance().apply {
                 time = agora.toDate()
@@ -159,63 +143,32 @@ class AdmTelaSolicPend : Fragment() {
             ref.update(
                 mapOf(
                     "situacao" to "aprovado",
-                    "prazo" to com.google.firebase.Timestamp(dataPrazo)
+                    "prazo" to Timestamp(dataPrazo)
                 )
-            ).addOnSuccessListener {
-                criarNotificacaoDeDevolucao(idUsuario, idLivro, dataPrazo)
-                carregarSolicitacoesPendentes()
-            }
+            )
+
+            // ★ CRIA NOTIFICAÇÃO PARA O USUÁRIO
+            criarNotificacaoAprovado(item)
 
         } else {
             ref.update("situacao", "negado")
-                .addOnSuccessListener {
-                    carregarSolicitacoesPendentes()
-                }
         }
     }
 
-    private fun criarNotificacaoDeDevolucao(idUsuario: String, idLivro: String, dataPrazo: Date) {
+    // ★★★ Função que cria a notificação (como a do evento) ★★★
+    private fun criarNotificacaoAprovado(item: Solicitacao) {
 
-        val userRef = db.collection("usuario")
-            .document(idUsuario)
-            .collection("notificacoes")
-
-        db.collection("livros").document(idLivro).get()
-            .addOnSuccessListener { livroDoc ->
-                val nomeLivro = livroDoc.getString("titulo") ?: "Livro"
-                val imagemLivro = livroDoc.getString("capa") ?: ""
-
-                val dataFormatada =
-                    java.text.SimpleDateFormat("dd/MM/yyyy").format(dataPrazo)
-    fun autorizarRetirada(idEmprestimo: String) {
-        val firestore = FirebaseFirestore.getInstance()
-
-        val atualizacoes = hashMapOf<String, Any>(
-            "situacao" to "aprovado",
-            "data" to FieldValue.serverTimestamp(), // 🌟 CRIA O CAMPO 'data' COM O TIMESTAMP ATUAL DO SERVIDOR
-            "statusDevolucao" to "Em dia" // Opcional: define um status inicial para o Histórico
+        val notificacao = hashMapOf(
+            "tipo" to "emprestimo",
+            "nome" to item.titulo,
+            "dataSolicitacao" to item.dataSolicitacao,
+            "prazo" to System.currentTimeMillis() + (30L * 24 * 60 * 60 * 1000),
+            "imagem" to item.capa
         )
 
-        firestore.collection("emprestimo").document(idEmprestimo)
-            .update(atualizacoes)
-            .addOnSuccessListener {
-                // Sucesso na aprovação e criação do campo 'data'
-            }
-            .addOnFailureListener { e ->
-                // Tratar erro
-            }
-    }
-
-                val notificacao = hashMapOf(
-                    "nome" to nomeLivro,
-                    "tipo" to "devolução",
-                    "data" to dataFormatada,
-                    "imagem" to imagemLivro,
-                    "mensagem" to "",
-                    "prazo" to dataPrazo.time
-                )
-
-                userRef.add(notificacao)
-            }
+        db.collection("usuario")
+            .document(item.idUsuario)
+            .collection("notificacoes")
+            .add(notificacao)
     }
 }

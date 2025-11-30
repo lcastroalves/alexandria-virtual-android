@@ -10,8 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// === DATA CLASS COMPLETO E CORRIGIDO ===
 data class Solicitacao(
     val idEmprestimo: String,
     val idLivro: String,
@@ -20,10 +21,10 @@ data class Solicitacao(
     val autor: String,
     val usuario: String,
     val email: String,
-    val data: String,
+    val dataSolicitacao: Long, // ⬅ timestamp vindo do Firestore
     val prazo: String,
     val local: String,
-    val capa: String   // Base64
+    val capa: String
 )
 
 class SolicitacaoAdapter(
@@ -34,6 +35,7 @@ class SolicitacaoAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imgLivro: ImageView = view.findViewById(R.id.imgLivro)
+        val txtData: TextView = view.findViewById(R.id.txtData)
         val txtTitulo: TextView = view.findViewById(R.id.txtTituloLivro)
         val txtAutor: TextView = view.findViewById(R.id.txtAutor)
         val txtUsuario: TextView = view.findViewById(R.id.txtUsuario)
@@ -55,7 +57,7 @@ class SolicitacaoAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = lista[position]
 
-        // IMAGEM BASE64
+        // === IMAGEM BASE64 ===
         if (item.capa.isNotEmpty()) {
             try {
                 val bytes = Base64.decode(item.capa, Base64.DEFAULT)
@@ -67,11 +69,16 @@ class SolicitacaoAdapter(
             holder.imgLivro.setImageResource(R.drawable.no_image)
         }
 
+        // === FORMATAR DATA ===
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dataFormatada = sdf.format(item.dataSolicitacao)
+
+        holder.txtData.text = dataFormatada
         holder.txtTitulo.text = item.titulo
         holder.txtAutor.text = "Autor: ${item.autor}"
         holder.txtUsuario.text = "Usuário: ${item.usuario}"
         holder.txtEmail.text = "Email: ${item.email}"
-        holder.txtPrazo.text = "Data limite: ${item.prazo}"
+        holder.txtPrazo.text = "Prazo: ${item.prazo}"
         holder.txtLocal.text = "Local: ${item.local}"
 
         holder.btnAutorizar.setOnClickListener { onAutorizar(item) }

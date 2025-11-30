@@ -10,8 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.SoliPend
 import com.example.alexandriavirtual20.adapter.SoliPendAdapter
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class TelaSolicitaPendUsu : AppCompatActivity() {
 
@@ -51,6 +54,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
             .whereEqualTo("idUsuario", uid)
             .get()
             .addOnSuccessListener { documentos ->
+
                 listaEmprestimos.clear()
 
                 val emprestimosValidos = documentos.documents.filter { doc ->
@@ -69,7 +73,18 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                     val idLivro = doc.getString("idLivro") ?: continue
                     val idEmprestimo = doc.id
 
-                    db.collection("livros").document(idLivro).get()
+                    /** 🔥 Correção aqui: dataSolicitacao é Timestamp */
+                    val timestamp = doc.getTimestamp("dataSolicitacao")
+                    val dataFormatada = if (timestamp != null) {
+                        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+                        sdf.format(timestamp.toDate())
+                    } else {
+                        "Data não informada"
+                    }
+
+                    db.collection("livros")
+                        .document(idLivro)
+                        .get()
                         .addOnSuccessListener { livroDoc ->
 
                             if (!livroDoc.exists()) return@addOnSuccessListener
@@ -78,24 +93,25 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                             val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
                             val imagem = livroDoc.getString("capa") ?: ""
 
-                            // 🔥 AVALIAÇÃO DO LIVRO – EXATAMENTE COMO NO LIVROADAPTER
-                            val avaliacaoTotal = livroDoc.getDouble("avaliacao") ?: 0.0
-                            val qtdAvaliacoes = livroDoc.getLong("qtdAvaliacoes") ?: 0
+                            val mediaAvaliacao = livroDoc.getDouble("mediaAvaliacao") ?: 0.0
+                            val totalAvaliacoes = livroDoc.getLong("totalAvaliacoes") ?: 0
 
-                            val mediaAvaliacao =
-                                if (qtdAvaliacoes > 0) avaliacaoTotal / qtdAvaliacoes else 0.0
+                            // arredondar para 1 casa
+                            val mediaArredondada =
+                                String.format("%.1f", mediaAvaliacao).replace(",", ".").toDouble()
 
                             listaEmprestimos.add(
                                 SoliPend(
                                     idEmprestimo = idEmprestimo,
                                     titulo = titulo,
                                     autor = autor,
-                                    data = doc.getString("dataSolicitacao") ?: "Data não informada",
+                                    data = dataFormatada,  // ✅ AGORA CORRETO
                                     prazo = "3 dias",
                                     local = "Biblioteca Central",
                                     imagem = imagem,
                                     pendente = situacao == "pendente",
-                                    avaliacao = mediaAvaliacao  // ⭐ agora vem com média
+                                    avaliacao = mediaArredondada,
+                                    qtdAvaliacoes = totalAvaliacoes.toInt()
                                 )
                             )
 
