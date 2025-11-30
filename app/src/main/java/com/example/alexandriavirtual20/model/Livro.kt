@@ -22,6 +22,7 @@ data class Livro(
 
     val mediaAvaliacao: Double = 0.0,
     val totalAvaliacoes: Long = 0,
+    var dataEmprestimo: Long = 0L
 
     ) : Parcelable {
 
@@ -48,7 +49,8 @@ data class Livro(
         isSelected = isSelected,
 
         mediaAvaliacao = 0.0,
-        totalAvaliacoes = 0L // Use L para Long
+        totalAvaliacoes = 0L// Use L para Long
+
     )
 
     // construtor padrao (Parcelable)
