@@ -1,41 +1,44 @@
 package com.example.alexandriavirtual20
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.example.alexandriavirtual20.adapter.Solicitacao
-import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
+import com.example.alexandriavirtual20.model.HistoricoEmprestimo
+import com.example.alexandriavirtual20.adapter.HistoricoEmprestimoAdapter
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
+import com.google.firebase.firestore.QueryDocumentSnapshot
+import java.text.SimpleDateFormat
+import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+// Definições de Argumentos (mantidas do seu template original)
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AdmTelaHistoricoEmpres.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AdmTelaHistoricoEmpres : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private val TAG = "AdmHistorico"
+    private val db = FirebaseFirestore.getInstance()
+    private var firebaseListener: ListenerRegistration? = null
+
+    // Lista final que alimenta o Adapter
+    private val listaHistorico = mutableListOf<HistoricoEmprestimo>()
+    private lateinit var adapter: HistoricoEmprestimoAdapter
+
+    private var documentosPendentes = 0
+    private var documentosProcessados = 0
+    // Formato de data para exibir (Ex: "09 de Set")
+    private val dateFormat = SimpleDateFormat("dd 'de' MMM", Locale("pt", "BR"))
+
+    // ... (onCreate e métodos de argumento padrão omitidos por brevidade)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,76 +55,142 @@ class AdmTelaHistoricoEmpres : Fragment() {
         val tabPendentes = view.findViewById<TextView>(R.id.tabPendentes)
         val tabUsuarios = view.findViewById<TextView>(R.id.tabUsuarios)
 
+        // Configuração das abas para navegação
         tabPendentes.setOnClickListener {
-            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
+            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend()) // Exemplo: Navegar para Pendentes
         }
         tabUsuarios.setOnClickListener {
-            (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
+            // Este fragmento já é o Histórico, então esta ação pode ser removida ou alterada
+            // (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
         }
 
-        val livros = listOf(
-            Solicitacao(
-                idEmprestimo = "1",
-                titulo = "Ciência da Computação",
-                autor = "Ednaldo Rosa",
-                usuario = "Felipe Barroso",
-                email = "felipebvm@gmail.com",
-                data = "09 de Set",
-                prazo = "12 de Set",
-                local = "Balcão da Biblioteca",
-                capa = "" // coloque Base64 aqui caso queira exibir a imagem
-            ),
-            Solicitacao(
-                idEmprestimo = "1",
-                titulo = "Java como Programar",
-                autor = "Deitel",
-                usuario = "Felipe Barroso",
-                email = "felipebvm@gmail.com",
-                data = "03 de Out",
-                prazo = "08 de Out",
-                local = "Balcão da Biblioteca",
-                capa = "" // coloque Base64 aqui também
-            )
-        )
-
-        recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        recycler.adapter = SolicitacaoAdapter(
-            livros,
-            onAutorizar = { livro ->
-                Toast.makeText(
-                    requireContext(),
-                    "Livro devolvido: Será corrigido",
-                    Toast.LENGTH_SHORT
-                ).show()
+        // 🌟 Inicialização do Adapter com as ações de Histórico (Devolução/Atraso)
+        adapter = HistoricoEmprestimoAdapter(
+            listaHistorico,
+            onDevolver = { item ->
+                Toast.makeText(requireContext(), "Confirmando devolução de ${item.titulo}", Toast.LENGTH_SHORT).show()
+                // Chamada para função de atualização do status no Firestore
+                // updateStatusEmprestimo(item.idDocumento, "Devolvido")
             },
-            onRecusar = { livro ->
-                Toast.makeText(
-                    requireContext(),
-                    "Livro atrasado: Será corrigido",
-                    Toast.LENGTH_SHORT
-                ).show()
+            onAtrasar = { item ->
+                Toast.makeText(requireContext(), "Registrando Atraso para ${item.titulo}", Toast.LENGTH_SHORT).show()
+                // Chamada para função de atualização do status no Firestore
+                // updateStatusEmprestimo(item.idDocumento, "Atrasado")
             })
 
+        recycler.adapter = adapter
+        // Configuração do RecyclerView para deslizar de tela cheia (PagerSnapHelper)
+        recycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         PagerSnapHelper().attachToRecyclerView(recycler)
+
+        // Carrega os dados do Firebase
+        carregarHistoricoEmprestimos()
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AdmTelaHistoricoEmpres.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AdmTelaHistoricoEmpres().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        firebaseListener?.remove()
+    }
+
+    private fun carregarHistoricoEmprestimos() {
+        firebaseListener?.remove()
+
+        // 1. Busca todos os empréstimos onde 'situacao' é "aprovado"
+        firebaseListener = db.collection("emprestimo")
+            .whereEqualTo("situacao", "aprovado")
+            .addSnapshotListener { snapshots, error ->
+
+                if (error != null || snapshots == null) {
+                    Log.e(TAG, "Erro ao carregar histórico: ${error?.message}")
+                    return@addSnapshotListener
+                }
+
+                documentosProcessados = 0
+                documentosPendentes = snapshots.size()
+                listaHistorico.clear()
+
+                if (snapshots.isEmpty) {
+                    adapter.notifyDataSetChanged()
+                    return@addSnapshotListener
+                }
+
+                snapshots.forEach { doc ->
+                    val idLivro = doc.getString("idLivro")
+                    val idUsuario = doc.getString("idUsuario")
+
+                    if (idLivro != null && idUsuario != null) {
+                        // Inicia o processo de busca tripla
+                        carregarDetalhes(doc.id, idLivro, idUsuario, doc)
+                    } else {
+                        // Conta documentos incompletos (sem ID) para garantir a atualização final
+                        processarFinalizar()
+                    }
                 }
             }
+    }
+
+    // 2 & 3. Função de busca tripla (Livro e Usuário)
+    private fun carregarDetalhes(
+        idEmprestimo: String,
+        idLivro: String,
+        idUsuario: String,
+        emprestimoDoc: QueryDocumentSnapshot
+    ) {
+        val refLivros = db.collection("livros").document(idLivro)
+        val refUsers = db.collection("usuario").document(idUsuario)
+
+        refLivros.get().addOnSuccessListener { livroDoc ->
+            val titulo = livroDoc.getString("titulo") ?: "Sem título"
+            val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
+            val capa = livroDoc.getString("capa") ?: "" // 🌟 2. URL/Base64 da Capa
+
+            refUsers.get().addOnSuccessListener { userDoc ->
+                val nomeUser = userDoc.getString("nome") ?: "Usuário Desconhecido"
+                val email = userDoc.getString("email") ?: "Email não encontrado"
+
+                // Extrai e formata os dados do Empréstimo
+                val dataPrevistaDevolucao = emprestimoDoc.getTimestamp("prazo")?.toDate()
+                val dataEmprestimo = emprestimoDoc.getTimestamp("data")?.toDate() // 🌟 Assumindo campo 'data' para a Data de Retirada
+                val statusDevolucao = emprestimoDoc.getString("statusDevolucao") ?: "Em dia"
+
+                // Formatação das datas
+                val dataEmpStr = dataEmprestimo?.let { dateFormat.format(it) } ?: "S/ Data" // 🌟 Data de Retirada
+                val prazoStr = dataPrevistaDevolucao?.let { dateFormat.format(it) } ?: "S/ Prazo"
+
+                val dataEmpFixa = "30 de Nov"
+
+                val historicoItem = HistoricoEmprestimo(
+                    idDocumento = idEmprestimo,
+                    idLivro = idLivro,
+                    idUsuario = idUsuario,
+                    dataEmprestimo = dataEmpFixa,        // 🌟 Data Retirada (09 de Set)
+                    dataPrevistaDevolucao = prazoStr,
+                    statusDevolucao = statusDevolucao,
+                    titulo = titulo,
+                    autor = autor,
+                    capa = capa,
+                    nomeUsuario = nomeUser,               // 🌟 1. Nome do Responsável
+                    emailUsuario = email                  // 🌟 1. Email do Responsável
+                )
+
+                listaHistorico.add(historicoItem)
+                processarFinalizar()
+
+            }.addOnFailureListener {
+                Log.w(TAG, "Falha ao buscar usuário $idUsuario", it)
+                processarFinalizar()
+            }
+        }.addOnFailureListener {
+            Log.w(TAG, "Falha ao buscar livro $idLivro", it)
+            processarFinalizar()
+        }
+    }
+
+    // Garante que o adapter só seja notificado após o processamento de todos os documentos
+    private fun processarFinalizar() {
+        documentosProcessados++
+        if (documentosProcessados == documentosPendentes) {
+            adapter.notifyDataSetChanged()
+        }
     }
 }

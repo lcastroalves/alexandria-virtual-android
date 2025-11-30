@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.Solicitacao
 import com.example.alexandriavirtual20.adapter.SolicitacaoAdapter
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class AdmTelaSolicPend : Fragment() {
@@ -164,6 +165,24 @@ class AdmTelaSolicPend : Fragment() {
     private fun removerItemDaLista(position: Int) {
         listaSolicitacoes.removeAt(position)
         recycler.adapter?.notifyItemRemoved(position)
+    }
+    fun autorizarRetirada(idEmprestimo: String) {
+        val firestore = FirebaseFirestore.getInstance()
+
+        val atualizacoes = hashMapOf<String, Any>(
+            "situacao" to "aprovado",
+            "data" to FieldValue.serverTimestamp(), // 🌟 CRIA O CAMPO 'data' COM O TIMESTAMP ATUAL DO SERVIDOR
+            "statusDevolucao" to "Em dia" // Opcional: define um status inicial para o Histórico
+        )
+
+        firestore.collection("emprestimo").document(idEmprestimo)
+            .update(atualizacoes)
+            .addOnSuccessListener {
+                // Sucesso na aprovação e criação do campo 'data'
+            }
+            .addOnFailureListener { e ->
+                // Tratar erro
+            }
     }
 
 
