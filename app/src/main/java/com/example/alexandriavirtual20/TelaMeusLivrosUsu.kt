@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.LivroAdapterMeus
 import com.example.alexandriavirtual20.model.Livro
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration // Para gerenciar o listener
 
@@ -90,45 +91,62 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
      * Aqui, estamos buscando todos os livros da coleção 'livros' por semelhança com a tela Admin.
      */
     private fun carregarLivros() {
-        // Remove o listener anterior, se houver
-        firestoreListener?.remove()
 
-        // Adiciona um novo listener em tempo real
-        firestoreListener = firestore.collection("livros")
-            .addSnapshotListener { snapshots, e ->
-                if (e != null) {
-                    Log.w(TAG, "Erro ao ouvir snapshots de livros: ", e)
-                    Toast.makeText(this, "Erro ao carregar livros.", Toast.LENGTH_SHORT).show()
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+            ?: return Toast.makeText(this, "Erro ao obter usuário autenticado", Toast.LENGTH_SHORT).show()
+
+        firestore.collection("emprestimo")
+            .whereEqualTo("idUsuario", uid)
+            .whereEqualTo("situacao", "aprovado")
+            .addSnapshotListener { emprestimosSnap, error ->
+
+                if (error != null) {
+                    Log.e(TAG, "Erro ao carregar emprestimos", error)
                     return@addSnapshotListener
                 }
 
-                if (snapshots != null) {
-                    listaOriginal.clear()
+                listaOriginal.clear()
+                listaFiltrada.clear()
 
-                    // Mapeia os documentos para o modelo Livro
-                    for (doc in snapshots.documents) {
-                        // Certifique-se de que o Livro está sendo mapeado com o ID
-                        val livro = Livro(
-                            id = doc.id, // O ID do documento é crucial para telas de detalhes/avaliação
-                            titulo = doc.getString("titulo") ?: "",
-                            autor = doc.getString("autor") ?: "",
-                            capa = doc.getString("capa") ?: "",
-                            anoLancamento = doc.getString("anoLancamento")?: ""
-                            // Adicione outros campos necessários
-                            // ex: anoLancamento = doc.getString("anoLancamento") ?: ""
-                            // Note: Você pode precisar ajustar a chamada 'Livro()' se seu construtor exigir todos os campos.
-                        )
-                        listaOriginal.add(livro)
-                    }
+                // Caso não tenha empréstimos aprovados
+                if (emprestimosSnap == null || emprestimosSnap.isEmpty) {
+                    adapter.notifyDataSetChanged()
+                    txtProgresso.text = "0/0"
+                    return@addSnapshotListener
+                }
 
-                    // Reaplicar o filtro atual (ou o padrão) após carregar os novos dados
-                    aplicarFiltro("alugados")
+                val total = emprestimosSnap.size()
 
-                    // Atualiza o texto de progresso
-                    txtProgresso.text = "${listaOriginal.size}/12"
+                for (doc in emprestimosSnap.documents) {
+                    val idLivro = doc.getString("idLivro") ?: continue
+                    val dataEmp = doc.getTimestamp("data")?.toDate()?.time ?: 0L
+
+                    firestore.collection("livros").document(idLivro).get()
+                        .addOnSuccessListener { livroDoc ->
+
+                            if (livroDoc.exists()) {
+
+                                val livro = Livro(
+                                    id = livroDoc.id,
+                                    titulo = livroDoc.getString("titulo") ?: "",
+                                    autor = livroDoc.getString("autor") ?: "",
+                                    capa = livroDoc.getString("capa") ?: "",
+                                    anoLancamento = livroDoc.getString("anoLancamento") ?: "",
+                                    dataEmprestimo = dataEmp
+                                )
+
+                                listaOriginal.add(livro)
+
+                                aplicarFiltro("alugados")
+
+                                // Progresso real
+                                txtProgresso.text = "${listaOriginal.size}/12"
+                            }
+                        }
                 }
             }
     }
+
 
     // ------------------------------------------------
     // 🧠 FUNÇÃO CENTRAL DE FILTRAGEM/ORDENAÇÃO
@@ -138,13 +156,7 @@ class TelaMeusLivrosUsu : AppCompatActivity() {
 
         when (tipo) {
             "alugados" -> {
-
-
-                listaFiltrada.addAll(listaOriginal.sortedByDescending {
-                    // Cuidado: anoLancamento não está sendo puxado no Livro atual,
-                    // ajuste o Livro() ou use outro campo para ordenação se for o caso
-                    it.anoLancamento.toIntOrNull() ?: 0
-                })
+                listaFiltrada.addAll(listaOriginal.sortedByDescending { it.dataEmprestimo })
             }
             "lidos" -> {
 
