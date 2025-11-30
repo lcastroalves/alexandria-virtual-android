@@ -11,8 +11,11 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
+// === DATA CLASS COMPLETO E CORRIGIDO ===
 data class Solicitacao(
     val idEmprestimo: String,
+    val idLivro: String,
+    val idUsuario: String,
     val titulo: String,
     val autor: String,
     val usuario: String,
@@ -24,9 +27,9 @@ data class Solicitacao(
 )
 
 class SolicitacaoAdapter(
-    private val lista: List<Solicitacao>,
-    private val onAutorizar: (position: Int) -> Unit,
-    private val onRecusar: (position: Int) -> Unit
+    private val lista: MutableList<Solicitacao>,
+    private val onAutorizar: (Solicitacao) -> Unit,
+    private val onRecusar: (Solicitacao) -> Unit
 ) : RecyclerView.Adapter<SolicitacaoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -47,16 +50,17 @@ class SolicitacaoAdapter(
         return ViewHolder(view)
     }
 
+    override fun getItemCount() = lista.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = lista[position]
 
-        // ------------ IMAGEM BASE64 ---------------
+        // IMAGEM BASE64
         if (item.capa.isNotEmpty()) {
             try {
-                val imageBytes = Base64.decode(item.capa, Base64.DEFAULT)
-                val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-                holder.imgLivro.setImageBitmap(bitmap)
-            } catch (e: Exception) {
+                val bytes = Base64.decode(item.capa, Base64.DEFAULT)
+                holder.imgLivro.setImageBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.size))
+            } catch (_: Exception) {
                 holder.imgLivro.setImageResource(R.drawable.no_image)
             }
         } else {
@@ -70,9 +74,15 @@ class SolicitacaoAdapter(
         holder.txtPrazo.text = "Data limite: ${item.prazo}"
         holder.txtLocal.text = "Local: ${item.local}"
 
-        holder.btnAutorizar.setOnClickListener { onAutorizar(holder.adapterPosition) }
-        holder.btnRecusar.setOnClickListener { onRecusar(holder.adapterPosition) }
+        holder.btnAutorizar.setOnClickListener { onAutorizar(item) }
+        holder.btnRecusar.setOnClickListener { onRecusar(item) }
     }
 
-    override fun getItemCount() = lista.size
+    fun removerItem(item: Solicitacao) {
+        val index = lista.indexOf(item)
+        if (index != -1) {
+            lista.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
 }
