@@ -90,6 +90,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                             if (!livroDoc.exists()) return@addOnSuccessListener
 
                             val titulo = livroDoc.getString("titulo") ?: "Sem título"
+                            val subtitulo = livroDoc.getString("subtitulo") ?: ""
                             val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
                             val imagem = livroDoc.getString("capa") ?: ""
 
@@ -104,6 +105,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                                 SoliPend(
                                     idEmprestimo = idEmprestimo,
                                     titulo = titulo,
+                                    subtitulo = subtitulo,
                                     autor = autor,
                                     data = dataFormatada,  // ✅ AGORA CORRETO
                                     prazo = "3 dias",
