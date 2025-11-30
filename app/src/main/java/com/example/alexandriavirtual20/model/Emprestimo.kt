@@ -9,5 +9,6 @@ data class Emprestimo (
     val dataPrevistaDevolucao: Timestamp? = null,
     val dataDevolucao: Timestamp? = null,
     val statusEmprestimo: String = "pendente",   // pendente, negado ou aceito
-    val statusDevolucao : String = "devolvido" // devolvido, atrasado
+    val statusDevolucao : String = "devolvido"// devolvido, atrasado
+
 )
