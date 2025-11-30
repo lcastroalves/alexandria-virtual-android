@@ -1,6 +1,7 @@
 package com.example.alexandriavirtual20
 
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.icu.text.SimpleDateFormat
 import android.os.Bundle
@@ -19,21 +20,21 @@ import java.io.ByteArrayOutputStream
 import java.util.Locale
 
 class AdmTelaAdicionEvent : AppCompatActivity() {
+
     private lateinit var btnVoltar: ImageButton
     private lateinit var btnAdicionar: Button
     private lateinit var btnADicionarImagem: ImageButton
     private lateinit var titulo: TextInputEditText
     private lateinit var abrirGaleria: ActivityResultLauncher<String>
     private lateinit var imagemEvento: ImageView
-    private lateinit var fb : FirebaseFirestore
+    private lateinit var fb: FirebaseFirestore
     private lateinit var data: TextInputEditText
     private lateinit var horario: TextInputEditText
     private lateinit var descricao: TextInputEditText
     private lateinit var breveDescricao: TextInputEditText
     private lateinit var local: TextInputEditText
     private lateinit var nomeEvento: String
-    private var colocouImagem: Boolean = false
-
+    private var colocouImagem = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,17 +52,13 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         descricao = findViewById(R.id.addDescricaoEvento)
         breveDescricao = findViewById(R.id.addDescricaoBreveEvento)
         local = findViewById(R.id.addLocalEvento)
-        //Informações que serão passadas ao banco de dados
 
-        btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
-        }
+        btnVoltar.setOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         abrirGaleria = registerForActivityResult(
             ActivityResultContracts.GetContent()
-        ){uri ->
-            if(uri != null){
-                // imagem capturada
+        ) { uri ->
+            if (uri != null) {
                 imagemEvento.setImageURI(uri)
                 colocouImagem = true
             }
@@ -75,12 +72,11 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             verificarCamposEAdd()
         }
     }
-    private fun campoVazio(): Boolean {
-        val campos: List<TextInputEditText> = listOf(titulo, data, horario, descricao, breveDescricao, local)
 
+    private fun campoVazio(): Boolean {
+        val campos = listOf(titulo, data, horario, descricao, breveDescricao, local)
         return campos.any { it.text.isNullOrEmpty() } || !colocouImagem
     }
-    // Função para conferir se todos os campos estão preenchidos
 
     private fun verificarCamposEAdd() {
         nomeEvento = titulo.text.toString()
@@ -93,27 +89,38 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         fb.collection("evento")
             .whereEqualTo("nome", nomeEvento)
             .get()
-            .addOnSuccessListener { querySnapshot ->
-                if (querySnapshot.isEmpty) {
-                    enviarDados()
-                }
-                else {
-                    Toast.makeText(this, "Evento já cadastrado! Confira os dados ou insira um novo evento", Toast.LENGTH_SHORT).show()
-                }
+            .addOnSuccessListener { query ->
+                if (query.isEmpty) enviarDados()
+                else Toast.makeText(this, "Evento já cadastrado!", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { querySnapshot ->
+            .addOnFailureListener {
                 Toast.makeText(this, "Erro ao verificar evento", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun enviarDados() {
-        val campos: List<TextInputEditText> = listOf(titulo, data, horario, descricao, breveDescricao, local)
+    // 🔥 Função para COMPRIMIR imagem antes de enviar ao banco
+    private fun comprimirImagem(bitmap: Bitmap): String {
+        // Reduz resolução para no máximo 800px
+        val larguraMax = 800
+        val ratio = larguraMax.toFloat() / bitmap.width
+        val alturaReduzida = (bitmap.height * ratio).toInt()
 
-        val imagemEnviada = (imagemEvento.drawable as? BitmapDrawable)?.bitmap
-        val imagemBase64 = if (imagemEnviada != null) {
-            val outputStream = ByteArrayOutputStream()
-            imagemEnviada.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-            Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+        val bitmapReduzido = Bitmap.createScaledBitmap(bitmap, larguraMax, alturaReduzida, true)
+
+        val output = ByteArrayOutputStream()
+
+        // JPEG com compressão REAL (70%)
+        bitmapReduzido.compress(Bitmap.CompressFormat.JPEG, 70, output)
+
+        return Base64.encodeToString(output.toByteArray(), Base64.DEFAULT)
+    }
+
+    private fun enviarDados() {
+        val campos = listOf(titulo, data, horario, descricao, breveDescricao, local)
+
+        val bitmapOriginal = (imagemEvento.drawable as? BitmapDrawable)?.bitmap
+        val imagemBase64 = if (bitmapOriginal != null) {
+            comprimirImagem(bitmapOriginal)   // ✔ agora envia comprimido
         } else {
             ""
         }
@@ -124,7 +131,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             val date = formatoData.parse(data.text.toString())
             Timestamp(date!!)
         } catch (e: Exception) {
-            Toast.makeText(this, "Data inválida. Use o formato dd/mm/aa.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Data inválida. Use dd/mm/aa.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -138,13 +145,11 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             "local" to local.text.toString(),
             "imagem" to imagemBase64
         )
+
         fb.collection("evento").add(dadosEvento)
             .addOnSuccessListener {
-                Toast.makeText(this, "Evento adicionado", Toast.LENGTH_SHORT).show()
-                campos.forEach {
-                    it.text?.clear()
-                }
-
+                Toast.makeText(this, "Evento adicionado!", Toast.LENGTH_SHORT).show()
+                campos.forEach { it.text?.clear() }
                 imagemEvento.setImageResource(R.drawable.padraopng)
                 colocouImagem = false
             }

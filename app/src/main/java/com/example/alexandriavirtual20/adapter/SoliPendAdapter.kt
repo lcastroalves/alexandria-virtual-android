@@ -15,6 +15,7 @@ import com.example.alexandriavirtual20.R
 data class SoliPend(
     val idEmprestimo: String,
     val titulo: String,
+    val subtitulo: String,
     val autor: String,
     val data: String,
     val prazo: String,
@@ -36,6 +37,7 @@ class SoliPendAdapter(
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imagem: ImageView = view.findViewById(R.id.imagemSoliPend)
         val nome: TextView = view.findViewById(R.id.nomeSoliPend)
+        val subtitulo: TextView = view.findViewById(R.id.subtituloSoliPend)
         val autor: TextView = view.findViewById(R.id.autorSoliPend)
         val avaliacaoText: TextView = view.findViewById(R.id.avaliacaoSoliPend)
         val pendenteImagem: ImageView = view.findViewById(R.id.pendenteSoliPend)
@@ -64,6 +66,7 @@ class SoliPendAdapter(
 
         // TEXTO
         holder.nome.text = soli.titulo
+        holder.subtitulo.text = soli.subtitulo
         holder.autor.text = soli.autor
 
         // ⭐ AVALIAÇÃO — EXATAMENTE COMO NO LIVROADAPTER
@@ -78,7 +81,7 @@ class SoliPendAdapter(
         // SITUAÇÃO
         if (soli.pendente) {
             holder.pendenteImagem.setImageResource(R.drawable.relogio)
-            holder.btnOk.visibility = View.INVISIBLE
+            holder.btnOk.visibility = INVISIBLE
         } else {
             holder.pendenteImagem.setImageResource(R.drawable.negado)
             holder.btnOk.visibility = View.VISIBLE

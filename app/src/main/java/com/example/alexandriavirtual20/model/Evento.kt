@@ -8,5 +8,6 @@ data class Evento (
     var descricao : String,
     var breveDescricao : String,
     var local : String,
-    var isSelected: Boolean = false
-    )
+    var isSelected: Boolean = false,
+    var dataOrdenacao: Long = 0
+)
