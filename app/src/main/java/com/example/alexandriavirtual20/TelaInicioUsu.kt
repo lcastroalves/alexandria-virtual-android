@@ -41,7 +41,11 @@ class TelaInicioUsu : Fragment() {
     private lateinit var existeNotificacao : TextView
     private lateinit var btnLevBib : Button
     private lateinit var btnCap : Button
+
     private lateinit var searchView: SearchView
+    private lateinit var listaLivrosOriginal: MutableList<Livro>
+    private lateinit var adapterLivro: LivroAdapterSoCapa
+
     private lateinit var fbAuth: FirebaseAuth
     private lateinit var fireBase: FirebaseFirestore
     private var notificacaoListener: ListenerRegistration? = null
@@ -130,20 +134,20 @@ class TelaInicioUsu : Fragment() {
     }
 
 
-    private fun carregarLivros(){
+    private fun carregarLivros() {
 
-        val produtos = mutableListOf<Livro>()
+        listaLivrosOriginal = mutableListOf()
 
         fireBase.collection("livros").get().addOnSuccessListener { query ->
 
-            for (doc in query.documents){
+            for (doc in query.documents) {
 
                 val id = doc.id
                 val titulo = doc.getString("titulo") ?: ""
                 val autor = doc.getString("autor") ?: ""
                 val imagemBase64 = doc.getString("capa") ?: ""
 
-                produtos.add(
+                listaLivrosOriginal.add(
                     Livro(
                         id = id,
                         titulo = titulo,
@@ -153,24 +157,24 @@ class TelaInicioUsu : Fragment() {
                 )
             }
 
-            val adapterLivro = LivroAdapterSoCapa(produtos){ livro ->
-
+            adapterLivro = LivroAdapterSoCapa(listaLivrosOriginal) { livro ->
                 val intent = Intent(requireContext(), TelaInfoLivroUsu::class.java)
                 intent.putExtra("livroId", livro.id)
                 startActivity(intent)
-
             }
 
             recyclerViewLivros.layoutManager = LinearLayoutManager(
-
                 requireContext(),
                 LinearLayoutManager.HORIZONTAL,
                 false
             )
 
             recyclerViewLivros.adapter = adapterLivro
+
+            configurarBusca()
         }
     }
+
 
     private fun carregarEventos(){
         val eventos = mutableListOf<Evento>()
@@ -231,4 +235,28 @@ class TelaInicioUsu : Fragment() {
 
             recyclerViewAtividades.adapter = adapterAtividade
     }
+
+    private fun configurarBusca() {
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                val texto = newText?.lowercase() ?: ""
+
+                val filtrados = listaLivrosOriginal.filter { livro ->
+                    livro.titulo.lowercase().contains(texto) ||
+                            livro.autor.lowercase().contains(texto)
+                }
+
+                adapterLivro.updateList(filtrados)
+
+                return true
+            }
+        })
+    }
+
 }
