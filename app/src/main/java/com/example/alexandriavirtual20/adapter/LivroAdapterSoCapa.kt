@@ -11,7 +11,7 @@ import com.example.alexandriavirtual20.R
 import com.example.alexandriavirtual20.model.Livro
 
 class LivroAdapterSoCapa (
-    private val livros: MutableList<Livro>,
+    private var livros: MutableList<Livro>,
     private val onLivroClick: (Livro) -> Unit
 ) : RecyclerView.Adapter<LivroAdapterSoCapa.ViewHolder>() {
 
@@ -49,6 +49,11 @@ class LivroAdapterSoCapa (
 
     override fun getItemCount(): Int {
         return livros.size
+    }
+
+    fun updateList(novaLista: List<Livro>) {
+        livros = novaLista.toMutableList()
+        notifyDataSetChanged()
     }
 
 
