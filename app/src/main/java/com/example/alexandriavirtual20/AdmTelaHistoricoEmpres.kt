@@ -36,6 +36,7 @@ class AdmTelaHistoricoEmpres : Fragment() {
     private var documentosPendentes = 0
     private var documentosProcessados = 0
     // Formato de data para exibir (Ex: "09 de Set")
+    // Este formato será usado tanto para a data de empréstimo (dataSolicitacao) quanto para o prazo
     private val dateFormat = SimpleDateFormat("dd 'de' MMM", Locale("pt", "BR"))
 
     // ... (onCreate e métodos de argumento padrão omitidos por brevidade)
@@ -57,11 +58,10 @@ class AdmTelaHistoricoEmpres : Fragment() {
 
         // Configuração das abas para navegação
         tabPendentes.setOnClickListener {
-            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend()) // Exemplo: Navegar para Pendentes
+            (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
         }
         tabUsuarios.setOnClickListener {
-            // Este fragmento já é o Histórico, então esta ação pode ser removida ou alterada
-            // (activity as? AdmAMain)?.replaceFragment(AdmTelaHistoricoEmpres())
+            // Se esta é a tela de Histórico, não precisa navegar para si mesma
         }
 
         // 🌟 Inicialização do Adapter com as ações de Histórico (Devolução/Atraso)
@@ -69,13 +69,11 @@ class AdmTelaHistoricoEmpres : Fragment() {
             listaHistorico,
             onDevolver = { item ->
                 Toast.makeText(requireContext(), "Confirmando devolução de ${item.titulo}", Toast.LENGTH_SHORT).show()
-                // Chamada para função de atualização do status no Firestore
-                // updateStatusEmprestimo(item.idDocumento, "Devolvido")
+                // Implementar updateStatusEmprestimo(item.idDocumento, "Devolvido")
             },
             onAtrasar = { item ->
                 Toast.makeText(requireContext(), "Registrando Atraso para ${item.titulo}", Toast.LENGTH_SHORT).show()
-                // Chamada para função de atualização do status no Firestore
-                // updateStatusEmprestimo(item.idDocumento, "Atrasado")
+                // Implementar updateStatusEmprestimo(item.idDocumento, "Atrasado")
             })
 
         recycler.adapter = adapter
@@ -122,12 +120,13 @@ class AdmTelaHistoricoEmpres : Fragment() {
                         // Inicia o processo de busca tripla
                         carregarDetalhes(doc.id, idLivro, idUsuario, doc)
                     } else {
-                        // Conta documentos incompletos (sem ID) para garantir a atualização final
                         processarFinalizar()
                     }
                 }
             }
+
     }
+
 
     // 2 & 3. Função de busca tripla (Livro e Usuário)
     private fun carregarDetalhes(
@@ -142,7 +141,7 @@ class AdmTelaHistoricoEmpres : Fragment() {
         refLivros.get().addOnSuccessListener { livroDoc ->
             val titulo = livroDoc.getString("titulo") ?: "Sem título"
             val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
-            val capa = livroDoc.getString("capa") ?: "" // 🌟 2. URL/Base64 da Capa
+            val capa = livroDoc.getString("capa") ?: ""
 
             refUsers.get().addOnSuccessListener { userDoc ->
                 val nomeUser = userDoc.getString("nome") ?: "Usuário Desconhecido"
@@ -150,27 +149,28 @@ class AdmTelaHistoricoEmpres : Fragment() {
 
                 // Extrai e formata os dados do Empréstimo
                 val dataPrevistaDevolucao = emprestimoDoc.getTimestamp("prazo")?.toDate()
-                val dataEmprestimo = emprestimoDoc.getTimestamp("data")?.toDate() // 🌟 Assumindo campo 'data' para a Data de Retirada
+
+                // 🌟 LEITURA CORRIGIDA: Usa o campo 'dataSolicitacao'
+                val dataSolicitacaoTimestamp = emprestimoDoc.getTimestamp("dataSolicitacao")
                 val statusDevolucao = emprestimoDoc.getString("statusDevolucao") ?: "Em dia"
 
                 // Formatação das datas
-                val dataEmpStr = dataEmprestimo?.let { dateFormat.format(it) } ?: "S/ Data" // 🌟 Data de Retirada
+                // Se a data de solicitação existir, formata; senão, usa 'S/ Data'
+                val dataEmpStr = dataSolicitacaoTimestamp?.let { dateFormat.format(it.toDate()) } ?: "S/ Data"
                 val prazoStr = dataPrevistaDevolucao?.let { dateFormat.format(it) } ?: "S/ Prazo"
-
-                val dataEmpFixa = "30 de Nov"
 
                 val historicoItem = HistoricoEmprestimo(
                     idDocumento = idEmprestimo,
                     idLivro = idLivro,
                     idUsuario = idUsuario,
-                    dataEmprestimo = dataEmpFixa,        // 🌟 Data Retirada (09 de Set)
+                    dataEmprestimo = dataEmpStr,          // 🌟 Data real da Solicitação no formato "dd de MMM"
                     dataPrevistaDevolucao = prazoStr,
                     statusDevolucao = statusDevolucao,
                     titulo = titulo,
                     autor = autor,
                     capa = capa,
-                    nomeUsuario = nomeUser,               // 🌟 1. Nome do Responsável
-                    emailUsuario = email                  // 🌟 1. Email do Responsável
+                    nomeUsuario = nomeUser,
+                    emailUsuario = email
                 )
 
                 listaHistorico.add(historicoItem)
