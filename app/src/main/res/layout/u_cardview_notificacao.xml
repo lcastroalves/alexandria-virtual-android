@@ -16,20 +16,21 @@
             android:id="@+id/nomeEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:fontFamily="@font/montserrat"
             android:text="Nome"
             android:textColor="#247AE8"
             android:textSize="14sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="@+id/nomeAddAdm"
+            app:layout_constraintTop_toBottomOf="@+id/nomeAddAdm" />
 
         <ImageView
             android:id="@+id/imagemAddAdm"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="110dp"
             android:src="@drawable/livro"
+            android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -38,36 +39,36 @@
             android:id="@+id/dataEventoLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:text="Tipo"
             android:textColor="#247AE8"
             android:textSize="14sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="3dp"
+            app:layout_constraintStart_toStartOf="@+id/nomeEventoLista"
             app:layout_constraintTop_toBottomOf="@+id/nomeEventoLista" />
 
         <TextView
             android:id="@+id/descricaoEventoLista"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
             android:fontFamily="@font/montserrat"
             android:text="Mensagem"
             android:textColor="#247AE8"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:layout_marginStart="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/imagemAddAdm"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/imagemAddAdm" />
 
         <TextView
             android:id="@+id/nomeAddAdm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:text="Data"
             android:textColor="#247AE8"
             android:textSize="14sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/nomeEventoLista" />
+            android:layout_marginStart="10dp"
+            app:layout_constraintStart_toEndOf="@+id/imagemAddAdm"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btnExcluir"
@@ -75,10 +76,8 @@
             android:layout_height="60dp"
             android:background="@android:color/transparent"
             android:contentDescription="Botão excluir"
-
             android:scaleType="center"
             android:src="@drawable/x_1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
