@@ -44,76 +44,57 @@ class TelaRedefinirSenha : AppCompatActivity() {
     }
 
     private fun checagemSenhas() {
-        val senhaAtual = senhaAtual.text.toString()
+
+        val senhaAtualTxt = senhaAtual.text.toString()
         val novaSenha = senha1.text.toString()
         val confirmarSenha = senha2.text.toString()
 
         val usuarioAtual = fbAuth.currentUser
-        val uid = usuarioAtual?.uid ?: run {
-            Toast.makeText(this, "Usuário não encontrado. Faça login novamente.", Toast.LENGTH_SHORT).show()
+        val email = usuarioAtual?.email ?: run {
+            Toast.makeText(this, "Erro: usuário não possui email!", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (senhaAtual.isEmpty() || novaSenha.isEmpty() || confirmarSenha.isEmpty()) {
+        if (senhaAtualTxt.isEmpty() || novaSenha.isEmpty() || confirmarSenha.isEmpty()) {
             Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
             return
         }
 
-        fb.collection("usuario")
-            .document(uid)
-            .get()
-            .addOnSuccessListener { doc ->
+        if (novaSenha != confirmarSenha) {
+            Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-                if (!doc.exists()) {
-                    Toast.makeText(this, "Dados do usuário não encontrados.", Toast.LENGTH_SHORT)
-                        .show()
-                    return@addOnSuccessListener
-                }
+        // Regra de senha
+        val senhaValida = novaSenha.length >= 8 && novaSenha.any { it.isDigit() }
+        if (!senhaValida) {
+            Toast.makeText(this, "A senha deve ter pelo menos 8 caracteres e um número.", Toast.LENGTH_LONG).show()
+            return
+        }
 
-                val senhaAtualCorreta = doc.getString("senha")
+        // 🔥 REAUTENTICAR usuário com email + senha ATUAL
+        val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(email, senhaAtualTxt)
 
-                if (senhaAtualCorreta.isNullOrEmpty()) {
-                    Toast.makeText(
-                        this,
-                        "Senha atual não encontrada no cadastro.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    return@addOnSuccessListener
-                }
-
-                val senhaValida = novaSenha.length >= 8 && novaSenha.any { it.isDigit() }
-                if (!senhaValida) {
-                    Toast.makeText(this, "A senha deve ter pelo menos 8 caracteres, incluindo um número.", Toast.LENGTH_LONG).show()
-                    return@addOnSuccessListener
-                }
-
-                if (senhaAtual != senhaAtualCorreta) {
-                    Toast.makeText(this, "Senha atual incorreta.", Toast.LENGTH_SHORT).show()
-                    return@addOnSuccessListener
-                }
-
-                if (novaSenha != confirmarSenha) {
-                    Toast.makeText(this, "Senhas não correspondem", Toast.LENGTH_SHORT).show()
-                    return@addOnSuccessListener
-                }
-
-                updateNovaSenha(novaSenha, uid)
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao buscar usuário.", Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun updateNovaSenha(novaSenha: String, uid: String){
-        fb.collection("usuario")
-            .document(uid)
-            .update("senha", novaSenha)
+        usuarioAtual.reauthenticate(credential)
             .addOnSuccessListener {
-                Toast.makeText(this, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show()
-                finish()
+                // Agora pode atualizar a senha no FirebaseAuth
+                usuarioAtual.updatePassword(novaSenha)
+                    .addOnSuccessListener {
+
+                        // Atualiza no Firestore também (opcional)
+                        fb.collection("usuario")
+                            .document(usuarioAtual.uid)
+                            .update("senha", novaSenha)
+
+                        Toast.makeText(this, "Senha alterada com sucesso!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this, "Erro ao alterar senha: ${it.message}", Toast.LENGTH_LONG).show()
+                    }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Erro ao salvar nova senha.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Senha atual incorreta!", Toast.LENGTH_SHORT).show()
             }
     }
 }

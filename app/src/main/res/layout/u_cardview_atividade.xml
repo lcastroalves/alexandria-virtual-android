@@ -41,8 +41,9 @@
             android:fontFamily="@font/montserrat"
             android:text="Descrição"
             android:textColor="#000000"
+            android:maxLines="3"
+            android:ellipsize="end"
             android:textSize="16sp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nomeAtividadeLista" />

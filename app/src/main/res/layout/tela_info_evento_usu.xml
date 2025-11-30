@@ -1,116 +1,123 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaEmail"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".TelaEmail">
 
-    <Button
-        android:id="@+id/botaoNotificar"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="10dp"
-        android:autoText="false"
-        android:backgroundTint="#247AE8"
-        android:fontFamily="@font/montserrat"
-        android:scaleX="1"
-        android:text="Me notificar"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:cornerRadius="10sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editarEmail" />
-
+    <!-- Botão voltar -->
     <ImageButton
         android:id="@+id/botaoVoltar"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
-        android:layout_marginEnd="66dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
-        app:layout_constraintEnd_toStartOf="@+id/imagemInfoAtividade"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/seta_azul" />
 
-    <ImageView
-        android:id="@+id/imagemInfoAtividade"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/contDescLogo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/totoro" />
-
-    <TextView
-        android:id="@+id/nomeInfoAtividade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/trocchi"
-        android:text="O meu vizinho totoro"
-        android:textColor="#247AE8"
-        android:textSize="32sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imagemInfoAtividade" />
-
-    <TextView
-        android:id="@+id/horarioInfoAtividade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="16:00 - 17:30"
-        android:textColor="#247AE8"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeInfoAtividade" />
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="384dp"
-        android:layout_height="346dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
-        app:srcCompat="@drawable/retangulo_azul" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
-        android:layout_width="384dp"
-        android:layout_height="349dp"
-        android:layout_marginTop="20dp"
+    <!-- Botão fixo inferior -->
+    <Button
+        android:id="@+id/botaoNotificar"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="#247AE8"
+        android:fontFamily="@font/montserrat"
+        android:text="Me notificar"
+        android:textSize="20sp"
+        app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horarioInfoAtividade"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/descricaoInfoAtividade"
-            android:layout_width="348dp"
-            android:layout_height="306dp"
-            android:layout_marginTop="20dp"
-            android:text="Descrição: &quot;Meu Vizinho Totoro&quot; é uma história sobre as irmãs Satsuki e Mei, que se mudam com o pai para uma casa no campo, perto do hospital onde a mãe está internada, e fazem amizade com Totoro, um espírito da floresta que guarda a mata. A animação japonesa do Estúdio Ghibli, de 1988, aborda temas como a relação familiar, a transição para a vida adulta e o escapismo infantil através do folclore japonês e da natureza. "
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- ScrollView ocupa apenas o espaço entre o topo e o botão -->
+    <ScrollView
+        android:id="@+id/scrollPrincipal"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/botaoVoltar"
+        app:layout_constraintBottom_toTopOf="@id/botaoNotificar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintInterna"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Imagem -->
+            <ImageView
+                android:id="@+id/imagemInfoAtividade"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="fitXY"
+                android:contentDescription="@string/contDescLogo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/totoro" />
+
+            <!-- Nome -->
+            <TextView
+                android:id="@+id/nomeInfoAtividade"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/trocchi"
+                android:text="O meu vizinho Totoro"
+                android:gravity="center"
+                android:textColor="#247AE8"
+                android:textSize="28sp"
+                app:layout_constraintTop_toBottomOf="@id/imagemInfoAtividade"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Horário -->
+            <TextView
+                android:id="@+id/horarioInfoAtividade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="16:00 - 17:30"
+                android:textColor="#247AE8"
+                android:textSize="18sp"
+                app:layout_constraintTop_toBottomOf="@id/nomeInfoAtividade"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <!-- Fundo da descrição -->
+            <ImageView
+                android:id="@+id/fundoDescricao"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:adjustViewBounds="true"
+                app:layout_constraintTop_toBottomOf="@id/horarioInfoAtividade"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:srcCompat="@drawable/retangulo_azul" />
+
+            <!-- Descrição -->
+            <TextView
+                android:id="@+id/descricaoInfoAtividade"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="30dp"
+                android:text="Descrição:"
+                android:textSize="18sp"
+                android:textColor="#FFFFFF"
+                app:layout_constraintTop_toTopOf="@id/fundoDescricao"
+                app:layout_constraintStart_toStartOf="@id/fundoDescricao"
+                app:layout_constraintEnd_toEndOf="@id/fundoDescricao" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
