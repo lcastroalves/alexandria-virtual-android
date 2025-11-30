@@ -6,7 +6,6 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog // Importação necessária
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -59,9 +58,13 @@ class AdmTelaEventos : AppCompatActivity() {
             startActivity(Intent(this, AdmTelaAdicionEvent::class.java))
         }
 
-        // --- MUDANÇA AQUI: Chama o novo método de confirmação ---
         btnExcluir.setOnClickListener {
-            confirmarExclusaoEventos()
+            val selecionados = listaFiltrada.filter { it.isSelected }
+            if (selecionados.isEmpty()) {
+                Toast.makeText(this, "Selecione pelo menos um evento.", Toast.LENGTH_SHORT).show()
+            } else {
+                excluirEventosSelecionados(selecionados)
+            }
         }
     }
 
@@ -125,33 +128,6 @@ class AdmTelaEventos : AppCompatActivity() {
             }
     }
 
-    // --- NOVO MÉTODO: Pede confirmação antes de excluir ---
-    private fun confirmarExclusaoEventos() {
-        val selecionados = listaFiltrada.filter { it.isSelected }
-
-        if (selecionados.isEmpty()) {
-            Toast.makeText(this, "Selecione pelo menos um evento.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val mensagem = if (selecionados.size == 1) {
-            "Tem certeza que deseja excluir o evento \"${selecionados[0].nome}\"?"
-        } else {
-            "Tem certeza que deseja excluir ${selecionados.size} eventos?"
-        }
-
-        AlertDialog.Builder(this)
-            .setTitle("Confirmação")
-            .setMessage(mensagem)
-            .setPositiveButton("Sim") { dialog, _ ->
-                excluirEventosSelecionados(selecionados)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Não") { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
-    // --- FIM NOVO MÉTODO ---
-
     private fun excluirEventosSelecionados(eventosSelecionados: List<Evento>) {
         for (evento in eventosSelecionados) {
             fb.collection("evento")
@@ -163,7 +139,6 @@ class AdmTelaEventos : AppCompatActivity() {
                     }
                 }
         }
-        // Nota: A lista será atualizada automaticamente via addSnapshotListener (observarEventos)
         Toast.makeText(this, "Evento(s) excluído(s).", Toast.LENGTH_SHORT).show()
     }
 }

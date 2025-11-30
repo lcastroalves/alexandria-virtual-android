@@ -54,8 +54,8 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                 if (!snapshots.isEmpty) {
                     val doc = snapshots.documents[0]
                     nome.setText(doc.getString("nome") ?: "")
-                    horario.setText(doc.getString("horario") ?: "")
-                    descricao.setText(doc.getString("descricao") ?: "")
+                    horario.setText("Horário: " + doc.getString("horario") ?: "")
+                    descricao.setText("Descrição: " + doc.getString("descricao") ?: "")
                     data = doc.getString("data") ?: ""
                     imagemBase64 = doc.getString("imagem") ?: ""
 
@@ -93,7 +93,7 @@ class TelaInfoEventoUsu : AppCompatActivity() {
             val uid = auth.currentUser?.uid
 
             if (uid == null) {
-                Toast.makeText(this, "Erro: usuário não logado.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Usuário não encontrado. Faça login novamente.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

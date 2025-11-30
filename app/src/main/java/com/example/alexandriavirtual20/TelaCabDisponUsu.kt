@@ -6,8 +6,6 @@ import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.adapter.CabineAdapter
@@ -123,13 +121,6 @@ class TelaCabDisponUsu : AppCompatActivity() {
             .document(uid)
             .get()
             .addOnSuccessListener { doc ->
-
-                if (!doc.exists()) {
-                    Toast.makeText(this, "Dados do usuário não encontrados.", Toast.LENGTH_SHORT)
-                        .show()
-                    return@addOnSuccessListener
-                }
-
                 val nomeAluno = doc.getString("nome") ?: ""
 
                 fb.collection("reservasCabines")
