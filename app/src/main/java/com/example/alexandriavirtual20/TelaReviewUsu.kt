@@ -196,7 +196,7 @@ class TelaReviewUsu : AppCompatActivity() {
         val userId = fbAuth.currentUser?.uid // Obtém o UID do usuário logado
 
         if (idLivro == null || nota == null || nota == 0 || texto.isNullOrBlank() || userId.isNullOrBlank()) {
-            Toast.makeText(this, "Selecione a nota, escreva sua avaliação e faça login.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Selecione a nota e escreva sua avaliação", Toast.LENGTH_SHORT).show()
             return
         }
 
