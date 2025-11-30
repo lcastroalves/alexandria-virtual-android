@@ -13,19 +13,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.alexandriavirtual20.R
 
 data class SoliPend(
-    val idEmprestimo: String,     // <-- ADICIONADO
+    val idEmprestimo: String,
     val titulo: String,
     val autor: String,
     val data: String,
     val prazo: String,
     val local: String,
     val imagem: String,
-    var pendente: Boolean
+    var pendente: Boolean,
+
+    val avaliacao: Double = 0.0,        // ⭐ média
+    val qtdAvaliacoes: Int = 0          // número de avaliações
 )
+
 
 class SoliPendAdapter(
     private var soliPends: MutableList<SoliPend>,
-    private val onDeleteClick: (SoliPend) -> Unit    // <-- callback
+    private val onDeleteClick: (SoliPend) -> Unit
 ) : RecyclerView.Adapter<SoliPendAdapter.ViewHolder>() {
 
     private var listaFiltrada = soliPends.toMutableList()
@@ -34,6 +38,7 @@ class SoliPendAdapter(
         val imagem: ImageView = view.findViewById(R.id.imagemSoliPend)
         val nome: TextView = view.findViewById(R.id.nomeSoliPend)
         val autor: TextView = view.findViewById(R.id.autorSoliPend)
+        val avaliacaoText: TextView = view.findViewById(R.id.avaliacaoSoliPend)
         val pendenteImagem: ImageView = view.findViewById(R.id.pendenteSoliPend)
         val btnOk: Button = view.findViewById(R.id.botaoSoliPend)
     }
@@ -47,7 +52,7 @@ class SoliPendAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val soli = listaFiltrada[position]
 
-        // imagem Base64
+        // IMAGEM
         if (soli.imagem.isNotEmpty()) {
             try {
                 val bytes = Base64.decode(soli.imagem, Base64.DEFAULT)
@@ -58,20 +63,29 @@ class SoliPendAdapter(
             }
         } else holder.imagem.setImageResource(R.drawable.no_image)
 
-        // textos
+        // TEXTO
         holder.nome.text = soli.titulo
         holder.autor.text = soli.autor
 
-        // situação
+        // ⭐ AVALIAÇÃO — EXATAMENTE COMO NO LIVROADAPTER
+        val textoAvaliacao = when (soli.qtdAvaliacoes) {
+            0 -> "Sem avaliações"
+            1 -> "⭐ ${soli.avaliacao} • 1 avaliação"
+            else -> "⭐ ${soli.avaliacao} • ${soli.qtdAvaliacoes} avaliações"
+        }
+
+        holder.avaliacaoText.text = textoAvaliacao
+
+        // SITUAÇÃO
         if (soli.pendente) {
             holder.pendenteImagem.setImageResource(R.drawable.relogio)
-            holder.btnOk.visibility = INVISIBLE
+            holder.btnOk.visibility = View.INVISIBLE
         } else {
             holder.pendenteImagem.setImageResource(R.drawable.negado)
             holder.btnOk.visibility = View.VISIBLE
 
             holder.btnOk.setOnClickListener {
-                onDeleteClick(soli)   // <-- chama o callback
+                onDeleteClick(soli)
             }
         }
     }
@@ -108,3 +122,4 @@ class SoliPendAdapter(
         notifyDataSetChanged()
     }
 }
+

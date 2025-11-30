@@ -12,13 +12,14 @@ import com.example.alexandriavirtual20.model.Notificacao
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-
 class TelaNotificacoesUsu : AppCompatActivity() {
+
     private lateinit var btnVoltar: ImageButton
     private lateinit var recyclerView: RecyclerView
     private lateinit var fb: FirebaseFirestore
     private lateinit var adapter: NotificacaoAdapter
-    private lateinit var listaNotificacoes: MutableList<Notificacao>
+    private val listaNotificacoes = mutableListOf<Notificacao>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,23 +27,23 @@ class TelaNotificacoesUsu : AppCompatActivity() {
 
         btnVoltar = findViewById(R.id.botaoVoltar)
         recyclerView = findViewById(R.id.recy)
-        listaNotificacoes = mutableListOf()
         fb = FirebaseFirestore.getInstance()
 
         btnVoltar.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
 
-        observarNotificacoes()
-
         adapter = NotificacaoAdapter(
             listaNotificacoes,
             onExcluirClick = { notificacao ->
-                adapter?.removerNotificacao(notificacao)
+                adapter.removerNotificacao(notificacao)
             }
         )
+
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
+
+        observarNotificacoes()
     }
 
     private fun observarNotificacoes() {
@@ -53,69 +54,63 @@ class TelaNotificacoesUsu : AppCompatActivity() {
             return
         }
 
-        fb.collection("usuario")
+        val userNotificacoesRef = fb.collection("usuario")
             .document(uid)
             .collection("notificacoes")
-            .addSnapshotListener { snapshots, error ->
-                if (error != null) {
-                    Toast.makeText(this, "Erro ao carregar notificações.", Toast.LENGTH_SHORT)
-                        .show()
-                    return@addSnapshotListener
-                }
 
-                listaNotificacoes.clear()
-
-                for (document in snapshots!!) {
-
-                    val prazoField = document.get("prazo")
-                    var millisPrazo = 0L
-
-                    when (prazoField) {
-                        is com.google.firebase.Timestamp -> {
-                            millisPrazo = prazoField.toDate().time
-                        }
-                        is Long -> {
-                            // Se você tiver salvado o prazo diretamente em millis
-                            millisPrazo = prazoField
-                        }
-                        is String -> {
-                            // Se você salvou data como string "dd/MM/yy"
-                            val sdf = java.text.SimpleDateFormat("dd/MM/yy")
-                            millisPrazo = sdf.parse(prazoField)?.time ?: 0L
-                        }
-                        else -> {
-                            millisPrazo = 0L
-                        }
-                    }
-
-                    val agora = System.currentTimeMillis()
-
-                    val diferencaDias = ((millisPrazo - agora) / (1000L * 60 * 60 * 24)).toInt()
-
-                    val prazoInt = when {
-                        diferencaDias <= 7 -> 1   // Vermelho
-                        diferencaDias <= 14 -> 2   // Amarelo
-                        else -> 3                 // Verde
-                    }
-
-                    val notificacao = Notificacao(
-                        nome = document.getString("nome") ?: "",
-                        data = document.getString("data") ?: "",
-                        imagem = document.getString("imagem") ?: "",
-                        tipo = document.getString("tipo") ?: "",
-                        prazo = prazoInt,
-                        dias = diferencaDias,
-                        mensagem = document.getString("mensagem") ?: ""
-                    )
-
-                    listaNotificacoes.add(notificacao)
-                }
-
-                listaNotificacoes.sortBy { it.dias }
-
-                adapter.notifyDataSetChanged()
+        // 🔥 Agora esta é a ÚNICA fonte de notificações
+        userNotificacoesRef.addSnapshotListener { snapshots, error ->
+            if (error != null) {
+                Toast.makeText(this, "Erro ao carregar notificações.", Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
             }
+
+            listaNotificacoes.clear()
+
+            for (document in snapshots!!) {
+
+                // --- Identificar formato do prazo (Long, Timestamp ou String) ---
+                val prazoField = document.get("prazo")
+                var millisPrazo = 0L
+
+                when (prazoField) {
+                    is com.google.firebase.Timestamp -> millisPrazo = prazoField.toDate().time
+                    is Long -> millisPrazo = prazoField
+                    is String -> {
+                        val sdf = java.text.SimpleDateFormat("dd/MM/yyyy")
+                        millisPrazo = sdf.parse(prazoField)?.time ?: 0L
+                    }
+                }
+
+                // --- Calcular diferença em dias ---
+                val agora = System.currentTimeMillis()
+                val diferencaDias =
+                    ((millisPrazo - agora) / (1000L * 60 * 60 * 24)).toInt()
+
+                // --- Classificação do prazo (1 = urgente, 2 = médio, 3 = tranquilo) ---
+                val prazoInt = when {
+                    diferencaDias <= 7 -> 1
+                    diferencaDias <= 14 -> 2
+                    else -> 3
+                }
+
+                val notificacao = Notificacao(
+                    nome = document.getString("nome") ?: "",
+                    data = document.getString("data") ?: "",
+                    imagem = document.getString("imagem") ?: "",
+                    tipo = document.getString("tipo") ?: "",
+                    prazo = prazoInt,
+                    dias = diferencaDias,
+                    mensagem = document.getString("mensagem") ?: ""
+                )
+
+                listaNotificacoes.add(notificacao)
+            }
+
+            // 🔥 Ordena por dias restantes (mais urgente primeiro)
+            listaNotificacoes.sortBy { it.dias }
+
+            adapter.notifyDataSetChanged()
+        }
     }
-
-
 }

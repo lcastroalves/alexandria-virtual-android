@@ -2,7 +2,6 @@ package com.example.alexandriavirtual20
 
 import android.os.Bundle
 import android.widget.ImageButton
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
@@ -55,8 +54,8 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                 listaEmprestimos.clear()
 
                 val emprestimosValidos = documentos.documents.filter { doc ->
-                    val sit = doc.getString("situacao") ?: ""
-                    sit == "pendente" || sit == "negado"
+                    val situacao = doc.getString("situacao") ?: ""
+                    situacao == "pendente" || situacao == "negado"
                 }
 
                 if (emprestimosValidos.isEmpty()) {
@@ -65,28 +64,38 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                 }
 
                 for (doc in emprestimosValidos) {
+
                     val situacao = doc.getString("situacao") ?: ""
                     val idLivro = doc.getString("idLivro") ?: continue
                     val idEmprestimo = doc.id
 
                     db.collection("livros").document(idLivro).get()
                         .addOnSuccessListener { livroDoc ->
+
                             if (!livroDoc.exists()) return@addOnSuccessListener
 
                             val titulo = livroDoc.getString("titulo") ?: "Sem título"
                             val autor = livroDoc.getString("autor") ?: "Autor desconhecido"
                             val imagem = livroDoc.getString("capa") ?: ""
 
+                            // 🔥 AVALIAÇÃO DO LIVRO – EXATAMENTE COMO NO LIVROADAPTER
+                            val avaliacaoTotal = livroDoc.getDouble("avaliacao") ?: 0.0
+                            val qtdAvaliacoes = livroDoc.getLong("qtdAvaliacoes") ?: 0
+
+                            val mediaAvaliacao =
+                                if (qtdAvaliacoes > 0) avaliacaoTotal / qtdAvaliacoes else 0.0
+
                             listaEmprestimos.add(
                                 SoliPend(
                                     idEmprestimo = idEmprestimo,
                                     titulo = titulo,
                                     autor = autor,
-                                    data = "Hoje",
+                                    data = doc.getString("dataSolicitacao") ?: "Data não informada",
                                     prazo = "3 dias",
                                     local = "Biblioteca Central",
                                     imagem = imagem,
-                                    pendente = situacao == "pendente"
+                                    pendente = situacao == "pendente",
+                                    avaliacao = mediaAvaliacao  // ⭐ agora vem com média
                                 )
                             )
 
@@ -121,5 +130,4 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
                 Toast.makeText(this, "Erro ao remover.", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

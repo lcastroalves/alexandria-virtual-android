@@ -70,7 +70,20 @@ class NotificacaoAdapter (
             return
         }
 
-        else if (notificacao.prazo <= 1 && notificacao.prazo > 0) {
+        else if (notificacao.dias == 0 && notificacao.prazo > 0) {
+            val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
+            holder.mensagem.setTextColor(redColor)
+
+            if (notificacao.tipo == "evento") {
+                holder.mensagem.text = "O evento está próximo!"
+            }
+
+            else {
+                holder.mensagem.text = "O tempo para devolução está acabando!"
+            }
+        }
+
+        else if (notificacao.prazo == 1 && notificacao.dias > 0) {
             val redColor = ContextCompat.getColor(holder.itemView.context, R.color.red)
             holder.mensagem.setTextColor(redColor)
 
