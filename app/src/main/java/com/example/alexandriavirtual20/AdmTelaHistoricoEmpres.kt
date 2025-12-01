@@ -38,7 +38,6 @@ class AdmTelaHistoricoEmpres : Fragment() {
     private var documentosPendentes = 0
     private var documentosProcessados = 0
     // Formato de data para exibir (Ex: "09 de Set")
-    // Este formato será usado tanto para a data de empréstimo (dataSolicitacao) quanto para o prazo
     private val dateFormat = SimpleDateFormat("dd 'de' MMM", Locale("pt", "BR"))
 
     // ... (onCreate e métodos de argumento padrão omitidos por brevidade)
@@ -157,7 +156,7 @@ class AdmTelaHistoricoEmpres : Fragment() {
                 val prazoTimestamp = emprestimoDoc.getTimestamp("prazo")
                 val prazoDate = prazoTimestamp?.toDate()
 
-// 🚀 CÓDIGO ATUALIZADO PARA CÁLCULO PRECISO DE DIAS (ZERANDO HORÁRIO)
+// 🚀 BLOCO DE CÁLCULO: MANTIDO INALTERADO PARA GARANTIR PRECISÃO POR DIA CIVIL
                 val hoje = Date()
                 val diferencaDias = if (prazoDate != null) {
 
@@ -185,13 +184,11 @@ class AdmTelaHistoricoEmpres : Fragment() {
                 } else 0
 // ----------------------------------------------------------------------------------
 
-// Se estiver atrasado por 30 dias ou mais, o status é "atrasado".
-                val statusFinal = if (diferencaDias >= 30) {
-                    "atrasado" // Maior ou igual a 30 dias de atraso
-                } else if (diferencaDias > 0) {
-                    "em atraso (menor)" // Atraso entre 1 e 29 dias
+// 🎯 LÓGICA DE STATUS ATUALIZADA: Status "atrasado" se a diferença for maior que 0 (1 dia ou mais)
+                val statusFinal = if (diferencaDias > 0) {
+                    "atrasado" // Qualquer atraso a partir de 1 dia após o prazo
                 } else {
-                    "em dia" // Em dia ou no dia do prazo
+                    "em dia" // Em dia ou no dia do prazo (diferencaDias <= 0)
                 }
 
 // Formatação
