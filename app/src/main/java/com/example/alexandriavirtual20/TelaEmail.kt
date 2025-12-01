@@ -36,7 +36,7 @@ class TelaEmail : AppCompatActivity() {
             val email = edtEmail.text.toString()
 
             if (email.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Insira um e-mail válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
@@ -49,25 +49,22 @@ class TelaEmail : AppCompatActivity() {
                             .addOnSuccessListener {
                                 Toast.makeText(
                                     this,
-                                    "E-mail enviado!",
+                                    "E-mail de redefinição enviado",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                             .addOnFailureListener { erro ->
                                 Toast.makeText(
                                     this,
-                                    "Erro ao enviar: ${erro.message}",
+                                    "Falha ao enviar e-mail",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
 
                     } else {
-                        Toast.makeText(this, "E-mail inválido!", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_SHORT).show()
                     }
             }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Erro de conexão!", Toast.LENGTH_SHORT).show()
-                }
         }
     }
 }

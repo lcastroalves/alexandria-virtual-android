@@ -99,8 +99,6 @@ class TelaInformacoesUsu : AppCompatActivity() {
                     inputNomeUsu.setText(nomeUsuario)
                     email.setText(emailFb)
                 }
-            }  .addOnFailureListener {
-                Toast.makeText(this, "Erro ao carregar dados", Toast.LENGTH_SHORT).show()
             }
         }
     }

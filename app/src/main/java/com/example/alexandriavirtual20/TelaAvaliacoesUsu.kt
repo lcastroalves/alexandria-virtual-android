@@ -34,7 +34,6 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
         val livro = intent.getParcelableExtra<Livro>("livro")
 
         if (livro == null || livro.id.isNullOrEmpty()) {
-            Toast.makeText(this, "Erro: Informações do livro ausentes.", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -110,8 +109,6 @@ class TelaAvaliacoesUsu : AppCompatActivity() {
             .addSnapshotListener { resultado, e ->
 
                 if (e != null) {
-                    // Trata erro do Listener
-                    Toast.makeText(this, "Erro ao carregar avaliações em tempo real.", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 
