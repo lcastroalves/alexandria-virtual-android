@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -32,7 +33,6 @@ class AdmTelaEventos : AppCompatActivity() {
         setContentView(R.layout.adm_tela_eventos)
 
         fb = FirebaseFirestore.getInstance()
-
 
         recyclerView = findViewById(R.id.recyListaEventoAdm)
         btnVoltar = findViewById(R.id.botaoVoltar2)
@@ -63,7 +63,7 @@ class AdmTelaEventos : AppCompatActivity() {
             if (selecionados.isEmpty()) {
                 Toast.makeText(this, "Selecione pelo menos um evento.", Toast.LENGTH_SHORT).show()
             } else {
-                excluirEventosSelecionados(selecionados)
+                confirmarExclusaoEventos(selecionados)
             }
         }
     }
@@ -71,7 +71,6 @@ class AdmTelaEventos : AppCompatActivity() {
     private fun configurarPesquisa() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?) = false
-
             override fun onQueryTextChange(texto: String?): Boolean {
                 filtrarEventos(texto.orEmpty())
                 return true
@@ -81,7 +80,6 @@ class AdmTelaEventos : AppCompatActivity() {
 
     private fun filtrarEventos(filtro: String) {
         val texto = filtro.lowercase()
-
         listaFiltrada.clear()
         listaFiltrada.addAll(
             cache.filter { evento ->
@@ -90,7 +88,6 @@ class AdmTelaEventos : AppCompatActivity() {
                         evento.local.lowercase().contains(texto)
             }
         )
-
         adapter.notifyDataSetChanged()
     }
 
@@ -103,10 +100,7 @@ class AdmTelaEventos : AppCompatActivity() {
     private fun observarEventos() {
         fb.collection("evento")
             .addSnapshotListener { snapshots, error ->
-                if (error != null || snapshots == null) {
-                    Toast.makeText(this, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
-                    return@addSnapshotListener
-                }
+                if (error != null || snapshots == null) return@addSnapshotListener
 
                 cache.clear()
 
@@ -128,17 +122,42 @@ class AdmTelaEventos : AppCompatActivity() {
             }
     }
 
-    private fun excluirEventosSelecionados(eventosSelecionados: List<Evento>) {
+    private fun confirmarExclusaoEventos(selecionados: List<Evento>) {
+        val mensagem = if (selecionados.size == 1) {
+            "Tem certeza que deseja excluir o evento \"${selecionados[0].nome}\"?"
+        } else {
+            "Tem certeza que deseja excluir ${selecionados.size} eventos?"
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Confirmação")
+            .setMessage(mensagem)
+            .setPositiveButton("Sim") { dialog, _ ->
+                excluirDoFirestore(selecionados)
+                dialog.dismiss()
+            }
+            .setNegativeButton("Não") { dialog, _ -> dialog.dismiss() }
+            .show()
+    }
+
+    private fun excluirDoFirestore(eventosSelecionados: List<Evento>) {
+        val colecao = fb.collection("evento")
+        var deletados = 0
+        val total = eventosSelecionados.size
+
         for (evento in eventosSelecionados) {
-            fb.collection("evento")
-                .whereEqualTo("nome", evento.nome)
-                .get()
-                .addOnSuccessListener { docs ->
-                    for (doc in docs) {
-                        fb.collection("evento").document(doc.id).delete()
+            colecao.whereEqualTo("nome", evento.nome).get()
+                .addOnSuccessListener { query ->
+                    for (doc in query) {
+                        colecao.document(doc.id).delete()
+                            .addOnSuccessListener {
+                                deletados++
+                                if (deletados == total) {
+                                    observarEventos()
+                                }
+                            }
                     }
                 }
         }
-        Toast.makeText(this, "Evento(s) excluído(s).", Toast.LENGTH_SHORT).show()
     }
 }
