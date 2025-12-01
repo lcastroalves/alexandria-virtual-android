@@ -78,11 +78,14 @@
 
             <TextView
                 android:id="@+id/subtitulo"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:text="como Programar"
                 android:textStyle="italic"
+                android:gravity="left"
+                android:ellipsize="end"
+                android:maxLines="2"
                 app:layout_constraintEnd_toEndOf="@+id/tituloLivro"
                 app:layout_constraintStart_toStartOf="@+id/tituloLivro"
                 app:layout_constraintTop_toBottomOf="@+id/tituloLivro" />
@@ -91,7 +94,6 @@
                 android:id="@+id/autorLivroSuperior"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
                 android:contentDescription="@string/descricaoAutorLivro"
                 android:ellipsize="none"
                 android:fontFamily="@font/montserrat_medium"
@@ -99,9 +101,10 @@
                 android:text="Paul J. Deitel"
                 android:textColor="#000000"
                 android:textSize="14sp"
+                android:layout_marginTop="55dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iconAdm"
-                app:layout_constraintTop_toTopOf="@+id/iconAdm" />
+                app:layout_constraintTop_toBottomOf="@+id/subtitulo" />
 
             <TextView
                 android:id="@+id/sinopseLivro"
@@ -109,10 +112,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:contentDescription="@string/sinopseLivro"
-                android:ellipsize="end"
                 android:fontFamily="@font/montserrat_medium"
-                android:maxLines="4"
                 android:text="@string/sinopseLivro"
                 android:textColor="#247AE8"
                 android:textSize="16sp"
@@ -248,6 +250,8 @@
                 android:textSize="14sp"
                 android:layout_marginStart="26dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/Relogio"
                 app:layout_constraintTop_toTopOf="@+id/Relogio" />
 
