@@ -147,7 +147,7 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             .addOnSuccessListener {
                 Toast.makeText(this, "Evento adicionado!", Toast.LENGTH_SHORT).show()
                 campos.forEach { it.text?.clear() }
-                imagemEvento.setImageResource(R.drawable.padraopng)
+                imagemEvento.setImageResource(R.drawable.no_image)
                 colocouImagem = false
             }
     }
