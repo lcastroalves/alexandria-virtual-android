@@ -108,6 +108,19 @@ class TelaLivrosFavUsu : AppCompatActivity() {
                     livro?.favorito = true   // marca como favorito
 
                     if (livro != null) {
+
+                        // pegar avaliações
+                        val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
+                        val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0
+
+                        // arredondar para 1 casa
+                        val mediaArredondada =
+                            String.format("%.1f", mediaAvaliacao).replace(",", ".").toDouble()
+
+                        livro.mediaAvaliacao = mediaAvaliacao
+                        livro.totalAvaliacoes = totalAvaliacoes
+                        livro.avaliacoes = totalAvaliacoes.toInt()
+
                         listaOriginal.add(livro)
                         listaFiltrada.add(livro)
                     }
