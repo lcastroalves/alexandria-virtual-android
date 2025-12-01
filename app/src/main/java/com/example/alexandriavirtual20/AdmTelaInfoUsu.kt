@@ -46,7 +46,7 @@ class AdmTelaInfoUsu : AppCompatActivity() {
         fb = FirebaseFirestore.getInstance()
 
         userId = intent.getStringExtra("documentId") ?: run {
-            Toast.makeText(this, "Usuário inválido.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Usuário não encontrado.", Toast.LENGTH_SHORT).show()
             finish(); return
         }
 

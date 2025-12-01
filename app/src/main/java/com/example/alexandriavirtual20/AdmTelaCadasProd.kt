@@ -72,23 +72,7 @@
             }
 
             btnVoltar.setOnClickListener {
-                // Cria o AlertDialog
-                val builder = androidx.appcompat.app.AlertDialog.Builder(this)
-                builder.setTitle("Voltar")
-                builder.setMessage("Deseja encerrar o cadastro?")
-
-                builder.setPositiveButton("Sim") { dialog, _ ->
-                    onBackPressedDispatcher.onBackPressed()
-                    dialog.dismiss()
-                }
-
-                // Botão "Não"
-                builder.setNegativeButton("Não") { dialog, _ ->
-                    dialog.dismiss() // Apenas fecha o popup
-                }
-
-                val dialog = builder.create()
-                dialog.show()
+                onBackPressedDispatcher.onBackPressed()
             }
 
 

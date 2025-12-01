@@ -62,6 +62,7 @@ class AdmInfoPessoais : AppCompatActivity() {
         }
 
         btnSalvarAlteracoes.setOnClickListener {
+            Toast.makeText(this, "Alterações salvas", Toast.LENGTH_SHORT).show()
             salvarAlteracoes()
         }
     }
@@ -108,8 +109,6 @@ class AdmInfoPessoais : AppCompatActivity() {
                     cargo.setText(cargoAdm)
                     contato.setText(contatoAdm)
                 }
-            }  .addOnFailureListener {
-                Toast.makeText(this, "Erro ao carregar dados", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -131,7 +130,6 @@ class AdmInfoPessoais : AppCompatActivity() {
         )
 
         if (nomeCompletoNovo.isEmpty() || nomeUsuarioNovo.isEmpty() || cargoNovo.isEmpty() || contatoNovo.isEmpty()) {
-            Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
             return
         }
 

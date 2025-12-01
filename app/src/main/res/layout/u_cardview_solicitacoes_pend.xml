@@ -56,7 +56,19 @@
             app:layout_constraintBottom_toBottomOf="@+id/imagemSoliPend"
             app:layout_constraintStart_toStartOf="@+id/avaliacaoSoliPend" />
 
-        <Button
+    <TextView
+        android:id="@+id/subtituloSoliPend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="subtitulo"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/avaliacaoSoliPend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeSoliPend" />
+
+    <Button
             android:id="@+id/botaoSoliPend"
             android:layout_width="80dp"
             android:layout_height="40dp"

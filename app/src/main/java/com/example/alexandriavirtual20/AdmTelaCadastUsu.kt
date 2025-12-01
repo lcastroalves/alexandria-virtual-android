@@ -105,9 +105,6 @@ class AdmTelaCadastUsu : AppCompatActivity() {
                                     Toast.makeText(this, "Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT).show()
                                     limparCampos()
                                 }
-                                .addOnFailureListener {
-                                    Toast.makeText(this, "Erro ao atualizar ID do usuário.", Toast.LENGTH_SHORT).show()
-                                }
                         }
                         .addOnFailureListener {
                             Toast.makeText(this, "Erro ao salvar os dados do usuário.", Toast.LENGTH_SHORT).show()
