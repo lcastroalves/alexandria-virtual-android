@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Usuario"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="10dp"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="15dp"
+        android:background="#EEF5FF">
 
         <CheckBox
             android:id="@+id/checkBox2"
@@ -23,15 +27,16 @@
 
         <ImageButton
             android:id="@+id/btnEdit"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="68dp"
-            android:background="@color/white"
-            android:contentDescription="Editar evento"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/editprofile" />
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            app:layout_constraintBottom_toBottomOf="@+id/checkBox2"
+            app:layout_constraintEnd_toStartOf="@+id/checkBox2"
+            app:layout_constraintStart_toEndOf="@+id/nomeUsu"
+            app:layout_constraintTop_toTopOf="@+id/checkBox2"
+            app:srcCompat="@drawable/editing" />
 
         <ImageView
             android:id="@+id/imagemPerfil"
