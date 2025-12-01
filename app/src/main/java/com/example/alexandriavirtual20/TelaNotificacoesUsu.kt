@@ -34,6 +34,7 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         }
 
         adapter = NotificacaoAdapter(
+            this,
             listaNotificacoes,
             onExcluirClick = { notificacao ->
                 adapter.removerNotificacao(notificacao)
@@ -50,7 +51,6 @@ class TelaNotificacoesUsu : AppCompatActivity() {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
 
         if (uid == null) {
-            Toast.makeText(this, "Erro: usuário não logado.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -58,7 +58,6 @@ class TelaNotificacoesUsu : AppCompatActivity() {
             .document(uid)
             .collection("notificacoes")
 
-        // 🔥 Agora esta é a ÚNICA fonte de notificações
         userNotificacoesRef.addSnapshotListener { snapshots, error ->
             if (error != null) {
                 Toast.makeText(this, "Erro ao carregar notificações.", Toast.LENGTH_SHORT).show()
@@ -95,6 +94,7 @@ class TelaNotificacoesUsu : AppCompatActivity() {
                 }
 
                 val notificacao = Notificacao(
+                    id = document.id, // 🔥 ID capturado corretamente para exclusão
                     nome = document.getString("nome") ?: "",
                     data = java.text.SimpleDateFormat("dd/MM/yyyy").format(millisPrazo),
                     imagem = document.getString("imagem") ?: "",
@@ -107,7 +107,7 @@ class TelaNotificacoesUsu : AppCompatActivity() {
                 listaNotificacoes.add(notificacao)
             }
 
-            // 🔥 Ordena por dias restantes (mais urgente primeiro)
+            // Ordena por dias restantes (mais urgente primeiro)
             listaNotificacoes.sortBy { it.dias }
 
             adapter.notifyDataSetChanged()

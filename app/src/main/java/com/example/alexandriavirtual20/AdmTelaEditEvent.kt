@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.io.ByteArrayOutputStream
 import android.graphics.Bitmap
 
-
 class AdmTelaEditEvent : AppCompatActivity() {
 
     private lateinit var btnVoltar: ImageButton
@@ -26,14 +25,14 @@ class AdmTelaEditEvent : AppCompatActivity() {
     private lateinit var edtNome: EditText
     private lateinit var edtData: EditText
     private lateinit var edtHorario: EditText
-    private lateinit var edtLocal: EditText
-    private lateinit var edtBreveDescricao: EditText
     private lateinit var edtDescricao: EditText
+    private lateinit var edtBreveDescricao: EditText
+    private lateinit var edtLocal: EditText
     private lateinit var btnSalvar: Button
 
     private lateinit var abrirGaleria: ActivityResultLauncher<String>
     private lateinit var firestore: FirebaseFirestore
-    private var imagemBase64: String = "" // Para armazenar a imagem atual
+    private var imagemBase64: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +42,17 @@ class AdmTelaEditEvent : AppCompatActivity() {
         val nomeEvento = intent.getStringExtra("nomeEvento") ?: return
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        btnMudarImg = findViewById(R.id.editImagemEvento)
+        btnMudarImg = findViewById(R.id.btnMudarImg)
         imagemEvento = findViewById(R.id.imagemEventoEdit)
-        btnSalvar = findViewById(R.id.botaoSalvarEditarEvento)
+        btnSalvar = findViewById(R.id.btnSalvar)
         firestore = FirebaseFirestore.getInstance()
 
-        edtNome = findViewById(R.id.tituloEditarEvento)
-        edtData = findViewById(R.id.dataEditarEvento)
-        edtHorario = findViewById(R.id.horarioEditarEvento)
-        edtLocal = findViewById(R.id.localEditarEvento)
-        edtBreveDescricao = findViewById(R.id.descricaoBreveEditarEvento)
-        edtDescricao = findViewById(R.id.descricaoEditarEvento)
+        edtNome = findViewById(R.id.tituloEvento)
+        edtData = findViewById(R.id.dataEvento)
+        edtHorario = findViewById(R.id.horarioEvento)
+        edtDescricao = findViewById(R.id.descricaoEvento)
+        edtBreveDescricao = findViewById(R.id.descurtaEvento)
+        edtLocal = findViewById(R.id.localEvento)
 
         // Buscar dados do evento pelo nome
         firestore.collection("evento")
@@ -65,9 +64,9 @@ class AdmTelaEditEvent : AppCompatActivity() {
                     edtNome.setText(doc.getString("nome") ?: "")
                     edtData.setText(doc.getString("data") ?: "")
                     edtHorario.setText(doc.getString("horario") ?: "")
-                    edtLocal.setText(doc.getString("local") ?: "")
                     edtBreveDescricao.setText(doc.getString("breveDescricao") ?: "")
                     edtDescricao.setText(doc.getString("descricao") ?: "")
+                    edtLocal.setText(doc.getString("local") ?: "")
                     imagemBase64 = doc.getString("imagem") ?: ""
 
                     if (imagemBase64.isNotEmpty()) {
@@ -93,9 +92,10 @@ class AdmTelaEditEvent : AppCompatActivity() {
             val nomeEdit = edtNome.text.toString()
             val dataEdit = edtData.text.toString()
             val horarioEdit = edtHorario.text.toString()
-            val localEdit = edtLocal.text.toString()
-            val breveEdit = edtBreveDescricao.text.toString()
             val descricaoEdit = edtDescricao.text.toString()
+            val breveEdit = edtBreveDescricao.text.toString()
+            val localEdit = edtLocal.text.toString()
+
 
             firestore.collection("evento")
                 .whereEqualTo("nome", nomeEvento)
@@ -107,9 +107,9 @@ class AdmTelaEditEvent : AppCompatActivity() {
                                 "nome" to nomeEdit,
                                 "data" to dataEdit,
                                 "horario" to horarioEdit,
-                                "local" to localEdit,
-                                "breveDescricao" to breveEdit,
                                 "descricao" to descricaoEdit,
+                                "breveDescricao" to breveEdit,
+                                "local" to localEdit,
                                 "imagem" to imagemBase64
                             )
                         )

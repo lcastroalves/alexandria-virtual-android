@@ -49,7 +49,6 @@ class TelaEventosFuturUsu : AppCompatActivity() {
         fb.collection("evento")
             .addSnapshotListener { snapshots, error ->
                 if (error != null) {
-                    Toast.makeText(this, "Erro ao carregar eventos.", Toast.LENGTH_SHORT).show()
                     return@addSnapshotListener
                 }
 

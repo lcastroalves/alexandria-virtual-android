@@ -41,8 +41,8 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
         setContentView(R.layout.adm_tela_add_evento)
 
         btnVoltar = findViewById(R.id.botaoVoltar)
-        btnAdicionar = findViewById(R.id.salvarEvento)
-        btnADicionarImagem = findViewById(R.id.editImagemEvento)
+        btnAdicionar = findViewById(R.id.btnSalvar)
+        btnADicionarImagem = findViewById(R.id.btnMudarImgEvento)
         fb = FirebaseFirestore.getInstance()
 
         imagemEvento = findViewById(R.id.imagemEventoAdd)
@@ -92,9 +92,6 @@ class AdmTelaAdicionEvent : AppCompatActivity() {
             .addOnSuccessListener { query ->
                 if (query.isEmpty) enviarDados()
                 else Toast.makeText(this, "Evento já cadastrado!", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao verificar evento", Toast.LENGTH_SHORT).show()
             }
     }
 
