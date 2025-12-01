@@ -114,9 +114,6 @@ class AdmTelaCadastUsu : AppCompatActivity() {
                     Toast.makeText(this, "E-mail já está cadastrado", Toast.LENGTH_SHORT).show()
                 }
         }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao verificar usuário existente.", Toast.LENGTH_SHORT).show()
-            }
     }
 
     private fun limparCampos(){
