@@ -109,34 +109,47 @@ class TelaHistoricoUsu : AppCompatActivity() {
         adapter.notifyDataSetChanged()
 
         // Primeiro: pega a lista de favoritos do usuário
-        fireBase.collection("usuario").document(usuarioID).collection("favoritos").get().addOnSuccessListener { favDocs ->
+        fireBase.collection("usuario").document(usuarioID).collection("favoritos").get()
+            .addOnSuccessListener { favDocs ->
 
-            // Cria um conjunto com os IDs favoritos
-            val favoritosIds = favDocs.documents.map { it.id }.toSet()
+                val favoritosIds = favDocs.documents.map { it.id }.toSet()
 
-            // Agora pega cada livro do histórico
-            for (id in ids) {
-                fireBase.collection("livros").document(id).get()
-                    .addOnSuccessListener { doc ->
+                // Agora pega cada livro do histórico
+                for (id in ids) {
+                    fireBase.collection("livros").document(id).get()
+                        .addOnSuccessListener { doc ->
 
-                        val livro = doc.toObject(Livro::class.java)
-                        livro?.id = doc.id
+                            if (!doc.exists()) return@addOnSuccessListener
 
-                        if (livro != null) {
-                            // ⭐️ Marca favorito automaticamente se estiver na coleção favoritos
-                            livro.favorito = favoritosIds.contains(livro.id)
+                            val livro = doc.toObject(Livro::class.java)
+                            livro?.id = doc.id
 
-                            listaOriginal.add(livro)
-                            listaFiltro.add(livro)
+                            if (livro != null) {
+                                // marca como favorito se estiver na coleção favoritos
+                                livro.favorito = favoritosIds.contains(livro.id)
+
+                                // pegar avaliações
+                                val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
+                                val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0
+
+                                // arredondar para 1 casa
+                                val mediaArredondada =
+                                    String.format("%.1f", mediaAvaliacao).replace(",", ".").toDouble()
+
+                                livro.mediaAvaliacao = mediaAvaliacao
+                                livro.totalAvaliacoes = totalAvaliacoes
+                                livro.avaliacoes = totalAvaliacoes.toInt()
+
+                                listaOriginal.add(livro)
+                                listaFiltro.add(livro)
+                            }
+
+                            if (listaFiltro.size == ids.size) {
+                                adapter.notifyDataSetChanged()
+                            }
                         }
-
-                        if (listaFiltro.size == ids.size) {
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-
+                }
             }
-        }
     }
 
 

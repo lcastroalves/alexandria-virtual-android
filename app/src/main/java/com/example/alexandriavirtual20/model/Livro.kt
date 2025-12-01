@@ -10,7 +10,7 @@ data class Livro(
     val genero: String = "",
     val autor: String = "",
     var capa: String = "",
-    val avaliacoes: Int = 0,
+    var avaliacoes: Int = 0,
     var favorito: Boolean = false,
     val anoLancamento: String = "",
     val sinopse: String = "",
@@ -20,8 +20,8 @@ data class Livro(
     var isSelected: Boolean = false,
 
 
-    val mediaAvaliacao: Double = 0.0,
-    val totalAvaliacoes: Long = 0,
+    var mediaAvaliacao: Double = 0.0,
+    var totalAvaliacoes: Long = 0,
     var dataEmprestimo: Long = 0L
 
     ) : Parcelable {

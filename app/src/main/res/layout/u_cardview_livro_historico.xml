@@ -46,75 +46,27 @@
             app:layout_constraintStart_toStartOf="@+id/titulo"
             app:layout_constraintTop_toBottomOf="@+id/titulo" />
 
-        <ImageView
-            android:id="@+id/estrela1"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:layout_margin="4dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:src="@drawable/star_black"
-            app:layout_constraintStart_toStartOf="@+id/subtitulo"
-            app:layout_constraintTop_toBottomOf="@+id/subtitulo" />
-
-        <ImageView
-            android:id="@+id/estrela2"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/star_black"
-            app:layout_constraintBottom_toBottomOf="@+id/estrela1"
-            app:layout_constraintStart_toEndOf="@+id/estrela1"
-            app:layout_constraintTop_toTopOf="@+id/estrela1" />
-
-        <ImageView
-            android:id="@+id/estrela3"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/star_black"
-            app:layout_constraintBottom_toBottomOf="@+id/estrela1"
-            app:layout_constraintStart_toEndOf="@+id/estrela2"
-            app:layout_constraintTop_toTopOf="@+id/estrela2" />
-
-        <ImageView
-            android:id="@+id/estrela4"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/star_black"
-            app:layout_constraintBottom_toBottomOf="@+id/estrela1"
-            app:layout_constraintStart_toEndOf="@+id/estrela3"
-            app:layout_constraintTop_toTopOf="@+id/estrela3" />
-
-        <ImageView
-            android:id="@+id/estrela5"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:src="@drawable/star_black"
-            app:layout_constraintBottom_toBottomOf="@+id/estrela1"
-            app:layout_constraintStart_toEndOf="@+id/estrela4"
-            app:layout_constraintTop_toTopOf="@+id/estrela4" />
 
         <TextView
             android:id="@+id/qntAvaliac"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30 avaliações"
+            android:text="⭐ 105 avaliações"
             android:textSize="10sp"
-            android:layout_marginStart="5dp"
-            app:layout_constraintBottom_toBottomOf="@+id/estrela1"
-            app:layout_constraintStart_toEndOf="@+id/estrela5"
-            app:layout_constraintTop_toTopOf="@+id/estrela5" />
+            android:layout_marginTop="5dp"
+            app:layout_constraintStart_toStartOf="@+id/subtitulo"
+            app:layout_constraintTop_toBottomOf="@+id/subtitulo" />
 
         <TextView
             android:id="@+id/autor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ernane Rosa Martins"
             android:ellipsize="end"
+            android:text="Ernane Rosa Martins"
             android:textColor="@android:color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/estrela1"
-            app:layout_constraintTop_toBottomOf="@+id/estrela1" />
+            app:layout_constraintBottom_toBottomOf="@+id/capaLivro"
+            app:layout_constraintStart_toStartOf="@+id/subtitulo" />
 
         <ImageView
             android:id="@+id/btnFav"

@@ -54,14 +54,18 @@ class LivroAdapterFavoritos(
         holder.autor.text = livro.autor
 
         // ⭐ Exibir avaliação corretamente
-        holder.qntAvaliac.text = "⭐ ${livro.avaliacoes} avaliações"
+        val estrela = String.format("%.1f", livro.mediaAvaliacao)
+        val quantidade = livro.totalAvaliacoes
+
+        val textoAvaliacao = "⭐ $estrela • $quantidade avaliações"
+        holder.qntAvaliac.text = textoAvaliacao
 
         // Atualiza coração favorito
         holder.btnFav.setImageResource(
             if (livro.favorito)
-                R.drawable.coracao_azul_cheio
+                R.drawable.coracao_cheio
             else
-                R.drawable.coracao_azul_vazio
+                R.drawable.coracao_vazio
         )
 
         // Abre tela de informações

@@ -54,7 +54,15 @@ class LivroAdapterHistorico (
 
         holder.titulo.text = livro.titulo
         holder.subtitulo.text = livro.subtitulo
-        holder.qntAvaliac.text = "( ${livro.avaliacoes} )"
+
+
+        val estrela = String.format("%.1f", livro.mediaAvaliacao)
+        val quantidade = livro.totalAvaliacoes
+
+        val textoAvaliacao = "⭐ $estrela • $quantidade avaliações"
+        holder.qntAvaliac.text = textoAvaliacao
+
+
         holder.autor.text = livro.autor
 
         if (livro.favorito) {
