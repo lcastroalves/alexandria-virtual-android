@@ -33,7 +33,7 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
         recyclerView = findViewById(R.id.recySoliPend)
 
         adapter = SoliPendAdapter(listaEmprestimos) { item ->
-            confirmarDelecao(item)
+            deletarEmprestimo(item)
         }
 
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -123,17 +123,6 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
             }
     }
 
-    private fun confirmarDelecao(item: SoliPend) {
-        AlertDialog.Builder(this)
-            .setTitle("Excluir solicitação")
-            .setMessage("Deseja realmente excluir a solicitação de \"${item.titulo}\"?")
-            .setPositiveButton("Sim") { _, _ ->
-                deletarEmprestimo(item)
-            }
-            .setNegativeButton("Cancelar", null)
-            .show()
-    }
-
     private fun deletarEmprestimo(item: SoliPend) {
         val db = FirebaseFirestore.getInstance()
 
@@ -142,10 +131,6 @@ class TelaSolicitaPendUsu : AppCompatActivity() {
             .delete()
             .addOnSuccessListener {
                 adapter.removerSoliPend(item)
-                Toast.makeText(this, "Solicitação removida.", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao remover.", Toast.LENGTH_SHORT).show()
             }
     }
 }

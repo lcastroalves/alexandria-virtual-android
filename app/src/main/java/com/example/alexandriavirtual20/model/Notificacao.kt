@@ -1,8 +1,7 @@
 package com.example.alexandriavirtual20.model
 
-import java.sql.Timestamp
-
 data class Notificacao (
+    var id: String,
     var nome : String,
     var tipo : String,
     var imagem : String,
@@ -10,4 +9,4 @@ data class Notificacao (
     var prazo : Int,
     var dias : Int,
     var mensagem : String
-    )
+)

@@ -3,195 +3,250 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    tools:context=".TelaEmail">
+    android:background="#FAFAFA"
+    tools:context=".AdmTelaEditEvent">
 
     <!-- Botão Voltar -->
     <ImageButton
         android:id="@+id/botaoVoltar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginTop="60dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/descricaoBotaoVoltar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon" />
+        app:srcCompat="@drawable/seta_azul" />
 
     <!-- Título -->
     <TextView
-        android:id="@+id/nomeInfoAtividade"
+        android:id="@+id/tituloEditar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="90dp"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/trocchi"
+        android:layout_marginStart="16dp"
         android:text="Editar evento"
         android:textColor="#247AE8"
-        android:textSize="32sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Imagem do evento -->
-    <ImageView
-        android:id="@+id/imagemEventoEdit"
-        android:layout_width="113dp"
-        android:layout_height="122dp"
-        android:contentDescription="@string/contDescLogo"
-        app:layout_constraintTop_toBottomOf="@id/nomeInfoAtividade"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/totoro" />
+        android:textSize="20sp"
+        android:fontFamily="@font/trocchi"
+        app:layout_constraintStart_toEndOf="@id/botaoVoltar"
+        app:layout_constraintTop_toTopOf="@id/botaoVoltar"/>
 
     <!-- Botão editar imagem -->
     <ImageButton
-        android:id="@+id/editImagemEvento"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="-10dp"
-        android:layout_marginEnd="50dp"
+        android:id="@+id/btnMudarImg"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="120dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/transparent"
-        android:contentDescription="Editar imagem do evento"
-        app:layout_constraintTop_toTopOf="@id/imagemEventoEdit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/editprofile" />
+        app:layout_constraintTop_toBottomOf="@id/tituloEditar"
+        app:srcCompat="@drawable/editing" />
 
-    <!-- Área dos campos -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/imagemEventoEdit"
+    <!-- Imagem do Evento -->
+    <ImageView
+        android:id="@+id/imagemEventoEdit"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnMudarImg"
+        android:src="@drawable/totoro"/>
 
-        <!-- Campo: Título -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutTitulo"
-            android:layout_width="0dp"
+    <!-- Scroll -->
+    <ScrollView
+        android:id="@+id/scrollCampos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/imagemEventoEdit"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalvar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp">
+            android:paddingBottom="16dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tituloEditarEvento"
-                android:layout_width="match_parent"
+            <!-- Campo: Título -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputTitulo"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Título" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="10dp"
+                android:hint="Título"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Campo: Data -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutData"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutTitulo"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tituloEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/dataEditarEvento"
-                android:layout_width="match_parent"
+            <!-- Campo: Data -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputData"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Data" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Data"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/inputTitulo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Campo: Horário -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutHorario"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutData"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dataEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/horarioEditarEvento"
-                android:layout_width="match_parent"
+            <!-- Campo: Horário -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputHorario"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Horário" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Horário"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/inputData"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Campo: Descrição -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutDescricao"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutHorario"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/horarioEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descricaoEditarEvento"
-                android:layout_width="match_parent"
+            <!-- Campo: Descrição -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputDescricao"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Descrição" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Descrição"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/inputHorario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Campo: Descrição breve -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutDescBreve"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescricao"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descricaoEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/descricaoBreveEditarEvento"
-                android:layout_width="match_parent"
+            <!-- Campo: Descrição curta -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputDescBreve"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Descrição breve" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Descrição breve"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/inputDescricao"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Campo: Local -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputLayoutLocal"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutDescBreve"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descurtaEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/localEditarEvento"
-                android:layout_width="match_parent"
+
+            <!-- Campo: Local -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLocalEvento"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Local" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:hint="Local"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusTopStart="5dp"
+                app:boxCornerRadiusTopEnd="5dp"
+                app:boxCornerRadiusBottomStart="5dp"
+                app:boxCornerRadiusBottomEnd="5dp"
+                app:boxStrokeColor="@color/borda_input"
+                app:hintTextColor="#247AE8"
+                app:layout_constraintTop_toBottomOf="@id/inputDescBreve"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Botão salvar -->
-        <Button
-            android:id="@+id/botaoSalvarEditarEvento"
-            android:layout_width="140dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#247AE8"
-            android:fontFamily="@font/montserrat_medium"
-            android:text="Salvar"
-            android:textSize="18sp"
-            app:cornerRadius="10dp"
-            app:layout_constraintTop_toBottomOf="@id/textInputLayoutLocal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/localEvento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="13dp"
+                    android:textSize="16sp"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <!-- Botão salvar -->
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="205dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar Alterações"
+        android:textSize="18dp"
+        android:backgroundTint="#2B76D7"
+        android:fontFamily="@font/montserrat_medium"
+        android:layout_marginBottom="20dp"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

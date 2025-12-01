@@ -28,6 +28,7 @@ class TelaInfoEventoUsu : AppCompatActivity() {
 
     private var imagemBase64: String = ""
     private var data : String = ""
+    private var eventoId: String? = null // 🔥 NOVO: Armazena o ID do documento do evento
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,10 @@ class TelaInfoEventoUsu : AppCompatActivity() {
             .addOnSuccessListener { snapshots ->
                 if (!snapshots.isEmpty) {
                     val doc = snapshots.documents[0]
+
+                    // 🔥 Captura o ID do documento do evento original
+                    eventoId = doc.id
+
                     nome.setText(doc.getString("nome") ?: "")
                     horario.setText("Horário: " + doc.getString("horario") ?: "")
                     descricao.setText("Descrição: " + doc.getString("descricao") ?: "")
@@ -64,15 +69,32 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                         val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                         imagem.setImageBitmap(bitmap)
                     }
+
+                    // Verifica a existência da notificação APÓS obter o ID do evento (se necessário)
+                    checkNotificacaoExistente(nomeEvento)
                 }
             }
 
+        btnVoltar.setOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
+        btnNotificar.setOnClickListener {
+            criarNotificacao()
+        }
+    }
+
+    // 🔥 Separamos a lógica de verificação de notificação para garantir que o UID e o Nome estejam prontos
+    private fun checkNotificacaoExistente(nomeEvento: String) {
         val uid = auth.currentUser?.uid
 
         if (uid != null) {
             firestore.collection("usuario")
                 .document(uid)
                 .collection("notificacoes")
+                // Se você planeja permitir múltiplas notificações do mesmo evento com nomes diferentes,
+                // seria melhor usar o campo eventoId aqui, mas manteremos a busca por nome
+                // para compatibilidade com a lógica anterior.
                 .whereEqualTo("nome", nomeEvento)
                 .get()
                 .addOnSuccessListener { query ->
@@ -84,50 +106,50 @@ class TelaInfoEventoUsu : AppCompatActivity() {
                     }
                 }
         }
+    }
 
-        btnVoltar.setOnClickListener {
-            onBackPressedDispatcher.onBackPressed()
+    private fun criarNotificacao() {
+        val uid = auth.currentUser?.uid
+
+        if (uid == null) {
+            return
         }
 
-        btnNotificar.setOnClickListener {
-            val uid = auth.currentUser?.uid
+        if (eventoId == null) {
+            return
+        }
 
-            if (uid == null) {
-                Toast.makeText(this, "Usuário não encontrado. Faça login novamente.", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+        val timestampData = converterDataParaTimestamp(data)
+
+        if (timestampData == null) {
+            return
+        }
+
+        val notificacao = hashMapOf(
+            "eventoId" to eventoId, // 🔥 ID do evento original
+            "tipo" to "evento",
+            "nome" to nome.text.toString(),
+            "data" to data,
+            "prazo" to timestampData,
+            "imagem" to imagemBase64
+        )
+
+        firestore.collection("usuario")
+            .document(uid)
+            .collection("notificacoes")
+            .add(notificacao)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Você será notificado!", Toast.LENGTH_SHORT).show()
+                btnNotificar.visibility = Button.GONE
             }
-
-            val timestampData = converterDataParaTimestamp(data)
-
-            if (timestampData == null) {
-                Toast.makeText(this, "Data inválida!", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
+            .addOnFailureListener {
+                Toast.makeText(this, "Erro ao criar notificação.", Toast.LENGTH_SHORT).show()
             }
-
-            val notificacao = hashMapOf(
-                "tipo" to "evento",
-                "nome" to nome.text.toString(),
-                "data" to data,
-                "prazo" to timestampData,
-                "imagem" to imagemBase64
-            )
-
-            firestore.collection("usuario")
-                .document(uid)
-                .collection("notificacoes")
-                .add(notificacao)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Você será notificado!", Toast.LENGTH_SHORT).show()
-                    btnNotificar.visibility = Button.GONE
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this, "Erro ao criar notificação.", Toast.LENGTH_SHORT).show()
-                }
-        }
-        }
+    }
 
     fun converterDataParaTimestamp(data: String): Long? {
         return try {
+            // Formato 'dd/MM/yy' é usado no código, mantendo a consistência.
             val formato = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
             val date = formato.parse(data)
             date?.time

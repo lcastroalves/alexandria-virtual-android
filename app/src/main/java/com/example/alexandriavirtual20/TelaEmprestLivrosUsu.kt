@@ -28,7 +28,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
     private lateinit var fireBase: FirebaseFirestore
     private lateinit var fbAuth: FirebaseAuth
 
-    private var livrosBloqueadosIds = listOf<String>()   // IDs dos livros com pendência
+    private var livrosBloqueadosIds = listOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
 
         configurarPesquisa()
 
-        // 🔥 Primeiro carregamos os empréstimos, depois livros
         observarEmprestimos()
 
         btnConfirmar.setOnClickListener {
@@ -81,9 +80,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         }
     }
 
-    // ============================================================
-    //   🔥 LISTENER DE EMPRÉSTIMOS — SÓ DEPOIS CHAMA observarLivros()
-    // ============================================================
     private fun observarEmprestimos() {
         val userId = fbAuth.currentUser?.uid ?: return
 
@@ -98,15 +94,10 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
                     it.getString("idLivro") ?: ""
                 } ?: emptyList()
 
-                // 🔥 Agora que sabemos os bloqueados,
-                // só agora podemos carregar livros corretamente
                 observarLivros()
             }
     }
 
-    // ============================================================
-    //                 🔥 LISTENER DOS LIVROS
-    // ============================================================
     private fun observarLivros() {
         fireBase.collection("livros")
             .addSnapshotListener { query, error ->
@@ -143,9 +134,6 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
             }
     }
 
-    // ============================================================
-    //                     FILTRAGEM
-    // ============================================================
     private fun aplicarFiltros() {
 
         val pesquisa = searchView.query.toString().lowercase()
@@ -179,9 +167,7 @@ class TelaEmprestLivrosUsu : AppCompatActivity() {
         adapter.notifyDataSetChanged()
     }
 
-    // ============================================================
-    //                     LISTENERS
-    // ============================================================
+
     private fun registrarFiltros() {
         val listener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(
