@@ -2,6 +2,7 @@
 package com.example.alexandriavirtual20.adapter
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,6 +63,13 @@ class HistoricoEmprestimoAdapter(
         // O design "09 de Set" provavelmente representa a data de retirada.
         holder.txtDataRetirada.text = item.dataEmprestimo
         holder.txtSituacaoDevolucao.text = item.statusDevolucao
+        if (item.statusDevolucao.equals("atrasado", ignoreCase = true)) {
+            holder.txtSituacaoDevolucao.text = "Atrasado ⚠️"
+            holder.txtSituacaoDevolucao.setTextColor(Color.RED)
+        } else {
+            holder.txtSituacaoDevolucao.text = "Em dia ✔️"
+            holder.txtSituacaoDevolucao.setTextColor(Color.parseColor("#008000")) // verde escuro
+        }
 
         if (item.capa.isNotEmpty()) {
             try {

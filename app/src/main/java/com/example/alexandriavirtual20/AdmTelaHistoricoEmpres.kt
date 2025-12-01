@@ -17,6 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import java.text.SimpleDateFormat
+import java.util.Calendar // Import necessário para a correção
+import java.util.Date
 import java.util.Locale
 
 // Definições de Argumentos (mantidas do seu template original)
@@ -58,6 +60,7 @@ class AdmTelaHistoricoEmpres : Fragment() {
 
         // Configuração das abas para navegação
         tabPendentes.setOnClickListener {
+            // Assumindo que AdmAMain é a Activity principal
             (activity as? AdmAMain)?.replaceFragment(AdmTelaSolicPend())
         }
         tabUsuarios.setOnClickListener {
@@ -148,24 +151,61 @@ class AdmTelaHistoricoEmpres : Fragment() {
                 val email = userDoc.getString("email") ?: "Email não encontrado"
 
                 // Extrai e formata os dados do Empréstimo
-                val dataPrevistaDevolucao = emprestimoDoc.getTimestamp("prazo")?.toDate()
-
-                // 🌟 LEITURA CORRIGIDA: Usa o campo 'dataSolicitacao'
                 val dataSolicitacaoTimestamp = emprestimoDoc.getTimestamp("dataSolicitacao")
-                val statusDevolucao = emprestimoDoc.getString("statusDevolucao") ?: "Em dia"
+                val dataSolicitacaoDate = dataSolicitacaoTimestamp?.toDate()
 
-                // Formatação das datas
-                // Se a data de solicitação existir, formata; senão, usa 'S/ Data'
-                val dataEmpStr = dataSolicitacaoTimestamp?.let { dateFormat.format(it.toDate()) } ?: "S/ Data"
-                val prazoStr = dataPrevistaDevolucao?.let { dateFormat.format(it) } ?: "S/ Prazo"
+                val prazoTimestamp = emprestimoDoc.getTimestamp("prazo")
+                val prazoDate = prazoTimestamp?.toDate()
 
+// 🚀 CÓDIGO ATUALIZADO PARA CÁLCULO PRECISO DE DIAS (ZERANDO HORÁRIO)
+                val hoje = Date()
+                val diferencaDias = if (prazoDate != null) {
+
+                    // 1. Configura a data do prazo para 00:00:00 no fuso local
+                    val calPrazo = Calendar.getInstance()
+                    calPrazo.time = prazoDate
+                    calPrazo.set(Calendar.HOUR_OF_DAY, 0)
+                    calPrazo.set(Calendar.MINUTE, 0)
+                    calPrazo.set(Calendar.SECOND, 0)
+                    calPrazo.set(Calendar.MILLISECOND, 0)
+
+                    // 2. Configura a data de hoje para 00:00:00 no fuso local
+                    val calHoje = Calendar.getInstance()
+                    calHoje.time = hoje
+                    calHoje.set(Calendar.HOUR_OF_DAY, 0)
+                    calHoje.set(Calendar.MINUTE, 0)
+                    calHoje.set(Calendar.SECOND, 0)
+                    calHoje.set(Calendar.MILLISECOND, 0)
+
+                    // 3. Calcula a diferença de milissegundos entre os dois inícios de dia
+                    val diff = calHoje.timeInMillis - calPrazo.timeInMillis
+
+                    // 4. Converte para o número de dias INTEIROS passados
+                    (diff / (1000 * 60 * 60 * 24)).toInt()
+                } else 0
+// ----------------------------------------------------------------------------------
+
+// Se estiver atrasado por 30 dias ou mais, o status é "atrasado".
+                val statusFinal = if (diferencaDias >= 30) {
+                    "atrasado" // Maior ou igual a 30 dias de atraso
+                } else if (diferencaDias > 0) {
+                    "em atraso (menor)" // Atraso entre 1 e 29 dias
+                } else {
+                    "em dia" // Em dia ou no dia do prazo
+                }
+
+// Formatação
+                val dataEmpStr = dataSolicitacaoDate?.let { dateFormat.format(it) } ?: "S/ Data"
+                val prazoStr = prazoDate?.let { dateFormat.format(it) } ?: "S/ Prazo"
+
+// Criar objeto
                 val historicoItem = HistoricoEmprestimo(
                     idDocumento = idEmprestimo,
                     idLivro = idLivro,
                     idUsuario = idUsuario,
-                    dataEmprestimo = dataEmpStr,          // 🌟 Data real da Solicitação no formato "dd de MMM"
+                    dataEmprestimo = dataEmpStr,
                     dataPrevistaDevolucao = prazoStr,
-                    statusDevolucao = statusDevolucao,
+                    statusDevolucao = statusFinal,
                     titulo = titulo,
                     autor = autor,
                     capa = capa,
