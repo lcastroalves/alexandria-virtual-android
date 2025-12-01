@@ -35,18 +35,35 @@ class TelaEmail : AppCompatActivity() {
             val email = edtEmail.text.toString()
 
             if (email.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Insira um e-mail válido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            fbAuth.sendPasswordResetEmail(email).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(this, "E-mail de redefinição enviado!", Toast.LENGTH_LONG).show()
+            fb.collection("usuario")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { docs ->
+                    if (!docs.isEmpty) {
+                        auth.sendPasswordResetEmail(email)
+                            .addOnSuccessListener {
+                                Toast.makeText(
+                                    this,
+                                    "E-mail de redefinição enviado",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            .addOnFailureListener { erro ->
+                                Toast.makeText(
+                                    this,
+                                    "Falha ao enviar e-mail",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                     } else {
-                        Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "E-mail não encontrado", Toast.LENGTH_SHORT).show()
                     }
             }
-
         }
     }
 }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,9 +94,6 @@ class TelaHistoricoUsu : AppCompatActivity() {
 
                 buscarLivrosDoHistorico(listaIds)
             }
-            .addOnFailureListener {
-                Toast.makeText(this, "Erro ao carregar histórico.", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
@@ -131,10 +127,6 @@ class TelaHistoricoUsu : AppCompatActivity() {
                                 // pegar avaliações
                                 val mediaAvaliacao = doc.getDouble("mediaAvaliacao") ?: 0.0
                                 val totalAvaliacoes = doc.getLong("totalAvaliacoes") ?: 0
-
-                                // arredondar para 1 casa
-                                val mediaArredondada =
-                                    String.format("%.1f", mediaAvaliacao).replace(",", ".").toDouble()
 
                                 livro.mediaAvaliacao = mediaAvaliacao
                                 livro.totalAvaliacoes = totalAvaliacoes

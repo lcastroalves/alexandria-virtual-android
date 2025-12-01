@@ -57,23 +57,10 @@
 
         </LinearLayout>
 
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:iconifiedByDefault="false"
-            android:queryHint="Buscar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linear_layout">
-        </SearchView>
-
         <Button
             android:id="@+id/btnProd"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:backgroundTint="#2B76D7"
             android:maxLines="3"
             android:paddingHorizontal="30dp"
@@ -81,9 +68,10 @@
             android:text="Lista de Produtos da Biblioteca"
             android:textSize="25sp"
             app:cornerRadius="10dp"
+            android:layout_marginTop="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/linear_layout">
 
         </Button>
 

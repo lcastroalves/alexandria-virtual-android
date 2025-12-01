@@ -51,7 +51,6 @@ class TelaRedefinirSenha : AppCompatActivity() {
 
         val usuarioAtual = fbAuth.currentUser
         val email = usuarioAtual?.email ?: run {
-            Toast.makeText(this, "Erro: usuário não possui email!", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -61,7 +60,7 @@ class TelaRedefinirSenha : AppCompatActivity() {
         }
 
         if (novaSenha != confirmarSenha) {
-            Toast.makeText(this, "As senhas não coincidem", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Senhas não correspondem", Toast.LENGTH_SHORT).show()
             return
         }
 

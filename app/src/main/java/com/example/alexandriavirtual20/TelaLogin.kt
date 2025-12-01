@@ -41,7 +41,7 @@ class TelaLogin : AppCompatActivity() {
             val senha = edtSenha.text.toString()
 
             if (email.isEmpty() || senha.isEmpty()) {
-                Toast.makeText(this, "Preencha todos os campos!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             fbAuth.signInWithEmailAndPassword(email, senha).addOnCompleteListener{ task ->
