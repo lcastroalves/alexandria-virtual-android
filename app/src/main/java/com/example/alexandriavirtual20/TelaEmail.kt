@@ -9,12 +9,14 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class TelaEmail : AppCompatActivity() {
     private lateinit var btnVoltar: ImageButton
     private lateinit var edtEmail: EditText
     private lateinit var btnEnviar: Button
     private lateinit var fbAuth : FirebaseAuth
+    private lateinit var fireBase: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,8 @@ class TelaEmail : AppCompatActivity() {
         btnVoltar = findViewById(R.id.botaoVoltar)
         edtEmail = findViewById(R.id.editarEmail)
         btnEnviar = findViewById(R.id.botaoEnviar)
+
+        fireBase = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
         btnVoltar.setOnClickListener {
@@ -39,12 +43,12 @@ class TelaEmail : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            fb.collection("usuario")
+            fireBase.collection("usuario")
                 .whereEqualTo("email", email)
                 .get()
                 .addOnSuccessListener { docs ->
                     if (!docs.isEmpty) {
-                        auth.sendPasswordResetEmail(email)
+                        fbAuth.sendPasswordResetEmail(email)
                             .addOnSuccessListener {
                                 Toast.makeText(
                                     this,

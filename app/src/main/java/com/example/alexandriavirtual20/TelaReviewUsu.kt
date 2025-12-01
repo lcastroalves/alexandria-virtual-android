@@ -90,12 +90,11 @@ class TelaReviewUsu : AppCompatActivity() {
                     listaLivros = novaLista
                     configurarRecyclerView()
                 } else {
-                    Toast.makeText(this, "Nenhum livro encontrado para avaliar.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Nenhum livro para avaliar.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Erro ao carregar livros: ${e.message}", e)
-                Toast.makeText(this, "Falha ao buscar livros para avaliação.", Toast.LENGTH_LONG).show()
             }
     }
 
@@ -274,12 +273,10 @@ class TelaReviewUsu : AppCompatActivity() {
                 }
                 .addOnFailureListener { e ->
                     Log.e(TAG, "Erro ao adicionar comentário: ${e.message}")
-                    Toast.makeText(this, "Erro ao salvar comentário. Média atualizada.", Toast.LENGTH_SHORT).show()
                 }
 
         }.addOnFailureListener { e ->
             Log.e(TAG, "Erro na transação de avaliação: ${e.message}")
-            Toast.makeText(this, "Erro ao enviar avaliação. Tente novamente.", Toast.LENGTH_SHORT).show()
         }.addOnCompleteListener {
             btnEnviar.isEnabled = true // Reabilitar o botão
         }
