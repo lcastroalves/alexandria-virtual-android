@@ -1,81 +1,128 @@
 # 📱 Alexandria Virtual – Android
 
-Alexandria Virtual é um aplicativo Android que simula o funcionamento de
-uma biblioteca virtual, permitindo empréstimo de livros, reserva de
-cabines de estudo e interação com um chatbot de apoio ao usuário.
+Full Android application for digital library management, developed with Kotlin and Firebase.
 
-O projeto foi desenvolvido em Kotlin, utilizando Android Studio e
-integração com Firebase, com foco em usabilidade, organização de dados
-e boas práticas de desenvolvimento mobile.
+The application allows users to borrow books, reserve study cabins, receive notifications, and interact with an integrated chatbot, while administrators can manage users, books, events, and reservations.
 
 ---
 
-## 🎯 Objetivo do Projeto
-Desenvolver um sistema mobile para biblioteca digital, voltado a alunos,
-professores e profissionais, oferecendo recursos que facilitem o acesso
-a livros, eventos, atividades educacionais e espaços de estudo.
+## 🎯 Project Objective
 
-O projeto tem caráter acadêmico e foi desenvolvido no contexto do curso
-de Ciência da Computação da Universidade de Fortaleza (Unifor).
+Develop a mobile system for a digital library focused on students, teachers, and professionals, providing resources that facilitate access to books, educational activities, events, and study spaces.
+
+This is an academic project developed during the Computer Science course at Universidade de Fortaleza (Unifor).
 
 ---
 
-## 👤 Perfis de Usuário
-- **Usuário da Biblioteca**
-  - Empréstimo de livros
-  - Reserva de cabines
-  - Avaliação de livros
-  - Acesso a eventos, atividades e chatbot
+## 👤 User Roles
 
-- **Administrador**
-  - Gerenciamento de livros, usuários e eventos
-  - Aprovação de empréstimos
-  - Gerenciamento de cabines e reservas
-  - Controle de avaliações e conteúdos
+### 📚 Library User
 
----
+* Book borrowing
+* Study cabin reservation
+* Book ratings and comments
+* Access to events, activities, and chatbot
 
-## 🚀 Principais Funcionalidades
-- Autenticação de usuários (login, cadastro e recuperação de senha)
-- Empréstimo e controle de livros
-- Avaliação e comentários de livros
-- Reserva de cabines por horário
-- Notificações de eventos e prazos
-- Chatbot integrado (Hipatia)
-- Área administrativa com permissões diferenciadas
+### 🛠️ Administrator
+
+* Book, user, and event management
+* Loan approval
+* Cabin and reservation management
+* Ratings and content control
 
 ---
 
-## 🛠️ Tecnologias Utilizadas
-- Kotlin
-- Android Studio
-- Firebase Authentication
-- Firebase Firestore
-- Firebase Storage
-- Git & GitHub
+## 🚀 Main Features
+
+* User authentication (login, registration, and password recovery)
+* Book borrowing and management
+* Book ratings and comments
+* Study cabin reservation by schedule
+* Event and deadline notifications
+* Integrated chatbot (Hipatia)
+* Administrative area with different permissions
 
 ---
 
-## 🧩 Metodologia
-O desenvolvimento do projeto seguiu a metodologia ágil **Kanban**,
-permitindo organização visual das tarefas, fluxo contínuo de entrega
-e adaptação ao longo do desenvolvimento.
+## 🛠️ Technologies Used
+
+* Kotlin
+* Android Studio
+* Firebase Authentication
+* Firebase Firestore
+* Firebase Storage
+* Git & GitHub
 
 ---
 
-## 👥 Projeto em Equipe
-Projeto acadêmico desenvolvido em equipe.
+## 🏗️ Architecture
 
-Este repositório representa uma versão pública do projeto para fins
-de portfólio e documentação, com os devidos créditos à equipe envolvida.
+The application follows a modular organization separating:
+
+* Authentication
+* Book management
+* Cabin reservation
+* Administrative area
+* Firebase services
+
+Firebase Firestore was used as the cloud database, while Firebase Authentication handled user access control.
 
 ---
 
-## 📚 Status do Projeto
-🚧 Em desenvolvimento
+## 📖 What I Learned
+
+During the development of this project, I improved my knowledge in:
+
+* Android development with Kotlin
+* Firebase integration
+* RecyclerView and adapters
+* User authentication
+* Real-time database manipulation
+* Team collaboration using Git and GitHub
 
 ---
 
-## 🔒 Observações de Segurança
-Arquivos de configuração sensíveis (como `google-services.json`)
-não estão incluídos no repositório por motivos de segurança.
+## 📚 Currently Learning
+
+* Android Architecture
+* Firebase
+* Software Engineering
+* Git & GitHub workflows
+* Mobile UI/UX improvement
+
+---
+
+## 🧩 Development Process
+
+The project was developed collaboratively using agile organization practices.
+
+---
+
+## 👥 Team Project
+
+Academic project developed collaboratively in a team environment.
+
+This repository represents a public portfolio version of the project, with proper credits to the team involved.
+
+---
+
+## ▶️ How to Run
+
+1. Clone the repository
+2. Open the project in Android Studio
+3. Configure Firebase credentials
+4. Run the application on an emulator or Android device
+
+---
+
+## 📚 Project Status
+
+✅ Project completed
+
+The application is fully functional and was developed as an academic project during the Computer Science course at Universidade de Fortaleza (Unifor).
+
+---
+
+## 🔒 Security Notes
+
+Sensitive configuration files (such as `google-services.json`) are not included in the repository for security reasons.
